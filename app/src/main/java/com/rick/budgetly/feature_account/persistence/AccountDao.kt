@@ -10,26 +10,18 @@ interface AccountDao {
 
     // i hope i come back to this, but i do think this is over engineered
     @Query("SELECT * FROM account")
-    fun getAccounts(): AccountDaoResult
+    fun getAccounts(): Flow<List<Account>>
 
     @Query("SELECT * FROM account WHERE id = :id")
-    fun getAccountById(id: Int) : AccountDaoResult
+    fun getAccountById(id: Int) : Account?
 
     @Query("SELECT * FROM account WHERE type = :type")
-    fun getAccountByType(type: String) : AccountDaoResult
+    fun getAccountByType(type: String) : Flow<List<Account>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveAccount(account: Account) : AccountDaoResult
+    suspend fun saveAccount(account: Account)
 
     @Delete
-    suspend fun deleteAccount(account: Account) : AccountDaoResult
+    suspend fun deleteAccount(account: Account)
 
 }
-
-sealed class AccountDaoResult {
-    data class OnSuccessFlow(val accounts: Flow<List<Account>>): AccountDaoResult()
-    data class OnSuccess(val account: Account): AccountDaoResult()
-    data class OnError(val exception: InvalidAccountException): AccountDaoResult()
-}
-
-class InvalidAccountException(message: String): Exception(message)

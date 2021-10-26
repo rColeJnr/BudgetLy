@@ -2,6 +2,7 @@ package com.rick.budgetly.feature_account.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.lang.Exception
 
 @Entity
 data class Account(
@@ -16,3 +17,5 @@ data class Account(
     var include: Boolean = true,
     @PrimaryKey val id: Int? = null,
 )
+
+class InvalidAccountException(message: String): Exception(message)

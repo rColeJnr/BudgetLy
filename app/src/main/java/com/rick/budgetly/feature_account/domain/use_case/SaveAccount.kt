@@ -1,18 +1,24 @@
 package com.rick.budgetly.feature_account.domain.use_case
 
+import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.IAccountRepository
+import com.rick.budgetly.feature_account.persistence.InvalidAccountException
 import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 
-class DeleteAccount(
+class SaveAccount(
     private val repository: IAccountRepository,
     private val container: AccountsContainer?
 ) {
+
     suspend operator fun invoke(account: Account){
-        repository.deleteAccount(
+        if (account.name.isEmpty()){
+            throw InvalidAccountException("The name of the account can't be empty")
+        }
+        repository.saveAccount(
             account,
-            {container?.showSuccess()},
-            {container?.showError("Failed to delete account")}
+            {},
+            {container?.showError("Failed to save account")}
         )
     }
 

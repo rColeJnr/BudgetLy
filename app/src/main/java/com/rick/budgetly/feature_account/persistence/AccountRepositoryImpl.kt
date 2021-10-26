@@ -2,6 +2,7 @@ package com.rick.budgetly.feature_account.persistence
 
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.IAccountRepository
+import kotlinx.coroutines.flow.Flow
 
 class AccountRepositoryImpl(
     private val accountDao: AccountDao
@@ -12,10 +13,7 @@ class AccountRepositoryImpl(
         onSuccess: (Unit) -> Unit,
         onError: (Exception) -> Unit
     ) {
-        when (val saveAccountResult: AccountDaoResult = accountDao.saveAccount(account)){
-            is AccountDaoResult.OnError -> onError(saveAccountResult.exception)
-            is AccountDaoResult.OnSuccess -> onSuccess(Unit)
-        }
+        accountDao.saveAccount(account)
     }
 
     override suspend fun deleteAccount(
@@ -23,14 +21,14 @@ class AccountRepositoryImpl(
         onSuccess: (Unit) -> Unit,
         onError: (Exception) -> Unit
     ) {
-        when (val deleteAccountResult: AccountDaoResult = accountDao.deleteAccount(account)){
+        when (val deleteAccountResult: AccountDaoResult = ){
             is AccountDaoResult.OnError -> onError(deleteAccountResult.exception)
             is AccountDaoResult.OnSuccess -> onSuccess(Unit)
         }
     }
 
     override suspend fun getAccounts(
-        onSuccess: (Unit) -> Unit,
+        onSuccess: (accounts: Flow<List<Account>>) -> Unit,
         onError: (Exception) -> Unit
     ) {
         when (val getAccountDaoResult: AccountDaoResult = accountDao.getAccounts()){
@@ -53,7 +51,7 @@ class AccountRepositoryImpl(
 
     override suspend fun getAccountByType(
         type: String,
-        onSuccess: (account: Account) -> Unit,
+        onSuccess: (account: Flow<List<Account>>) -> Unit,
         onError: (Exception) -> Unit
     ) {
         when (val getAccountByType = accountDao.getAccountByType(type)){
@@ -62,3 +60,14 @@ class AccountRepositoryImpl(
         }
     }
 }
+
+sealed class AccountDaoResult {
+    data class OnSuccessFlow(val accounts: Flow<List<Account>>): AccountDaoResult()
+    data class OnSuccess(val account: Account): AccountDaoResult()
+    data class OnError(val exception: InvalidAccountException): AccountDaoResult()
+}
+
+
+// Just realized that there are the use cases
+// If necessary i will move the functions to use case files
+// but i believe that won't be necessary

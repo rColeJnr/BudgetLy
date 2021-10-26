@@ -1,5 +1,7 @@
 package com.rick.budgetly.feature_account.domain
 
+import kotlinx.coroutines.flow.Flow
+
 interface IAccountRepository {
 
     suspend fun saveAccount(
@@ -15,7 +17,7 @@ interface IAccountRepository {
     )
 
     suspend fun getAccounts(
-        onSuccess: (Unit) -> Unit,
+        onSuccess: (accounts: Flow<List<Account>>) -> Unit,
         onError: (Exception) -> Unit
     )
 
@@ -27,7 +29,7 @@ interface IAccountRepository {
 
     suspend fun getAccountByType(
         type: String,
-        onSuccess: (account: Account) -> Unit,
+        onSuccess: (accounts: Flow<List<Account>>) -> Unit,
         onError: (Exception) -> Unit
     )
 
