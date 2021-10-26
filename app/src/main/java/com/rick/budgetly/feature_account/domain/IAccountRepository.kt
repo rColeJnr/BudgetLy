@@ -3,7 +3,14 @@ package com.rick.budgetly.feature_account.domain
 interface IAccountRepository {
 
     suspend fun saveAccount(
-        onSuccess: (account: Account) -> Unit,
+        account: Account,
+        onSuccess: (Unit) -> Unit,
+        onError: (Exception) -> Unit
+    )
+
+    suspend fun deleteAccount(
+        account: Account,
+        onSuccess: (Unit) -> Unit,
         onError: (Exception) -> Unit
     )
 
@@ -13,12 +20,14 @@ interface IAccountRepository {
     )
 
     suspend fun getAccountById(
-        onSuccess: (id: Int) -> Account?,
+        id: Int,
+        onSuccess: (account: Account) -> Unit,
         onError: (Exception) -> Unit
     )
 
     suspend fun getAccountByType(
-        onSuccess: (accountType: String) -> Account?,
+        type: String,
+        onSuccess: (account: Account) -> Unit,
         onError: (Exception) -> Unit
     )
 
@@ -27,10 +36,4 @@ interface IAccountRepository {
 //        onSuccess: (accountCurrency: String) -> Account?,
 //        onError: (Exception) -> Unit
 //    )
-
-    suspend fun deleteAccount(
-        onSuccess: (account: Account) -> Unit,
-        onError: (Exception) -> Unit
-    )
-
 }
