@@ -9,11 +9,7 @@ class DeleteAccount(
     private val container: AccountsContainer?
 ) {
     suspend operator fun invoke(account: Account){
-        repository.deleteAccount(
-            account,
-            {container?.showSuccess()},
-            {container?.showError("Failed to delete account")}
-        )
+        repository.deleteAccount(account)
     }
 
 }

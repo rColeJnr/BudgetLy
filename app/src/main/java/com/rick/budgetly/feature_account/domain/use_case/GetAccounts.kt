@@ -1,9 +1,10 @@
 package com.rick.budgetly.feature_account.domain.use_case
 
+import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.IAccountRepository
 import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 import com.rick.budgetly.feature_account.ui.accounts.AccountsViewModel
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 //TODO Forward retrieved data to viewModel
@@ -14,20 +15,8 @@ class GetAccounts @Inject constructor(
     private val viewModel: AccountsViewModel
 ) {
 
-    suspend operator fun invoke(){
-        repository.getAccounts(
-            { accounts ->
-                println(accounts)
-                viewModel.apply {
-                    accounts.onEach {
-                        _accountsState.value = accountsState.value.copy(
-                            accounts = it
-                        )
-                    }
-                }
-            },
-            { container?.showError("Failed to get accounts from database") }
-        )
+    suspend operator fun invoke(): Flow<List<Account>> {
+         return repository.getAccounts()
     }
 
 }
@@ -37,15 +26,8 @@ class GetAccountById @Inject constructor(
     private val container: AccountsContainer?,
     private val viewModel: AccountsViewModel
 ){
-    suspend operator fun invoke(id: Int){
-        repository.getAccountById(
-            id,
-            { account ->
-                println(account)
-                // TODO account details view model
-            },
-            {container?.showError("Invalid id")}
-        )
+    suspend operator fun invoke(id: Int): Account? {
+        return repository.getAccountById(id)
     }
 }
 
@@ -54,19 +36,7 @@ class GetAccountByType @Inject constructor(
     private val container: AccountsContainer?,
     private val viewModel: AccountsViewModel
 ){
-    suspend operator fun invoke(type: String) {
-        repository.getAccountByType(
-            type,
-            { accounts ->
-                viewModel.apply {
-                    accounts.onEach {
-                        _accountsState.value = accountsState.value.copy(
-                            accountsByType = it
-                        )
-                    }
-                }
-            },
-            {container?.showError("No account match the given type")}
-        )
+    suspend operator fun invoke(type: String): Flow<List<Account>> {
+        return repository.getAccountByType(type)
     }
 }

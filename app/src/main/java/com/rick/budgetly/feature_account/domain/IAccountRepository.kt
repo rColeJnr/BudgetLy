@@ -4,34 +4,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface IAccountRepository {
 
-    suspend fun saveAccount(
-        account: Account,
-        onSuccess: (Unit) -> Unit,
-        onError: (Exception) -> Unit
-    )
+    suspend fun saveAccount(account: Account)
 
-    suspend fun deleteAccount(
-        account: Account,
-        onSuccess: (Unit) -> Unit,
-        onError: (Exception) -> Unit
-    )
+    suspend fun deleteAccount(account: Account)
 
-    suspend fun getAccounts(
-        onSuccess: (accounts: Flow<List<Account>>) -> Unit,
-        onError: (Exception) -> Unit
-    )
+    suspend fun getAccounts(): Flow<List<Account>>
 
-    suspend fun getAccountById(
-        id: Int,
-        onSuccess: (account: Account) -> Unit,
-        onError: (Exception) -> Unit
-    )
+    suspend fun getAccountById(id: Int): Account?
 
-    suspend fun getAccountByType(
-        type: String,
-        onSuccess: (accounts: Flow<List<Account>>) -> Unit,
-        onError: (Exception) -> Unit
-    )
+    suspend fun getAccountByType(type: String): Flow<List<Account>>
 
     // I feel like get account by currency is a bit extra
 //    suspend fun getAccountByCurrency(
