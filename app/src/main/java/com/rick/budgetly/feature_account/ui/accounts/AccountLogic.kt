@@ -38,12 +38,18 @@ class AccountLogic @Inject constructor(
         accountUseCases.getAccounts()
     }
 
+    // Congratulashings
     private fun onAccountTypeToggled(type: String) = launch {
-
+        viewModel.apply {
+            accountsState.value.isAccountTypeVisible[type]?.not()
+            _accountsState.value = accountsState.value.copy(
+                isAccountTypeVisible = accountsState.value.isAccountTypeVisible
+            )
+        }
     }
 
     private fun onAccountToggled() {
-
+        TODO ("show account options")
     }
 
     private fun onRestoreAccount() {
@@ -61,7 +67,7 @@ class AccountLogic @Inject constructor(
     }
 
     private fun onStop() {
-        TODO("Not yet implemented")
+        TODO("dont remember what i'm supposed to do here")
     }
 
 }

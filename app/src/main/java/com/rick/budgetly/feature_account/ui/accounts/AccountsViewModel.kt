@@ -13,7 +13,6 @@ import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class AccountsViewModel @Inject constructor(
-    private val accountUseCases: AccountUseCases,
     private val dispatcherProvider: DispatcherProvider
 ): ViewModel(), CoroutineScope {
 

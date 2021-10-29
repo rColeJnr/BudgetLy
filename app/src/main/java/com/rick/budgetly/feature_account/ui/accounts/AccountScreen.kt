@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.ui.accounts.components.AccountList
-import com.rick.composables.myfirstcompose.domain.model.Account
 
 @Composable
 fun AccountScreen(accountList: List<Account>, modifier: Modifier = Modifier) {
@@ -51,7 +51,8 @@ fun AccountScreenPreview() {
                 "MZN",
                 "${i * 7}",
                 "1000",
-                "Account $i description"
+                "Account $i description",
+                ""
             )
         )
     }
