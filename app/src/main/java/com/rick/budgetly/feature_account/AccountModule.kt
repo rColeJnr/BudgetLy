@@ -2,12 +2,14 @@ package com.rick.budgetly.feature_account
 
 import android.app.Application
 import androidx.room.Room
+import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.IAccountRepository
 import com.rick.budgetly.feature_account.domain.use_case.*
 import com.rick.budgetly.feature_account.persistence.AccountDatabase
 import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.DATABASE_NAME
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
 import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
+import com.rick.budgetly.feature_account.ui.accounts.AccountsViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,11 +36,16 @@ object AccountModule {
 
     @Provides
     @Singleton
-    fun providesAccountUseCases(repository: IAccountRepository, container: AccountsContainer): AccountUseCases  = AccountUseCases(
-        getAccounts = GetAccounts(repository, container),
-        getAccountsByType = GetAccountByType(repository, container),
-        getAccountById = GetAccountById(repository, container),
+    fun providesAccountUseCases(repository: IAccountRepository, container: AccountsContainer, viewModel: AccountsViewModel): AccountUseCases  = AccountUseCases(
+        getAccounts = GetAccounts(repository, container, viewModel),
+        getAccountsByType = GetAccountByType(repository, container, viewModel),
+        getAccountById = GetAccountById(repository, container, viewModel),
         saveAccount = SaveAccount(repository, container),
         deleteAccount = DeleteAccount(repository, container)
     )
+
+    @Provides
+    @Singleton
+    fun providesAccountDispatchers() =
+        ProductionDispatcherProvider
 }

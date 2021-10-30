@@ -1,5 +1,6 @@
 package com.rick.budgetly.feature_account.persistence
 
+import com.rick.budgetly.feature_account.persistence.AccountDao
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.IAccountRepository
 

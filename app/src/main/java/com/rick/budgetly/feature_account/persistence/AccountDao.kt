@@ -3,7 +3,6 @@ package com.rick.budgetly.feature_account.persistence
 import androidx.room.*
 import com.rick.budgetly.feature_account.domain.Account
 import kotlinx.coroutines.flow.Flow
-import java.lang.Exception
 
 @Dao
 interface AccountDao {
@@ -23,5 +22,4 @@ interface AccountDao {
 
     @Delete
     suspend fun deleteAccount(account: Account)
-
 }

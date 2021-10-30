@@ -9,7 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rick.budgetly.ui.theme.BudgetLyTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BudgetLyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,8 +19,22 @@ class BudgetLyActivity : ComponentActivity() {
             BudgetLyTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
+                    Greetings(name = "Junior")
                 }
             }
         }
     }
+}
+
+@Composable
+fun Greetings(name: String) {
+    
+    Text(text = "Hello $name")
+    
+}
+
+@Preview
+@Composable
+fun PreviewGreetings() {
+    Greetings(name = "Junior")
 }

@@ -1,11 +1,12 @@
 package com.rick.budgetly.feature_account.ui.accounts
 
 import com.rick.budgetly.feature_account.common.BaseLogic
-import com.rick.budgetly.feature_account.common.DispatcherProvider
+import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -13,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
 class AccountLogic @Inject constructor(
     private val viewModel: AccountsViewModel,
     private val accountUseCases: AccountUseCases,
-    private val dispatcher: DispatcherProvider
+    private val dispatcher: ProductionDispatcherProvider
 ): BaseLogic<AccountEvents>(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
@@ -28,28 +29,72 @@ class AccountLogic @Inject constructor(
             is AccountEvents.DeleteAccount -> onAccountDeleted(event.account)
             AccountEvents.RestoreAccount -> onRestoreAccount()
             AccountEvents.ToggleAccount -> onAccountToggled()
-            is AccountEvents.ToggleAccountType -> onAccountTypeToggled(event.type)
+            is AccountEvents.ToggleAccountType -> onAccountTypeToggled(event.accountType)
             AccountEvents.OnStart -> onStart()
             AccountEvents.OnStop -> onStop()
         }
     }
 
     private fun onStart() = launch {
-        accountUseCases.getAccounts()
-    }
-
-    // Congratulashings
-    private fun onAccountTypeToggled(type: String) = launch {
-        viewModel.apply {
-            accountsState.value.isAccountTypeVisible[type]?.not()
-            _accountsState.value = accountsState.value.copy(
-                isAccountTypeVisible = accountsState.value.isAccountTypeVisible
-            )
+        accountUseCases.getAccounts().onEach { accounts ->
+            viewModel.apply {
+                _accountsState.value = accountsState.value.copy(
+                    accounts = accounts
+                )
+            }
         }
     }
 
+    // Congratulashings
+    private fun onAccountTypeToggled(accountType: AccountType) = launch {
+
+        when(accountType){
+
+            AccountType.DEBTS -> {
+                accountUseCases.getAccountsByType(accountType.type).onEach { accounts ->
+                    viewModel.apply {
+                        _accountsState.value = accountsState.value.copy(
+                            accountsByTypeDebts = accounts
+                        )
+                        accountsState.value.isAccountTypeVisible[accountType.type]?.not()
+                        _accountsState.value = accountsState.value.copy(
+                            isAccountTypeVisible = accountsState.value.isAccountTypeVisible
+                        )
+                    }
+                }
+            }
+            AccountType.LOANS -> {
+                accountUseCases.getAccountsByType(accountType.type).onEach { accounts ->
+                    viewModel.apply {
+                        _accountsState.value = accountsState.value.copy(
+                            accountsByTypeLoans = accounts
+                        )
+                        accountsState.value.isAccountTypeVisible[accountType.type]?.not()
+                        _accountsState.value = accountsState.value.copy(
+                            isAccountTypeVisible = accountsState.value.isAccountTypeVisible
+                        )
+                    }
+                }
+            }
+            AccountType.SAVINGS -> {
+                accountUseCases.getAccountsByType(accountType.type).onEach { accounts ->
+                    viewModel.apply {
+                        _accountsState.value = accountsState.value.copy(
+                            accountsByTypeSavings = accounts
+                        )
+                        accountsState.value.isAccountTypeVisible[accountType.type]?.not()
+                        _accountsState.value = accountsState.value.copy(
+                            isAccountTypeVisible = accountsState.value.isAccountTypeVisible
+                        )
+                    }
+                }
+            }
+        }
+
+    }
+
     private fun onAccountToggled() {
-        TODO ("show account options")
+        TODO ("navigate to account options")
     }
 
     private fun onRestoreAccount() {

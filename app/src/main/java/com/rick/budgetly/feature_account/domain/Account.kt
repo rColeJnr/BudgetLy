@@ -13,9 +13,13 @@ data class Account(
     val limit: String,
     val description: String ,
     val image: String,
-    var default: Boolean = false,
-    var include: Boolean = true,
-    @PrimaryKey val id: Int? = null,
-)
+    val include: Boolean = true,
+    val main: Boolean = false,
+    @PrimaryKey val id: Int? = null
+){
+    companion object {
+
+    }
+}
 
 class InvalidAccountException(message: String): Exception(message)

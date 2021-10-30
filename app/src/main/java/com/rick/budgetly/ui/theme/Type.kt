@@ -26,3 +26,16 @@ val Typography = Typography(
     )
     */
 )
+
+val toolBar = Typography(
+    body1 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Black,
+        fontSize = 16.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Light,
+        fontSize = 15.sp
+    )
+)
