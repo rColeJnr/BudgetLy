@@ -10,9 +10,7 @@ import javax.inject.Inject
 //TODO Forward retrieved data to viewModel
 
 class GetAccounts @Inject constructor(
-    private val repository: IAccountRepository,
-    private val container: AccountsContainer?,
-    private val viewModel: AccountsViewModel
+    private val repository: IAccountRepository
 ) {
 
     suspend operator fun invoke(): Flow<List<Account>> {
@@ -22,9 +20,7 @@ class GetAccounts @Inject constructor(
 }
 
 class GetAccountById @Inject constructor(
-    private val repository: IAccountRepository,
-    private val container: AccountsContainer?,
-    private val viewModel: AccountsViewModel
+    private val repository: IAccountRepository
 ){
     suspend operator fun invoke(id: Int): Account? {
         return repository.getAccountById(id)
@@ -32,9 +28,7 @@ class GetAccountById @Inject constructor(
 }
 
 class GetAccountByType @Inject constructor(
-    private val repository: IAccountRepository,
-    private val container: AccountsContainer?,
-    private val viewModel: AccountsViewModel
+    private val repository: IAccountRepository
 ){
     suspend operator fun invoke(type: String): Flow<List<Account>> {
         return repository.getAccountByType(type)

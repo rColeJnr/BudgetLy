@@ -8,6 +8,7 @@ import com.rick.budgetly.feature_account.domain.use_case.*
 import com.rick.budgetly.feature_account.persistence.AccountDatabase
 import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.DATABASE_NAME
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
+import com.rick.budgetly.feature_account.ui.accounts.AccountLogic
 import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 import com.rick.budgetly.feature_account.ui.accounts.AccountsViewModel
 import dagger.Module
@@ -36,12 +37,18 @@ object AccountModule {
 
     @Provides
     @Singleton
-    fun providesAccountUseCases(repository: IAccountRepository, container: AccountsContainer, viewModel: AccountsViewModel): AccountUseCases  = AccountUseCases(
-        getAccounts = GetAccounts(repository, container, viewModel),
-        getAccountsByType = GetAccountByType(repository, container, viewModel),
-        getAccountById = GetAccountById(repository, container, viewModel),
-        saveAccount = SaveAccount(repository, container),
-        deleteAccount = DeleteAccount(repository, container)
+    fun providesAccountUseCases(repository: IAccountRepository): AccountUseCases  = AccountUseCases(
+        getAccounts = GetAccounts(repository),
+        getAccountsByType = GetAccountByType(repository),
+        getAccountById = GetAccountById(repository),
+        saveAccount = SaveAccount(repository ),
+        deleteAccount = DeleteAccount(repository)
+    )
+
+    @Provides
+    @Singleton
+    fun providesAccountLogic(viewModel: AccountsViewModel, dispatcher : ProductionDispatcherProvider, accountUseCases: AccountUseCases) = AccountLogic(
+        viewModel, dispatcher, accountUseCases
     )
 
     @Provides

@@ -6,8 +6,7 @@ import com.rick.budgetly.feature_account.domain.InvalidAccountException
 import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 
 class SaveAccount(
-    private val repository: IAccountRepository,
-    private val container: AccountsContainer?
+    private val repository: IAccountRepository
 ) {
 
     suspend operator fun invoke(account: Account){

@@ -1,6 +1,7 @@
 package com.rick.budgetly.feature_account.ui.accounts
 
 import com.rick.budgetly.feature_account.common.BaseLogic
+import com.rick.budgetly.feature_account.common.DispatcherProvider
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
@@ -13,8 +14,8 @@ import kotlin.coroutines.CoroutineContext
 
 class AccountLogic @Inject constructor(
     private val viewModel: AccountsViewModel,
-    private val accountUseCases: AccountUseCases,
-    private val dispatcher: ProductionDispatcherProvider
+    private val dispatcher: ProductionDispatcherProvider,
+    private val accountUseCases: AccountUseCases
 ): BaseLogic<AccountEvents>(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
@@ -24,6 +25,8 @@ class AccountLogic @Inject constructor(
         jobTracker = Job()
     }
 
+    // The logical fix is to move the events to viewModel
+    // and leave the functions here, thus, the logic here,
     override fun onEvent(event: AccountEvents) {
         when(event){
             is AccountEvents.DeleteAccount -> onAccountDeleted(event.account)
@@ -115,4 +118,9 @@ class AccountLogic @Inject constructor(
         TODO("dont remember what i'm supposed to do here")
     }
 
+}
+
+class ProvideAccountLogic() {
+    @Inject
+    lateinit var accountLogic: AccountLogic
 }
