@@ -8,8 +8,6 @@ import com.rick.budgetly.feature_account.domain.use_case.*
 import com.rick.budgetly.feature_account.persistence.AccountDatabase
 import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.DATABASE_NAME
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
-import com.rick.budgetly.feature_account.ui.accounts.AccountLogic
-import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 import com.rick.budgetly.feature_account.ui.accounts.AccountsViewModel
 import dagger.Module
 import dagger.Provides
@@ -43,12 +41,6 @@ object AccountModule {
         getAccountById = GetAccountById(repository),
         saveAccount = SaveAccount(repository ),
         deleteAccount = DeleteAccount(repository)
-    )
-
-    @Provides
-    @Singleton
-    fun providesAccountLogic(viewModel: AccountsViewModel, dispatcher : ProductionDispatcherProvider, accountUseCases: AccountUseCases) = AccountLogic(
-        viewModel, dispatcher, accountUseCases
     )
 
     @Provides

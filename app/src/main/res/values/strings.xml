@@ -4,4 +4,20 @@
     <string name="debit">DEBIT</string>
     <string name="loans">LOANS</string>
     <string name="savings">SAVINGS</string>
+    <string name="Money">Money</string>
+    <string name="Bank">Bank</string>
+    <string name="Safe">Safe</string>
+    <string name="Smile">Smile</string>
+    <string name="Wallet">Wallet</string>
+    <string name="Card">Card</string>
+    <string name="Coins">Coins</string>
+    <string name="NEWACCOUNT">New or Edit Account</string>
+
+    <string name="Description">Description</string>
+
+    <string name="Type">Type</string>
+
+    <string name="Currency">Currency</string>
+    <string name="MZN">MZN</string>
+
 </resources>

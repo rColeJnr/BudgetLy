@@ -4,6 +4,7 @@ import com.rick.budgetly.feature_account.domain.Account
 
 data class AccountsState(
     val accounts: List<Account> = emptyList(),
+    val accountsByTypeCash: List<Account> = emptyList(),
     val accountsByTypeDebts: List<Account> = emptyList(),
     val accountsByTypeLoans: List<Account> = emptyList(),
     val accountsByTypeSavings: List<Account> = emptyList(),

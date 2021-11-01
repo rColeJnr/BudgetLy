@@ -9,6 +9,7 @@ sealed class AccountEvents{
     object ToggleAccount: AccountEvents()
     object OnStart: AccountEvents()
     object OnStop: AccountEvents()
+
     data class ToggleAccountType(val accountType: AccountType): AccountEvents()
 
 }

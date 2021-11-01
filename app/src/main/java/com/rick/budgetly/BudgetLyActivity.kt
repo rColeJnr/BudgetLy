@@ -8,10 +8,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.rick.budgetly.feature_account.ui.accounts.AccountLogic
 import com.rick.budgetly.ui.theme.BudgetLyTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BudgetLyActivity : ComponentActivity() {
