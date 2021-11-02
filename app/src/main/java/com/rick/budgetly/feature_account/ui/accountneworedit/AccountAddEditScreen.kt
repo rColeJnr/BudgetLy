@@ -1,6 +1,7 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -9,13 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.rick.budgetly.R
 import com.rick.budgetly.feature_account.domain.AccountColor
 import com.rick.budgetly.feature_account.domain.AccountIcon
@@ -26,32 +25,52 @@ import com.rick.budgetly.feature_account.ui.accounts.components.AccountInputText
 
 @ExperimentalAnimationApi
 @Composable
-fun AccountAddEditScreen(modifier: Modifier = Modifier) {
+fun AccountAddEditScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    viewModel: AccountAddEditViewModel
+) {
 
-    val (text, onTextChange) = rememberSaveable{ mutableStateOf("")}
-    val (description) = remember { mutableStateOf("") }
-    val (limit) = remember { mutableStateOf("") }
-    val (balance) = remember { mutableStateOf("") }
-    val (checked, onCheckedChange) = remember { mutableStateOf(true) }
-    val (icon, onIconChange) = remember { mutableStateOf(AccountIcon.Default) }
-    val (color, onColorChange) = remember { mutableStateOf(AccountColor.Default)}
+    // dude will get here with an account from navController
+    viewModel.onStart(null)
+
+    val onCancelAccount = {
+        navController.navigateUp()
+        viewModel.currentAccount = null
+    }
+
+    val onSaveAccount = {
+        navController.navigateUp()
+        viewModel.onEvent(AccountAddEditEvents.SaveAccount)
+    }
 
     Column(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxHeight()
+            .fillMaxHeight(),
     ) {
         TopBarWithTextField(
-            iconsVisible = text.isNotBlank(),
-            text = text,
-            onTextChange = onTextChange,
-            icon = icon,
-            onIconChange = onIconChange,
-            color = color,
-            onColorChange = onColorChange,
-            modifier = Modifier.fillMaxWidth()
+            iconsVisible = viewModel.accountTitle.value.isNotEmpty(),
+            text = viewModel.accountTitle.value,
+            onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },
+            icon = AccountIcon.values()[viewModel.accountIcon.value],
+            // there's a fix for this, same way we got the icon in state code lab
+            // tomorrow, but the principle is that we get the exact clicked icon from  the ui
+            // and we then convert it to int and stuff. i guess.
+            onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },
+            color = AccountColor.values()[viewModel.accountColor.value],
+            // we do whaever we do for Icon for color too
+            onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
+            modifier = Modifier.fillMaxWidth(),
+            onCancelAccount = onCancelAccount,
+            onSaveAccount = onSaveAccount
         )
-        AccountAddDetails(description = description, limit = limit, balance = balance, checked = checked, onCheckedChange = onCheckedChange)
+        AccountAddDetails(
+            description = viewModel.accountDescription.value,
+            limit = viewModel.accountLimit.value,
+            balance = viewModel.accountBalance.value,
+            checked = viewModel.accountInTotalStatus.value,
+            onCheckedChange = { viewModel.onEvent(AccountAddEditEvents.ChangeIncludeInTotalStatus(it)) })
     }
 
 }
@@ -63,22 +82,31 @@ fun TopBarWithTextField(
     text: String,
     onTextChange: (String) -> Unit,
     icon: AccountIcon,
-    onIconChange: (AccountIcon) -> Unit,
+    onIconChange: (Int) -> Unit,
     color: AccountColor,
     onColorChange: (AccountColor) -> Unit,
+    onSaveAccount: () -> Unit,
+    onCancelAccount: () -> Unit,
     modifier: Modifier
 ) {
-    Column(modifier = modifier) {
+    Column() {
         Row(modifier = modifier, horizontalArrangement = Arrangement.SpaceBetween) {
-            Icon(imageVector = Icons.Default.Close, contentDescription = null)
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = null,
+                modifier = Modifier.clickable { onCancelAccount() })
             Text(text = stringResource(R.string.NEWACCOUNT), style = MaterialTheme.typography.h4)
-            Icon(imageVector = Icons.Default.Check, contentDescription = null)
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = null,
+                modifier = Modifier.clickable { onSaveAccount() })
         }
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         AccountInputText(text = text, onTextChange = onTextChange)
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         if (iconsVisible) {
-            Column(){
+            Column() {
+                // I should have just one animated row
                 AnimatedIconRow(
                     icon = icon,
                     onIconChange = onIconChange,
@@ -101,6 +129,6 @@ fun TopBarWithTextField(
 @Preview
 @Composable
 fun PreviewAccountTopBar() {
-    AccountAddEditScreen()
+//    AccountAddEditScreen()
 }
 

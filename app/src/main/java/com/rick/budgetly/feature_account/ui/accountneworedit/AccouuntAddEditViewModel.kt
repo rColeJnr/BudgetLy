@@ -24,27 +24,27 @@ class AccountAddEditViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = dispatcher.provideIOContext()
 
-    private var currentAccount: Account? = null
+    var currentAccount: Account? = null
 
-    private val accountColor = mutableStateOf(AccountColor.Default.color.toArgb())
+    internal val accountColor = mutableStateOf(AccountColor.Default.color.toArgb())
 
-    private val accountIcon = mutableStateOf(AccountIcon.Default.imageVector.name)
+    internal  val accountIcon = mutableStateOf(-1)
 
-    private val accountType = mutableStateOf(AccountType.Default.type)
+    internal  val accountType = mutableStateOf(AccountType.Default.type)
 
-    private val accountCurrency = mutableStateOf(AccountCurrency.Default.currency)
+    internal  val accountCurrency = mutableStateOf(AccountCurrency.Default.currency)
 
-    private val accountLimit = mutableStateOf("")
+    internal  val accountLimit = mutableStateOf("")
 
-    private val accountBalance = mutableStateOf("")
+    internal  val accountBalance = mutableStateOf("")
 
-    private val accountTitle= mutableStateOf("")
+    internal  val accountTitle= mutableStateOf("")
 
-    private val accountDescription= mutableStateOf("")
+    internal  val accountDescription= mutableStateOf("")
 
-    private val accountInTotalStatus = mutableStateOf(true)
+    internal  val accountInTotalStatus = mutableStateOf(true)
 
-    private val accountMain = mutableStateOf(false)
+    internal  val accountMain = mutableStateOf(false)
 
     internal fun onStart(account: Account?){
         account?.let {
@@ -100,8 +100,8 @@ class AccountAddEditViewModel @Inject constructor(
         accountCurrency.value = currency
     }
 
-    private fun onIconChange(icon: ImageVector) {
-        accountIcon.value = icon.name
+    private fun onIconChange(icon: Int) {
+        accountIcon.value = icon
     }
 
     private fun onTypeChange(type: String) {

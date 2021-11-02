@@ -85,7 +85,7 @@ fun SelectableColorButton(
 @Composable
 fun AnimatedIconRow(
     icon: AccountIcon,
-    onIconChange: (AccountIcon) -> Unit,
+    onIconChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     visible: Boolean = true
 ) {
@@ -105,7 +105,7 @@ fun AnimatedIconRow(
 @Composable
 fun IconRow(
     icon: AccountIcon,
-    onIconChange: (AccountIcon) -> Unit,
+    onIconChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier.horizontalScroll(rememberScrollState())) {
@@ -113,7 +113,7 @@ fun IconRow(
             SelectableIconButton(
                 icon = accountIcon.imageVector,
                 cDescription = accountIcon.contentDescription,
-                onIconSelected = { onIconChange(accountIcon) },
+                onIconSelected = { onIconChange },
                 isSelected = accountIcon == icon
             )
         }
@@ -123,7 +123,7 @@ fun IconRow(
 @Composable
 fun SelectableIconButton(
     icon: ImageVector,
-    cDescription: Int,
+    cDescription: String,
     onIconSelected: () -> Unit,
     isSelected: Boolean,
     modifier: Modifier = Modifier
@@ -138,7 +138,7 @@ fun SelectableIconButton(
             Icon(
                 imageVector = icon,
                 tint = tint,
-                contentDescription = stringResource(id = cDescription)
+                contentDescription = icon.name
             )
             if (isSelected) {
                 Box(

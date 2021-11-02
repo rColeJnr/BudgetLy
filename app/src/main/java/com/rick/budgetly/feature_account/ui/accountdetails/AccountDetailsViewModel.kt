@@ -32,7 +32,7 @@ class AccountDetailsViewModel @Inject constructor(
             is AccountDetailsEvents.ChangeIncludeInTotalStatus -> onIncludeInTotalStatusChanged(event.include)
             is AccountDetailsEvents.DeleteAccount -> onAccountDeleted(account = event.account)
             AccountDetailsEvents.RestoreAccount -> onRestoreAccount()
-            AccountDetailsEvents.saveChanges -> onAccountChanged()
+            AccountDetailsEvents.SaveChanges -> onAccountChanged()
         }
     }
 

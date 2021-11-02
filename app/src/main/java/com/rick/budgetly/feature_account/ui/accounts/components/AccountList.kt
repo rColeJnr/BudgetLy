@@ -135,8 +135,8 @@ fun PreviewAccountItem() {
 @Preview
 @Composable
 fun PreviewAccountList() {
-    val list = List<Account>(9) {
-        Account("name$it", "type$it", "Currency", "${75 * it}", "", "", "")
-    }
-    AccountByTypeList(onClick = { /*TODO*/ }, items = list, visible = true)
+//    val list = List<Account>(9) {
+////        Account("name$it", "type$it", "Currency", "${75 * it}", "", "", "", 1)
+//    }
+//    AccountByTypeList(onClick = { /*TODO*/ }, items = list, visible = true)
 }

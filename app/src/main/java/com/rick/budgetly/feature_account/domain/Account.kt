@@ -17,7 +17,7 @@ data class Account(
     var balance: String,
     val limit: String,
     val description: String,
-    val icon: String,
+    val icon: Int,
     val color: Int,
     val include: Boolean = true,
     val main: Boolean = false,
@@ -35,7 +35,7 @@ enum class AccountType(val type: String) {
     }
 }
 
-enum class AccountIcon(val imageVector: ImageVector, contentDescription: String) {
+enum class AccountIcon(val imageVector: ImageVector, val contentDescription: String) {
     Money(Icons.Default.Money, Icons.Default.Money.name),
     Bank(Icons.Default.CommentBank, Icons.Default.CommentBank.name),
     Safe(Icons.Default.Savings, Icons.Default.Savings.name),

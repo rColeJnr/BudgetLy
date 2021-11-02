@@ -8,5 +8,5 @@ sealed class AccountDetailsEvents{
     data class ChangeIncludeInTotalStatus(val include: Boolean): AccountDetailsEvents()
     data class DeleteAccount(val account: Account): AccountDetailsEvents()
     object RestoreAccount: AccountDetailsEvents()
-    object saveChanges: AccountDetailsEvents()
+    object SaveChanges: AccountDetailsEvents()
 }

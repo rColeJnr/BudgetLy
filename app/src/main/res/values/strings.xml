@@ -19,5 +19,6 @@
 
     <string name="Currency">Currency</string>
     <string name="MZN">MZN</string>
+    <string name="balane">Balance</string>
 
 </resources>
