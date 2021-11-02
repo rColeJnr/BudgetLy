@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class AccountAddEditEvents {
 
     data class EnteredTitle(val accountTitle: String): AccountAddEditEvents()
+    data class EnteredDescription(val accountDescription: String): AccountAddEditEvents()
     data class ChangeAccountIcon(val accountIcon: ImageVector ): AccountAddEditEvents()
     data class ChangeAccountColor(val accountColor: Color ): AccountAddEditEvents()
     data class ChangeAccountType( val accountType: String ): AccountAddEditEvents()

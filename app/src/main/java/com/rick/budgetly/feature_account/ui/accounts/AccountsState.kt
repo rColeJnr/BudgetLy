@@ -1,6 +1,7 @@
 package com.rick.budgetly.feature_account.ui.accounts
 
 import com.rick.budgetly.feature_account.domain.Account
+import com.rick.budgetly.feature_account.domain.AccountType
 
 data class AccountsState(
     val accounts: List<Account> = emptyList(),
@@ -15,6 +16,3 @@ data class AccountsState(
         AccountType.SAVINGS.type to false,
     )
 )
-enum class AccountType(val type: String) {
-    CASH("CASH"), DEBTS("DEBTS"), LOANS("LOANS"), SAVINGS("SAVINGS")
-}

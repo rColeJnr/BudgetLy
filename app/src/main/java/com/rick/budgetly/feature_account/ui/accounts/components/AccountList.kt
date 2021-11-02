@@ -98,7 +98,7 @@ fun AccountByTypeList(
             repeat(items.size -1) {
                 AccountItem(
                     modifier = Modifier,
-                    title = items[it].name,
+                    title = items[it].title,
                     balance = items[it].balance,
                     icon = Icons.Default.AccountBalance,
                     contentDescription = "Account balance",

@@ -1,8 +1,6 @@
 package com.rick.budgetly.feature_account.domain
 
 import androidx.annotation.StringRes
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.Color
@@ -10,30 +8,41 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.rick.budgetly.R
-import java.lang.Exception
 
 @Entity
 data class Account(
-    val name: String,
+    val title: String,
     val type: String,
     val currency: String,
-    val balance: String,
+    var balance: String,
     val limit: String,
-    val description: String ,
-    val image: String,
+    val description: String,
+    val icon: String,
+    val color: Int,
     val include: Boolean = true,
     val main: Boolean = false,
     @PrimaryKey val id: Int? = null
 )
 
-enum class AccountIcon(val imageVector: ImageVector, @StringRes val contentDescription: Int){
-    Money(Icons.Default.Money , R.string.Money ),
-    Bank(Icons.Default.CommentBank , R.string.Bank),
-    Safe(Icons.Default.Savings , R.string.Safe),
-    Wallet(Icons.Default.AccountBalanceWallet , R.string.Wallet),
-    Card(Icons.Default.CreditCard , R.string.Card),
-    Coins(Icons.Default.PriceChange , R.string.Coins),
-    Smile(Icons.Default.Face , R.string.Smile);
+enum class AccountType(val type: String) {
+    CASH("CASH"),
+    DEBTS("DEBTS"),
+    LOANS("LOANS"),
+    SAVINGS("SAVINGS");
+
+    companion object {
+        val Default = CASH
+    }
+}
+
+enum class AccountIcon(val imageVector: ImageVector, contentDescription: String) {
+    Money(Icons.Default.Money, Icons.Default.Money.name),
+    Bank(Icons.Default.CommentBank, Icons.Default.CommentBank.name),
+    Safe(Icons.Default.Savings, Icons.Default.Savings.name),
+    Wallet(Icons.Default.AccountBalanceWallet, Icons.Default.AccountBalanceWallet.name),
+    Card(Icons.Default.CreditCard, Icons.Default.CreditCard.name),
+    Coins(Icons.Default.PriceChange,Icons.Default.PriceChange.name),
+    Face(Icons.Default.Face, Icons.Default.Face.name);
 
     companion object {
         val Default = Card
@@ -41,7 +50,7 @@ enum class AccountIcon(val imageVector: ImageVector, @StringRes val contentDescr
 
 }
 
-enum class AccountColor(val color: Color){
+enum class AccountColor(val color: Color) {
     Red(Color.Red),
     Magenta(Color.Magenta),
     Blue(Color.Blue),
@@ -55,4 +64,17 @@ enum class AccountColor(val color: Color){
     }
 }
 
-class InvalidAccountException(message: String): Exception(message)
+enum class AccountCurrency(val currency: String){
+    MZN("Mozambican Metical"),
+    RAND("South African Rand"),
+    KWANZA("Angolan Kwanza"),
+    USD("United States Dollar"),
+    RUB("Russian Ruble"),
+    EURO("Euro");
+
+    companion object {
+        val Default = MZN
+    }
+}
+
+class InvalidAccountException(message: String) : Exception(message)

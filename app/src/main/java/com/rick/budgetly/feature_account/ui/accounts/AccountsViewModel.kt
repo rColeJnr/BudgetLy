@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.Account
+import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -26,42 +27,28 @@ class AccountsViewModel @Inject constructor(
     private val _accountsState = mutableStateOf(AccountsState())
     internal val accountsState: State<AccountsState> = _accountsState
 
-    private var lastDeletedAccount: Account? = null
-
     override fun onEvent(event: AccountEvents) {
         when (event) {
-            is AccountEvents.DeleteAccount -> onAccountDeleted(
-                accountUseCases = accountUseCases,
-                account = event.account
-            )
-            AccountEvents.RestoreAccount -> onRestoreAccount(accountUseCases)
             AccountEvents.ToggleAccount -> onAccountToggled()
-            is AccountEvents.ToggleAccountType -> onAccountTypeToggled(
-                accountUseCases = accountUseCases,
-                event.accountType
-            )
-            AccountEvents.OnStart -> onStart(accountUseCases)
-            AccountEvents.OnStop -> onStop(accountUseCases)
+            is AccountEvents.ToggleAccountType -> onAccountTypeToggled(event.accountType)
+            AccountEvents.OnStart -> onStart()
+            AccountEvents.OnStop -> onStop()
         }
     }
 
 
-    private fun onStart(accountUseCases: AccountUseCases) = launch {
+    private fun onStart() = launch {
         accountUseCases.getAccounts().onEach { accounts ->
-
             _accountsState.value = accountsState.value.copy(
                 accounts = accounts
             )
-
         }
     }
 
     // Congratulashings
-    private fun onAccountTypeToggled(accountUseCases: AccountUseCases, accountType: AccountType) =
+    private fun onAccountTypeToggled(accountType: AccountType) =
         launch {
-
             when (accountType) {
-
                 AccountType.DEBTS -> {
                     accountUseCases.getAccountsByType(accountType.type).onEach { accounts ->
                         _accountsState.value = accountsState.value.copy(
@@ -113,28 +100,13 @@ class AccountsViewModel @Inject constructor(
                     }
                 }
             }
-
         }
 
     private fun onAccountToggled() {
         TODO("navigate to account options")
     }
 
-    private fun onRestoreAccount(accountUseCases: AccountUseCases) {
-        launch {
-            accountUseCases.saveAccount(lastDeletedAccount ?: return@launch)
-            lastDeletedAccount = null
-        }
-    }
-
-    private fun onAccountDeleted(accountUseCases: AccountUseCases, account: Account) {
-        launch {
-            accountUseCases.deleteAccount(account)
-            lastDeletedAccount = account
-        }
-    }
-
-    private fun onStop(accountUseCases: AccountUseCases) {
+    private fun onStop() {
         TODO("dont remember what i'm supposed to do here")
     }
 

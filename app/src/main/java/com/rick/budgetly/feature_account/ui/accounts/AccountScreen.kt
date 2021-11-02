@@ -11,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.ui.accounts.components.AccountByTypeList
 import com.rick.budgetly.feature_account.ui.accounts.components.AccountListTitle
 import com.rick.budgetly.feature_account.ui.accounts.components.AccountTopBar
