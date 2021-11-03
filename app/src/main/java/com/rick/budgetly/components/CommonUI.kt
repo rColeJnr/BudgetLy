@@ -79,4 +79,4 @@ fun formatAmount(amount: Float): String {
     return AmountDecimalFormat.format(amount)
 }
 
-private val AmountDecimalFormat = DecimalFormat("#.###.##")
+private val AmountDecimalFormat = DecimalFormat("#,###.##")

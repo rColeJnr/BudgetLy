@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rick.budgetly.R
 
@@ -22,39 +23,47 @@ fun AccountAddDetails(
     onBalanceChange: (String) -> Unit,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    type: String = stringResource(id = R.string.Type),
+    type: String,
     onTypeChange: (Int) -> Unit,
-    currency: String = stringResource(id = R.string.MZN),
+    currency: String,
     onCurrencyChange: (Int) -> Unit
 ) {
 
-    Surface(Modifier.background(Color.LightGray)) {
+    Surface(
+        color = MaterialTheme.colors.background
+    ) {
         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceEvenly) {
             AccountTitleDetailColumn(
-                title = stringResource(id = R.string.Type),
+                title = "Type",
                 detail = type
             )
+            Spacer(modifier = Modifier.height(8.dp))
             Divider()
+
             AccountTitleDetailColumn(
-                title = stringResource(id = R.string.Currency),
+                title = "Currency",
                 detail = currency
             )
+            Spacer(modifier = Modifier.height(8.dp))
             Divider()
+
             AccountTitleDetailColumn(
-                title = stringResource(id = R.string.Description),
+                title = "Description",
                 detail = description
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider()
 
             AccountTitleBalanceRow(title = "Credit Limit", balance = limit)
+            Spacer(modifier = Modifier.height(8.dp))
             Divider()
-            AccountTitleBalanceRow(title = "Current Balance", balance = balance)
 
-            Spacer(modifier = Modifier.height(16.dp))
+            AccountTitleBalanceRow(title = "Current Balance", balance = balance)
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider()
 
             AccountTitleOptionRow(title = "IncludeInTotal", boolean =checked , onCheckedChange = onCheckedChange)
-            Divider()
         }
     }
 }
@@ -80,7 +89,7 @@ fun AccountTitleBalanceRow(title: String, balance: String) {
         .height(68.dp)
         .fillMaxWidth()
     ) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center) {
             Text(text = title, style = MaterialTheme.typography.h5)
             Text(text = balance, style = MaterialTheme.typography.body1)
         }
@@ -90,7 +99,7 @@ fun AccountTitleBalanceRow(title: String, balance: String) {
 @Composable
 fun AccountTitleOptionRow(title: String, boolean: Boolean, onCheckedChange: (Boolean) -> Unit) {
     Card(modifier = Modifier
-        .clip(RoundedCornerShape(4.dp))
+        .clip(RoundedCornerShape(8.dp))
         .height(68.dp)
         .fillMaxWidth()
     ) {
@@ -99,4 +108,23 @@ fun AccountTitleOptionRow(title: String, boolean: Boolean, onCheckedChange: (Boo
             Switch(checked = boolean, onCheckedChange = onCheckedChange)
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewAccountAddDetails() {
+    AccountAddDetails(
+        description = "Account descript",
+        onDescriptionChange = {},
+        limit = "1434",
+        onLimitChange = {},
+        balance = "13454",
+        onBalanceChange = {},
+        checked = true,
+        onCheckedChange = {},
+        onTypeChange = {},
+        onCurrencyChange = {},
+        type = "TYPE",
+        currency = "MZN"
+    )
 }
