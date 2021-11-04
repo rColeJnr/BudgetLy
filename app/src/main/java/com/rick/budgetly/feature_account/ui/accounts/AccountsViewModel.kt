@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
-import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +24,7 @@ class AccountsViewModel @Inject constructor(
         get() = dispatcher.provideIOContext()
 
     private val _accountsState = mutableStateOf(AccountsState())
-    internal val accountsState: State<AccountsState> = _accountsState
+    private val accountsState: State<AccountsState> = _accountsState
 
     override fun onEvent(event: AccountEvents) {
         when (event) {
@@ -37,7 +36,7 @@ class AccountsViewModel @Inject constructor(
     }
 
 
-    private fun onStart() = launch {
+    fun onStart() = launch {
         accountUseCases.getAccounts().onEach { accounts ->
             _accountsState.value = accountsState.value.copy(
                 accounts = accounts

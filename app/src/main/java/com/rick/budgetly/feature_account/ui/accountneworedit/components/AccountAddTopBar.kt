@@ -26,8 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.rick.budgetly.feature_account.domain.AccountColor
 import com.rick.budgetly.feature_account.domain.AccountIcon
 
-
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedColorsRow(
     colorsVisible: Boolean,
@@ -81,7 +80,7 @@ fun SelectableColorButton(
     }
 }
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedIconRow(
     icon: AccountIcon,

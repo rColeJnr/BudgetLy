@@ -3,7 +3,6 @@ package com.rick.budgetly.feature_account.ui.accountneworedit
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
@@ -26,9 +25,9 @@ class AccountAddEditViewModel @Inject constructor(
 
     var currentAccount: Account? = null
 
-    internal val accountColor = mutableStateOf(AccountColor.Default.color.toArgb())
+    internal val accountColor = mutableStateOf(AccountColor.Position)
 
-    internal  val accountIcon = mutableStateOf(-1)
+    internal  val accountIcon = mutableStateOf(AccountIcon.Position)
 
     internal  val accountType = mutableStateOf(AccountType.Default.type)
 
@@ -44,10 +43,11 @@ class AccountAddEditViewModel @Inject constructor(
 
     internal  val accountInTotalStatus = mutableStateOf(true)
 
-    internal  val accountMain = mutableStateOf(false)
+    private  val accountMain = mutableStateOf(false)
 
     internal fun onStart(account: Account?){
         account?.let {
+            currentAccount = it
             accountColor.value = it.color
             accountIcon.value = it.icon
             accountType.value = it.type
@@ -126,6 +126,7 @@ class AccountAddEditViewModel @Inject constructor(
             main = accountMain.value
         )
         accountUseCases.saveAccount(currentAccount!!)
+        currentAccount = null
     }
 
     private fun onCancelAccount() {

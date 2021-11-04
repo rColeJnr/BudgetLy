@@ -17,26 +17,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.rick.budgetly.R
-import com.rick.budgetly.feature_account.domain.AccountColor
-import com.rick.budgetly.feature_account.domain.AccountCurrency
-import com.rick.budgetly.feature_account.domain.AccountIcon
-import com.rick.budgetly.feature_account.domain.AccountType
+import com.rick.budgetly.feature_account.domain.*
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountAddDetails
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
-import com.rick.budgetly.feature_account.ui.accounts.components.AccountInputText
-import com.rick.budgetly.feature_account.ui.accounts.components.AccountTopBar
+import com.rick.budgetly.feature_account.ui.components.AccountInputText
 
-@ExperimentalAnimationApi
 @Composable
-fun AccountAddEditScreen(
+fun AccountAddEditBody(
     modifier: Modifier = Modifier,
+    account: Account?,
     navController: NavHostController,
     viewModel: AccountAddEditViewModel
 ) {
 
     // dude will get here with an account from navController
-    viewModel.onStart(null)
+    viewModel.onStart(account)
 
     val onCancelAccount = {
         navController.navigateUp()
@@ -65,9 +61,8 @@ fun AccountAddEditScreen(
             color = AccountColor.values()[viewModel.accountColor.value],
             // we do whaever we do for Icon for color too
             onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
-            modifier = Modifier.fillMaxWidth(),
-            onCancelAccount = onCancelAccount,
-            onSaveAccount = onSaveAccount
+            onSaveAccount = onSaveAccount,
+            onCancelAccount = onCancelAccount
         )
         AccountAddDetails(
             description = viewModel.accountDescription.value,
@@ -87,7 +82,6 @@ fun AccountAddEditScreen(
 
 }
 
-@ExperimentalAnimationApi
 @Composable
 fun TopBarWithTextField(
     iconsVisible: Boolean,
@@ -98,10 +92,9 @@ fun TopBarWithTextField(
     color: AccountColor,
     onColorChange: (AccountColor) -> Unit,
     onSaveAccount: () -> Unit,
-    onCancelAccount: () -> Unit,
-    modifier: Modifier
+    onCancelAccount: () -> Unit
 ) {
-    Column() {
+    Column {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = Icons.Default.Close,
@@ -123,7 +116,7 @@ fun TopBarWithTextField(
         AccountInputText(text = text, onTextChange = onTextChange)
         Spacer(modifier = Modifier.height(8.dp))
         if (iconsVisible) {
-            Column() {
+            Column {
                 // I should have just one animated row
                 AnimatedIconRow(
                     icon = icon,
@@ -155,10 +148,8 @@ fun PreviewAccountTopBar() {
             onIconChange = {},
             color = AccountColor.Default,
             onColorChange = {},
-            onSaveAccount = { /*TODO*/ },
-            onCancelAccount = { /*TODO*/ },
-            modifier = Modifier
-        )
+            onSaveAccount = { /*TODO*/ }
+        ) { /*TODO*/ }
         AccountAddDetails(
             description = "Account descript",
             onDescriptionChange = {},

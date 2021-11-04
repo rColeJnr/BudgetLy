@@ -1,13 +1,11 @@
 package com.rick.budgetly.feature_account.domain
 
-import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.rick.budgetly.R
 
 @Entity
 data class Account(
@@ -20,7 +18,7 @@ data class Account(
     val icon: Int,
     val color: Int,
     val include: Boolean = true,
-    val main: Boolean = false,
+    var main: Boolean = false,
     @PrimaryKey val id: Int? = null
 )
 
@@ -46,6 +44,7 @@ enum class AccountIcon(val imageVector: ImageVector, val contentDescription: Str
 
     companion object {
         val Default = Card
+        const val Position = 4
     }
 
 }
@@ -55,12 +54,13 @@ enum class AccountColor(val color: Color) {
     Magenta(Color.Magenta),
     Blue(Color.Blue),
     Gray(Color.Gray),
-    cyan(Color.Black),
+    Cyan(Color.Black),
     DarkGray(Color.DarkGray),
     Green(Color.Green);
 
     companion object {
         val Default = Green
+        const val Position = 6
     }
 }
 

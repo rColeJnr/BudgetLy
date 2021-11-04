@@ -6,8 +6,10 @@ import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
+import com.rick.budgetly.feature_account.ui.util.getMainAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -21,18 +23,22 @@ class AccountDetailsViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = dispatcher.provideIOContext()
     
-    private var currentAccount: Account? = null
+    internal var currentAccount: Account? = null
+    private var deletedAccount: Account? = null
 
     private val accountBalance = mutableStateOf(currentAccount?.balance)
     private val accountInclude = mutableStateOf(currentAccount?.include)
+    private val accountMain = mutableStateOf(currentAccount?.main)
+    private lateinit var prevAccountMain: Account
 
     override fun onEvent(event: AccountDetailsEvents) {
         when (event) {
             is AccountDetailsEvents.ChangeBalance -> onBalanceChanged(event.balance)
-            is AccountDetailsEvents.ChangeIncludeInTotalStatus -> onIncludeInTotalStatusChanged(event.include)
-            is AccountDetailsEvents.DeleteAccount -> onAccountDeleted(account = event.account)
+            AccountDetailsEvents.ChangeIncludeInTotalStatus -> onIncludeInTotalStatusChanged()
+            AccountDetailsEvents.ChangeMainStatus -> onMainStatusChanged()
             AccountDetailsEvents.RestoreAccount -> onRestoreAccount()
             AccountDetailsEvents.SaveChanges -> onAccountChanged()
+            is AccountDetailsEvents.DeleteAccount -> onAccountDeleted(account = event.account)
         }
     }
 
@@ -41,14 +47,24 @@ class AccountDetailsViewModel @Inject constructor(
             accountUseCases.saveAccount(
                 it.copy(
                     balance = accountBalance.value!!,
-                    include = accountInclude.value!!
+                    include = accountInclude.value!!,
+                    main = accountMain.value!!
                 )
             )
+            prevAccountMain.main = false
+            accountUseCases.saveAccount(prevAccountMain)
         }
     }
 
-    private fun onIncludeInTotalStatusChanged(include: Boolean) {
-        accountInclude.value = include
+    private fun onIncludeInTotalStatusChanged() {
+        accountInclude.value = accountInclude.value!!.not()
+    }
+
+    private fun onMainStatusChanged() = launch{
+        accountUseCases.getAccounts().onEach { accounts ->
+            prevAccountMain = getMainAccount(accounts)
+            currentAccount!!.main = true
+        }
     }
 
     private fun onBalanceChanged(balance: String) {
@@ -57,13 +73,14 @@ class AccountDetailsViewModel @Inject constructor(
 
     private fun onRestoreAccount() {
         launch {
-            accountUseCases.saveAccount(currentAccount ?: return@launch)
-            currentAccount = null
+            accountUseCases.saveAccount(deletedAccount ?: return@launch)
+            deletedAccount = null
         }
     }
 
     private fun onAccountDeleted(account: Account) {
         launch {
+            deletedAccount = account
             accountUseCases.deleteAccount(account)
         }
     }

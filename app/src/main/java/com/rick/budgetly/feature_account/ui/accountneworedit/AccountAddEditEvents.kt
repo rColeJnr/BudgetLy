@@ -1,7 +1,6 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class AccountAddEditEvents {
 

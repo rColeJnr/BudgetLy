@@ -1,6 +1,5 @@
 package com.rick.budgetly.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,10 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.rick.budgetly.feature_account.domain.Account
-import java.text.DecimalFormat
-
-
+import com.rick.budgetly.feature_account.ui.util.formatAmount
 
 @Composable
 fun BaseRow(
@@ -74,9 +70,3 @@ fun BaseRow(
     }
     Divider(Modifier.height(8.dp))
 }
-
-fun formatAmount(amount: Float): String {
-    return AmountDecimalFormat.format(amount)
-}
-
-private val AmountDecimalFormat = DecimalFormat("#,###.##")
