@@ -41,9 +41,12 @@ fun AccountTopBar(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AccountInputText(
-    text: String,
-    onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    text: String,
+    label: String = "",
+    onTextChange: (String) -> Unit,
+    singleLine: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onImeAction: () -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -51,8 +54,9 @@ fun AccountInputText(
         value = text,
         onValueChange = onTextChange,
         colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
-        maxLines = 1,
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+        label = { Text(text = label) },
+        singleLine = singleLine,
+        keyboardOptions = keyboardOptions.copy(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {
             onImeAction()
             keyboardController?.hide()

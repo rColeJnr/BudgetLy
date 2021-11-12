@@ -108,11 +108,11 @@ fun IconRow(
     modifier: Modifier = Modifier
 ) {
     Row(modifier.horizontalScroll(rememberScrollState())) {
-        for (accountIcon in AccountIcon.values()) {
+        for ((index, accountIcon) in AccountIcon.values().withIndex()) {
             SelectableIconButton(
                 icon = accountIcon.imageVector,
                 cDescription = accountIcon.contentDescription,
-                onIconSelected = { onIconChange },
+                onIconSelected = { onIconChange(index) },
                 isSelected = accountIcon == icon
             )
         }
@@ -137,7 +137,7 @@ fun SelectableIconButton(
             Icon(
                 imageVector = icon,
                 tint = tint,
-                contentDescription = icon.name
+                contentDescription = cDescription
             )
             if (isSelected) {
                 Box(

@@ -36,10 +36,12 @@ import com.rick.budgetly.feature_account.ui.util.getAccount
 
 @Composable
 fun AccountBody(
-    accounts: List<Account>,
+    accountsViewModel: AccountsViewModel,
     accountsAddEditViewModel: AccountAddEditViewModel,
     accountsDetailsViewModel: AccountDetailsViewModel
 ) {
+
+    val  accounts = accountsViewModel.accountsState.value.accounts
 
     val navController = rememberNavController()
     NavHost(
@@ -73,7 +75,7 @@ fun AccountBody(
                         )
                     }
 
-                    Text(text = "Random kanye Qoute", style = MaterialTheme.typography.h4)
+                    Text(text = "Random kanye Quote", style = MaterialTheme.typography.h4)
 
                     AccountList(
                         accounts = accounts,

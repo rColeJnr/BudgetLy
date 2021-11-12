@@ -89,7 +89,7 @@ fun BudgetLyNavHost(
         composable(BudgetLyScreen.Accounts.name) {
             accountsViewModel.onStart()
             AccountBody(
-                dummyAccounts,
+                accountsViewModel = accountsViewModel,
                 accountsAddEditViewModel = accountsAddEditViewModel,
                 accountsDetailsViewModel = accountsDetailsViewModel,
             )

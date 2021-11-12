@@ -24,7 +24,7 @@ class AccountsViewModel @Inject constructor(
         get() = dispatcher.provideIOContext()
 
     private val _accountsState = mutableStateOf(AccountsState())
-    private val accountsState: State<AccountsState> = _accountsState
+    internal val accountsState: State<AccountsState> = _accountsState
 
     override fun onEvent(event: AccountEvents) {
         when (event) {
