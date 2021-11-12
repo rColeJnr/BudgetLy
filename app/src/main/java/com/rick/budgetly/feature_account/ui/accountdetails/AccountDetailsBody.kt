@@ -16,10 +16,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.rick.budgetly.components.BaseDropdownMenu
+import com.rick.budgetly.components.IconDropdownMenu
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.AccountIcon
-import com.rick.budgetly.feature_account.ui.util.dollarSign
 import com.rick.budgetly.feature_account.ui.util.formatAmount
 
 @Composable
@@ -27,7 +26,6 @@ fun AccountDetailsBody(
     modifier: Modifier = Modifier,
     serializableAccount: Account,
     viewModel: AccountDetailsViewModel,
-    onNewAccountClick: () -> Unit,
     onNavigationIconClick: () -> Unit,
     onSettingsClick: (Account) -> Unit,
     onDeleteClick: () -> Unit
@@ -64,11 +62,6 @@ fun AccountDetailsBody(
                     )
                 }
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { onNewAccountClick() }) {
-                Icon(imageVector = Icons.Default.AddBusiness, contentDescription = null)
-            }
         }
     ) {
         Column(
@@ -86,7 +79,7 @@ fun AccountDetailsBody(
             Spacer(modifier = modifier.height(16.dp))
             Text(text = account.title)
             Spacer(modifier = modifier.height(16.dp))
-            Text(text = dollarSign(balance) + formatAmount(balance), style = MaterialTheme.typography.h5)
+            Text(text = formatAmount(balance), style = MaterialTheme.typography.h5)
             Spacer(modifier = modifier.height(8.dp))
             Text("Balance", style = MaterialTheme.typography.body2)
             Spacer(modifier = modifier.height(24.dp))
@@ -151,7 +144,7 @@ fun DetailsDropDownMenu(
     onMenuItemThirdClick: () -> Unit,
     menuItemThirdContent: @Composable () -> Unit,
 ) {
-    BaseDropdownMenu(
+    IconDropdownMenu(
         icon = icon,
         onMenuItemOneClick = { onMenuItemOneClick() },
         menuItemOneContent = { menuItemOneContent() },

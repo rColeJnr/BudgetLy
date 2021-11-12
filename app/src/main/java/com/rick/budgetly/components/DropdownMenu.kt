@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BaseDropdownMenu(
+fun IconDropdownMenu(
     icon: ImageVector,
     onMenuItemOneClick: () -> Unit,
     menuItemOneContent: @Composable () -> Unit,
@@ -39,6 +39,29 @@ fun BaseDropdownMenu(
             Divider()
             DropdownMenuItem(onClick = { onMenuItemThirdClick() }) {
                 menuItemThirdContent()
+            }
+        }
+    }
+}
+
+@Composable
+fun TextDropdownMenu(
+    text: String,
+    items: List<String>,
+    onMenuItemClick: (Int) -> Unit
+) {
+    Box(modifier = Modifier) {
+        var expanded by remember { mutableStateOf(false) }
+
+        TextButton(onClick = { expanded = true }) {
+            Text(text = text)
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            for (item in items){
+                DropdownMenuItem(onClick = { onMenuItemClick(items.indexOf(item))}) {
+                    Text(text = item)
+                }
+                Divider()
             }
         }
     }

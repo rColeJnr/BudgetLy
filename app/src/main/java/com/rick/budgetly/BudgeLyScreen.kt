@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 enum class BudgetLyScreen(val icon: ImageVector) {
     Accounts (icon = Icons.Default.AttachMoney),
-    Transactions (icon = Icons.Default.Translate),
+    Transactions (icon = Icons.Default.History),
     Overview (icon = Icons.Default.PieChart);
 //    TODO categories,
 //    TODO Overview

@@ -67,23 +67,24 @@ fun AccountBody(
                         Icon(
                             imageVector = Icons.Default.PieChart,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier
+                                .padding(end = 4.dp)
+                                .size(26.dp)
                         )
                     }
+
+                    Text(text = "Random kanye Qoute", style = MaterialTheme.typography.h4)
 
                     AccountList(
                         accounts = accounts,
                         onAccountClick = { navController.navigate(AccountsScreen.AccountsDetails.name + "account=${it}") },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentHeight(align = Alignment.Bottom)
+                            .heightIn(0.dp, max = 298.dp)
                     )
                     // you implement this click here, i guess
-                    AddNewAccount { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${-1}") }
+                    AddNewAccount(modifier = Modifier) { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${-1}") }
                 }
             }
         }
@@ -119,10 +120,9 @@ fun AccountBody(
             AccountDetailsBody(
                 serializableAccount = getAccount(accounts, account)!!,
                 viewModel = accountsDetailsViewModel,
-                onNewAccountClick = { navController.navigate(AccountsScreen.AccountsAddEdit.name) },
                 onNavigationIconClick = { navController.navigateUp() },
                 onSettingsClick = {
-                    navController.navigate("${AccountsScreen.AccountsAddEdit.name}/$it")
+                    navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${it.id}")
                 },
                 // i am undecided about moving the all the state up here or passing navController and viewModel as parameters
                 // so it's salad.
@@ -140,11 +140,12 @@ fun AccountBody(
 private const val accountToEdit = "accountToEdit"
 
 @Composable
-private fun AddNewAccount(onNewAccountClick: () -> Unit) {
+private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
     TextButton(
         onClick = { onNewAccountClick() },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            .wrapContentHeight(align = Alignment.Bottom)
             .padding(bottom = 8.dp)
     ) {
         Icon(imageVector = Icons.Default.PlusOne, contentDescription = "Add a new account")
@@ -156,9 +157,7 @@ private fun AddNewAccount(onNewAccountClick: () -> Unit) {
 @Composable
 private fun AccountList(accounts: List<Account>, onAccountClick: (Int) -> Unit, modifier: Modifier) {
     LazyColumn(
-        modifier
-            .padding(12.dp)
-            .wrapContentHeight(Alignment.Bottom),
+        modifier = modifier
     ) {
         items(accounts) {
             BaseRow(
@@ -168,16 +167,10 @@ private fun AccountList(accounts: List<Account>, onAccountClick: (Int) -> Unit, 
                 icon = AccountIcon.values()[it.icon].imageVector,
                 title = it.title,
                 currency = it.currency,
-                balance = it.balance.toFloat(),
-                negative = it.balance.toFloat() < 0
+                balance = it.balance.toFloat()
             )
         }
     }
-
-    Divider(
-        Modifier
-            .height(16.dp)
-    )
 }
 @Preview
 @Composable
@@ -206,6 +199,6 @@ fun PreviewEverything() {
             )
         }
         AccountList(accounts = dummyAccounts, onAccountClick = {} , modifier = Modifier.weight(1f))
-        AddNewAccount {}
+//        AddNewAccount {}
     }
 }

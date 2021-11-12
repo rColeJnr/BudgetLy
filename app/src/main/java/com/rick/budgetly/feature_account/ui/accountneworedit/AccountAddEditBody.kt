@@ -3,6 +3,7 @@ package com.rick.budgetly.feature_account.ui.accountneworedit
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -18,11 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.rick.budgetly.R
 import com.rick.budgetly.feature_account.domain.*
-import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountAddDetails
+import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountAddEditDetails
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
 import com.rick.budgetly.feature_account.ui.components.AccountInputText
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AccountAddEditBody(
     modifier: Modifier = Modifier,
@@ -46,7 +48,6 @@ fun AccountAddEditBody(
 
     Column(
         modifier = modifier
-            .padding(16.dp)
             .fillMaxHeight(),
     ) {
         TopBarWithTextField(
@@ -64,7 +65,7 @@ fun AccountAddEditBody(
             onSaveAccount = onSaveAccount,
             onCancelAccount = onCancelAccount
         )
-        AccountAddDetails(
+        AccountAddEditDetails(
             description = viewModel.accountDescription.value,
             limit = viewModel.accountLimit.value,
             balance = viewModel.accountBalance.value,
@@ -135,6 +136,7 @@ fun TopBarWithTextField(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalAnimationApi
 @Preview
 @Composable
@@ -150,7 +152,7 @@ fun PreviewAccountTopBar() {
             onColorChange = {},
             onSaveAccount = { /*TODO*/ }
         ) { /*TODO*/ }
-        AccountAddDetails(
+        AccountAddEditDetails(
             description = "Account descript",
             onDescriptionChange = {},
             limit = "1434",
