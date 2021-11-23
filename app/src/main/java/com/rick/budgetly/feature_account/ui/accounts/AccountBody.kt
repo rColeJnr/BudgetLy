@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -37,7 +38,14 @@ fun AccountBody(
     accountsViewModel: AccountsViewModel = hiltViewModel()
 ) {
 
+    // Accounts list
     val  accounts = accountsViewModel.accountsState.value.accounts
+
+    // Api response
+    val quoute = accountsViewModel.response.observeAsState().value
+    if (quoute?.isSuccessful != null){
+        accountsViewModel.quote.value = quoute.body()?.quote!!
+    }
 
     val navController = rememberNavController()
     NavHost(
@@ -46,7 +54,7 @@ fun AccountBody(
         modifier = Modifier
     ){
         composable(AccountsScreen.Accounts.name){
-            AccountBody(accounts, navController)
+            AccountBody(accounts, accountsViewModel.quote.value, navController)
         }
         val routeAddEdit = AccountsScreen.AccountsAddEdit.name
         composable(
@@ -91,6 +99,7 @@ fun AccountBody(
 @Composable
 private fun AccountBody(
     accounts: List<Account>,
+    quote: String,
     navController: NavHostController
 ) {
 
@@ -119,7 +128,7 @@ private fun AccountBody(
                 )
             }
 
-            Text(text = "Random kanye Quote", style = MaterialTheme.typography.h4, modifier = Modifier.clickable {
+            Text(text = quote, style = MaterialTheme.typography.h4, modifier = Modifier.clickable {
 
             })
 

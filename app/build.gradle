@@ -68,8 +68,13 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.4.0'
 
     // Compose dependencies
+
+    // LiveData
+    implementation 'androidx.compose.runtime:runtime-livedata:1.1.0-beta03'
+
     // ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01'
+
     // view model
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
 
@@ -100,6 +105,10 @@ dependencies {
 
     // Coil
     implementation 'io.coil-kt:coil-compose:1.4.0'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Test
     testImplementation 'junit:junit:4.+'

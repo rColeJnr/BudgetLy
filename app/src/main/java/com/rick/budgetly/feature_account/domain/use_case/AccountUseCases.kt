@@ -6,4 +6,5 @@ data class AccountUseCases(
     val getAccountById: GetAccountById,
     val saveAccount: SaveAccount,
     val deleteAccount: DeleteAccount
+
 )

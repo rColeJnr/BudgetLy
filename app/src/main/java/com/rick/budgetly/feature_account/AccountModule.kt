@@ -4,15 +4,20 @@ import android.app.Application
 import androidx.room.Room
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.IAccountRepository
+import com.rick.budgetly.feature_account.domain.IQuoteApi
+import com.rick.budgetly.feature_account.domain.IQuoteRepository
 import com.rick.budgetly.feature_account.domain.use_case.*
 import com.rick.budgetly.feature_account.persistence.AccountDatabase
 import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.DATABASE_NAME
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
-import com.rick.budgetly.feature_account.ui.accounts.AccountsViewModel
+import com.rick.budgetly.feature_account.persistence.QuoteRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -47,4 +52,22 @@ object AccountModule {
     @Singleton
     fun providesAccountDispatchers() =
         ProductionDispatcherProvider
+
+    @Provides
+    @Singleton
+    fun quoteAPI(retrofit: Retrofit) = retrofit.create(IQuoteApi::class.java)
+
+    @Provides
+    @Singleton
+    fun retrofit() = Retrofit.Builder()
+        .baseUrl("https://api.kanye.rest")
+        .client(OkHttpClient())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    @Provides
+    @Singleton
+    fun providesQuoteRepository(api: IQuoteApi): IQuoteRepository{
+        return QuoteRepositoryImpl(api)
+    }
 }
