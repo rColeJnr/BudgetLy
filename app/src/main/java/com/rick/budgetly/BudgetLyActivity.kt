@@ -9,18 +9,13 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rick.budgetly.components.BudgetLyTabRow
-import com.rick.budgetly.feature_account.ui.accountdetails.AccountDetailsViewModel
-import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditViewModel
 import com.rick.budgetly.feature_account.ui.accounts.AccountBody
-import com.rick.budgetly.feature_account.ui.accounts.AccountsViewModel
-import com.rick.budgetly.feature_account.ui.util.dummyAccounts
 import com.rick.budgetly.ui.theme.BudgetLyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,21 +25,13 @@ class BudgetLyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BudgetLyApp(
-                accountsViewModel = hiltViewModel(),
-                addEditViewModel = hiltViewModel(),
-                detailsViewModel = hiltViewModel(),
-            )
+            BudgetLyApp()
         }
     }
 }
 
 @Composable
-fun BudgetLyApp(
-    accountsViewModel: AccountsViewModel,
-    addEditViewModel: AccountAddEditViewModel,
-    detailsViewModel: AccountDetailsViewModel
-) {
+fun BudgetLyApp() {
     BudgetLyTheme {
         val allScreens = BudgetLyScreen.values().toList()
         val navController = rememberNavController()
@@ -63,9 +50,6 @@ fun BudgetLyApp(
             }
         ) { innerPadding ->
             BudgetLyNavHost(
-                accountsViewModel = accountsViewModel,
-                accountsAddEditViewModel = addEditViewModel,
-                accountsDetailsViewModel = detailsViewModel,
                 navController,
                 Modifier.padding(innerPadding)
             )
@@ -75,9 +59,6 @@ fun BudgetLyApp(
 
 @Composable
 fun BudgetLyNavHost(
-    accountsViewModel: AccountsViewModel,
-    accountsAddEditViewModel: AccountAddEditViewModel,
-    accountsDetailsViewModel: AccountDetailsViewModel,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
@@ -87,12 +68,7 @@ fun BudgetLyNavHost(
         modifier = modifier
     ) {
         composable(BudgetLyScreen.Accounts.name) {
-            accountsViewModel.onStart()
-            AccountBody(
-                accountsViewModel = accountsViewModel,
-                accountsAddEditViewModel = accountsAddEditViewModel,
-                accountsDetailsViewModel = accountsDetailsViewModel,
-            )
+            AccountBody()
         }
         composable(BudgetLyScreen.Transactions.name){
             Text(text = "Stupid text2")

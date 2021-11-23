@@ -12,6 +12,9 @@ class SaveAccount(
         if (account.title.isEmpty()){
             throw InvalidAccountException("The name of the account can't be empty")
         }
+        if (account.balance.toFloat() > account.limit.toFloat()){
+            throw InvalidAccountException("The account balance exceeded the set limit")
+        }
         repository.saveAccount(account)
     }
 

@@ -13,7 +13,7 @@ class GetAccounts @Inject constructor(
     private val repository: IAccountRepository
 ) {
 
-    suspend operator fun invoke(): Flow<List<Account>> {
+    operator fun invoke(): Flow<List<Account>> {
          return repository.getAccounts()
     }
 

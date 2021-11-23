@@ -16,35 +16,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.budgetly.R
+import com.rick.budgetly.feature_account.common.AccountsScreen
 import com.rick.budgetly.feature_account.domain.*
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountAddEditDetails
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
 import com.rick.budgetly.feature_account.ui.components.AccountInputText
+import com.rick.budgetly.feature_account.ui.util.dummyAccounts
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AccountAddEditBody(
     modifier: Modifier = Modifier,
-    account: Account?,
     navController: NavHostController,
-    viewModel: AccountAddEditViewModel
-) {
-
-    // dude will get here with an account from navController
-    viewModel.onStart(account)
-
-    val onCancelAccount = {
-        navController.navigateUp()
-        viewModel.currentAccount = null
-    }
-
-    val onSaveAccount = {
-        navController.navigateUp()
-        viewModel.onEvent(AccountAddEditEvents.SaveAccount)
-    }
+    viewModel: AccountAddEditViewModel = hiltViewModel()) {
 
     Column(
         modifier = modifier
@@ -55,29 +43,31 @@ fun AccountAddEditBody(
             text = viewModel.accountTitle.value,
             onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },
             icon = AccountIcon.values()[viewModel.accountIcon.value],
-            // there's a fix for this, same way we got the icon in state code lab
-            // tomorrow, but the principle is that we get the exact clicked icon from  the ui
-            // and we then convert it to int and stuff. i guess.
             onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },
             color = AccountColor.values()[viewModel.accountColor.value],
-            // we do whaever we do for Icon for color too
             onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
-            onSaveAccount = onSaveAccount,
-            onCancelAccount = onCancelAccount
+            onSaveAccount = {
+                viewModel.onEvent(AccountAddEditEvents.SaveAccount)
+                navController.navigateUp()
+            },
+            onCancelAccount = {
+                viewModel.onEvent(AccountAddEditEvents.CancelAccount)
+                navController.navigateUp()
+            }
         )
         AccountAddEditDetails(
-            description = viewModel.accountDescription.value,
-            limit = viewModel.accountLimit.value,
-            balance = viewModel.accountBalance.value,
-            checked = viewModel.accountInTotalStatus.value,
             type = viewModel.accountType.value,
-            currency = viewModel.accountCurrency.value,
-            onCheckedChange = { viewModel.onEvent(AccountAddEditEvents.ChangeIncludeInTotalStatus(it)) },
-            onBalanceChange = { viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it)) },
-            onCurrencyChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountCurrency(AccountCurrency.values()[it].currency))},
-            onDescriptionChange = { viewModel.onEvent(AccountAddEditEvents.EnteredDescription(it)) },
-            onLimitChange = { viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(it)) },
             onTypeChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountType(AccountType.values()[it].type))},
+            currency = viewModel.accountCurrency.value,
+            onCurrencyChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountCurrency(AccountCurrency.values()[it].currency))},
+            checked = viewModel.accountInTotalStatus.value,
+            onCheckedChange = { viewModel.onEvent(AccountAddEditEvents.ChangeIncludeInTotalStatus(it)) },
+            description = viewModel.accountDescription.value,
+            onDescriptionChange = { viewModel.onEvent(AccountAddEditEvents.EnteredDescription(it)) },
+            limit = viewModel.accountLimit.value,
+            onLimitChange = { viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(it)) },
+            balance = viewModel.accountBalance.value,
+            onBalanceChange = { viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it)) },
         )
     }
 
@@ -150,8 +140,9 @@ fun PreviewAccountTopBar() {
             onIconChange = {},
             color = AccountColor.Default,
             onColorChange = {},
-            onSaveAccount = { /*TODO*/ }
-        ) { /*TODO*/ }
+            onSaveAccount = {},
+            onCancelAccount = {}
+        )
         AccountAddEditDetails(
             description = "Account descript",
             onDescriptionChange = {},

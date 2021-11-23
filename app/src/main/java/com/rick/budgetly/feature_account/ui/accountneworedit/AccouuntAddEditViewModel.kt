@@ -1,27 +1,27 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.*
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class AccountAddEditViewModel @Inject constructor(
     private val accountUseCases: AccountUseCases,
-    private val dispatcher: ProductionDispatcherProvider
-): ViewModel(), BaseLogic<AccountAddEditEvents>, CoroutineScope {
+    private val dispatcher: ProductionDispatcherProvider,
+    savedStateHandle: SavedStateHandle
+): ViewModel(), BaseLogic<AccountAddEditEvents> {
 
-    override val coroutineContext: CoroutineContext
-        get() = dispatcher.provideIOContext()
 
     var currentAccount: Account? = null
 
@@ -33,7 +33,7 @@ class AccountAddEditViewModel @Inject constructor(
 
     internal  val accountCurrency = mutableStateOf(AccountCurrency.Default.currency)
 
-    internal  val accountLimit = mutableStateOf("")
+    internal val accountLimit = mutableStateOf("")
 
     internal  val accountBalance = mutableStateOf("")
 
@@ -43,22 +43,10 @@ class AccountAddEditViewModel @Inject constructor(
 
     internal  val accountInTotalStatus = mutableStateOf(true)
 
+    internal var accountId: Int? = null
+
     private  val accountMain = mutableStateOf(false)
 
-    internal fun onStart(account: Account?){
-        account?.let {
-            currentAccount = it
-            accountColor.value = it.color
-            accountIcon.value = it.icon
-            accountType.value = it.type
-            accountCurrency.value = it.currency
-            accountLimit.value = it.limit
-            accountBalance.value = it.balance
-            accountTitle.value = it.title
-            accountInTotalStatus.value = it.include
-            accountMain.value = it.main
-        }
-    }
 
     override fun onEvent(event: AccountAddEditEvents) {
         when (event){
@@ -73,6 +61,33 @@ class AccountAddEditViewModel @Inject constructor(
             is AccountAddEditEvents.EnteredTitle -> onTitleEntered(event.accountTitle)
             is AccountAddEditEvents.EnteredDescription -> onDescriptionEntered(event.accountDescription)
             AccountAddEditEvents.SaveAccount -> onSaveAccount()
+        }
+    }
+
+    init{
+        viewModelScope.launch{
+            val job = viewModelScope.launch(dispatcher.provideIOContext()) {
+                savedStateHandle.get<Int>("accountToEdit")?.let { it ->
+                    if (it != -1){
+                        currentAccount = accountUseCases.getAccountById(it)
+                    }
+                }
+            }
+            job.join()
+            currentAccount?.let { account ->
+                currentAccount = account
+                accountColor.value = account.color
+                accountIcon.value = account.icon
+                accountType.value = account.type
+                accountCurrency.value = account.currency
+                accountLimit.value = account.limit
+                accountBalance.value = account.balance
+                accountTitle.value = account.title
+                accountDescription.value = account.description
+                accountInTotalStatus.value = account.include
+                accountMain.value = account.main
+                accountId = account.id
+            }
         }
     }
 
@@ -96,6 +111,10 @@ class AccountAddEditViewModel @Inject constructor(
         accountInTotalStatus.value = include
     }
 
+    private fun onMainStatusChange(main: Boolean){
+        accountMain.value = main
+    }
+
     private fun onCurrencyChange(currency: String) {
         accountCurrency.value = currency
     }
@@ -112,7 +131,7 @@ class AccountAddEditViewModel @Inject constructor(
         accountColor.value = color.toArgb()
     }
 
-    private fun onSaveAccount() = launch {
+    private fun onSaveAccount() = viewModelScope.launch {
         currentAccount = Account(
             title = accountTitle.value,
             type = accountType.value,
@@ -123,14 +142,37 @@ class AccountAddEditViewModel @Inject constructor(
             icon = accountIcon.value,
             color = accountColor.value,
             include = accountInTotalStatus.value,
-            main = accountMain.value
+            main = accountMain.value,
+            id = currentAccount?.id
         )
         accountUseCases.saveAccount(currentAccount!!)
         currentAccount = null
+        cleanFields()
     }
 
     private fun onCancelAccount() {
         currentAccount = null
-        // navigate up
+        cleanFields()
+    }
+
+    private fun cleanFields(){
+
+        onIconChange(AccountIcon.Position)
+
+        onTypeChange(AccountType.Default.type)
+
+        onCurrencyChange(AccountCurrency.Default.currency)
+
+        onLimitEntered("")
+
+        onBalanceEntered("")
+
+        onTitleEntered("")
+
+        onDescriptionEntered("")
+
+        onIncludeInTotalStatusChange(true)
+
+        onMainStatusChange(false)
     }
 }

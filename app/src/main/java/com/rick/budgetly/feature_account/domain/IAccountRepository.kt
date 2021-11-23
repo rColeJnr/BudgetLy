@@ -8,7 +8,7 @@ interface IAccountRepository {
 
     suspend fun deleteAccount(account: Account)
 
-    suspend fun getAccounts(): Flow<List<Account>>
+    fun getAccounts(): Flow<List<Account>>
 
     suspend fun getAccountById(id: Int): Account?
 

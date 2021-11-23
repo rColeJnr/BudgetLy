@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,20 +27,14 @@ import com.rick.budgetly.feature_account.common.AccountsScreen
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.AccountIcon
 import com.rick.budgetly.feature_account.ui.accountdetails.AccountDetailsBody
-import com.rick.budgetly.feature_account.ui.accountdetails.AccountDetailsEvents
-import com.rick.budgetly.feature_account.ui.accountdetails.AccountDetailsViewModel
 import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditBody
-import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditViewModel
 import com.rick.budgetly.feature_account.ui.components.AccountTopBar
 import com.rick.budgetly.feature_account.ui.util.dummyAccounts
 import com.rick.budgetly.feature_account.ui.util.formatAmount
-import com.rick.budgetly.feature_account.ui.util.getAccount
 
 @Composable
 fun AccountBody(
-    accountsViewModel: AccountsViewModel,
-    accountsAddEditViewModel: AccountAddEditViewModel,
-    accountsDetailsViewModel: AccountDetailsViewModel
+    accountsViewModel: AccountsViewModel = hiltViewModel()
 ) {
 
     val  accounts = accountsViewModel.accountsState.value.accounts
@@ -50,45 +46,7 @@ fun AccountBody(
         modifier = Modifier
     ){
         composable(AccountsScreen.Accounts.name){
-            Surface(
-                Modifier.fillMaxSize()
-            ) {
-                //  A column would have done this job just fine, but i wnted to mess with this layout
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    val amount =
-                        formatAmount(accounts.map { account -> account.balance.toFloat() }.sum())
-                    AccountTopBar(
-                        modifier = Modifier
-                            .wrapContentHeight(),
-                        title = amount,
-                        secondTitle = "Balance",
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.PieChart,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(end = 4.dp)
-                                .size(26.dp)
-                        )
-                    }
-
-                    Text(text = "Random kanye Quote", style = MaterialTheme.typography.h4)
-
-                    AccountList(
-                        accounts = accounts,
-                        onAccountClick = { navController.navigate(AccountsScreen.AccountsDetails.name + "account=${it}") },
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentHeight(align = Alignment.Bottom)
-                            .heightIn(0.dp, max = 298.dp)
-                    )
-                    // you implement this click here, i guess
-                    AddNewAccount(modifier = Modifier) { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${-1}") }
-                }
-            }
+            AccountBody(accounts, navController)
         }
         val routeAddEdit = AccountsScreen.AccountsAddEdit.name
         composable(
@@ -99,13 +57,10 @@ fun AccountBody(
                     defaultValue = -1
                 }
             )
-        ) { entry ->
-            val account = entry.arguments?.getInt(accountToEdit)
+        ) {
             AccountAddEditBody(
                 modifier = Modifier,
-                account = getAccount(accounts, account),
                 navController = navController,
-                viewModel = accountsAddEditViewModel
             )
         }
 
@@ -117,26 +72,66 @@ fun AccountBody(
                     type = NavType.IntType
                 }
             )
-        ) { entry ->
-            val account = entry.arguments?.getInt("account")
+        ) {
             AccountDetailsBody(
-                serializableAccount = getAccount(accounts, account)!!,
-                viewModel = accountsDetailsViewModel,
                 onNavigationIconClick = { navController.navigateUp() },
                 onSettingsClick = {
-                    navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${it.id}")
+                    navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${it}")
                 },
-                // i am undecided about moving the all the state up here or passing navController and viewModel as parameters
-                // so it's salad.
-                onDeleteClick = {
-                    accountsDetailsViewModel.onEvent(AccountDetailsEvents.DeleteAccount(accountsDetailsViewModel.currentAccount!!))
-                    navController.navigateUp()
-                }
+            // i am undecided about moving the all the state up here or passing navController and viewModel as parameters
+            // so it's salad.
+                navController = navController
             )
         }
 
     }
 
+}
+
+@Composable
+private fun AccountBody(
+    accounts: List<Account>,
+    navController: NavHostController
+) {
+    Surface(
+        Modifier.fillMaxSize()
+    ) {
+        //  A column would have done this job just fine, but i wnted to mess with this layout
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            val amount =
+                formatAmount(accounts.map { account -> account.balance.toFloat() }.sum())
+            AccountTopBar(
+                modifier = Modifier
+                    .wrapContentHeight(),
+                title = amount,
+                secondTitle = "Balance",
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PieChart,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .size(26.dp)
+                )
+            }
+
+            Text(text = "Random kanye Quote", style = MaterialTheme.typography.h4)
+
+            AccountList(
+                accounts = accounts,
+                onAccountClick = { navController.navigate(AccountsScreen.AccountsDetails.name + "account=${it}") },
+                modifier = Modifier
+                    .weight(1f)
+                    .wrapContentHeight(align = Alignment.Bottom)
+                    .heightIn(0.dp, max = 298.dp)
+            )
+            // you implement this click here, i guess
+            AddNewAccount(modifier = Modifier) { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${-1}") }
+        }
+    }
 }
 
 private const val accountToEdit = "accountToEdit"

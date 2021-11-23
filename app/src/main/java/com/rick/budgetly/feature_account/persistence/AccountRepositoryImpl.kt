@@ -15,7 +15,7 @@ class AccountRepositoryImpl(
         accountDao.deleteAccount(account)
     }
 
-    override suspend fun getAccounts() = accountDao.getAccounts()
+    override fun getAccounts() = accountDao.getAccounts()
 
     override suspend fun getAccountById(id: Int) = accountDao.getAccountById(id)
 

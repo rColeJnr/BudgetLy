@@ -1,14 +1,18 @@
 package com.rick.budgetly.feature_account.ui.accounts
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,8 +27,15 @@ class AccountsViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = dispatcher.provideIOContext()
 
+    private var getAccountsJob: Job? = null
+
     private val _accountsState = mutableStateOf(AccountsState())
     internal val accountsState: State<AccountsState> = _accountsState
+
+    init {
+        // Get accounts
+        onStart()
+    }
 
     override fun onEvent(event: AccountEvents) {
         when (event) {
@@ -36,12 +47,14 @@ class AccountsViewModel @Inject constructor(
     }
 
 
-    fun onStart() = launch {
-        accountUseCases.getAccounts().onEach { accounts ->
+    private fun onStart() {
+        getAccountsJob?.cancel()
+        getAccountsJob = accountUseCases.getAccounts().onEach { accounts ->
             _accountsState.value = accountsState.value.copy(
                 accounts = accounts
             )
         }
+            .launchIn(viewModelScope)
     }
 
     // Congratulashings

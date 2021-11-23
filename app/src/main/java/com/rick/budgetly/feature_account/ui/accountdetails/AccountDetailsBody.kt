@@ -16,23 +16,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.rick.budgetly.components.IconDropdownMenu
-import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.AccountIcon
 import com.rick.budgetly.feature_account.ui.util.formatAmount
 
 @Composable
 fun AccountDetailsBody(
     modifier: Modifier = Modifier,
-    serializableAccount: Account,
-    viewModel: AccountDetailsViewModel,
     onNavigationIconClick: () -> Unit,
-    onSettingsClick: (Account) -> Unit,
-    onDeleteClick: () -> Unit
+    onSettingsClick: (Int) -> Unit,
+    navController: NavHostController,
+    viewModel: AccountDetailsViewModel = hiltViewModel(),
 ) {
-
-    viewModel.currentAccount = serializableAccount
-    val account = viewModel.currentAccount!!
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -49,15 +46,20 @@ fun AccountDetailsBody(
                     )
                 },
                 actions = {
-                    IconButton(onClick = { onSettingsClick(account) }){ Icon(imageVector = Icons.Default.Settings, contentDescription = null) }
+                    IconButton(onClick = { onSettingsClick( viewModel.accountId!!) } ){ Icon(imageVector = Icons.Default.Settings, contentDescription = null) }
                     Spacer(modifier = modifier.width(8.dp))
                     DetailsDropDownMenu(
                         icon = Icons.Default.MoreVert,
                         onMenuItemOneClick = { viewModel.onEvent( AccountDetailsEvents.ChangeMainStatus) },
                         menuItemOneContent = { Text(text = "Set as main account") },
                         onMenuItemSecondClick = { viewModel.onEvent( AccountDetailsEvents.ChangeIncludeInTotalStatus) },
-                        menuItemSecondContent = { Text(text = if (account.include) "Don't inclute in total" else "Include in total" ) },
-                        onMenuItemThirdClick = { onDeleteClick() },
+                        menuItemSecondContent = { Text(text = if (viewModel.accountInclude.value) "Don't include in total" else "Include in total" ) },
+                        onMenuItemThirdClick = {
+                            viewModel.onEvent(
+                                AccountDetailsEvents.DeleteAccount(viewModel.currentAccount!!)
+                            )
+                            navController.navigateUp()
+                        },
                         menuItemThirdContent = { Text(text = "Delete account") }
                     )
                 }
@@ -73,15 +75,15 @@ fun AccountDetailsBody(
 
         ) {
             //theme the god damn app
-            val balance = account.balance.toFloat()
+            val balance = viewModel.accountBalance.value.toFloat()
             Spacer(modifier = modifier.height(32.dp))
-            Icon(imageVector = AccountIcon.values()[account.icon].imageVector, contentDescription = AccountIcon.values()[account.icon].contentDescription, modifier.size(75.dp))
+            Icon(imageVector = AccountIcon.values()[viewModel.accountIcon.value].imageVector, contentDescription = AccountIcon.values()[viewModel.accountIcon.value].contentDescription, modifier.size(75.dp))
             Spacer(modifier = modifier.height(16.dp))
-            Text(text = account.title)
+            Text(text = viewModel.accountTitle.value)
             Spacer(modifier = modifier.height(16.dp))
             Text(text = formatAmount(balance), style = MaterialTheme.typography.h5)
             Spacer(modifier = modifier.height(8.dp))
-            Text("Balance", style = MaterialTheme.typography.body2)
+            Text(viewModel.accountType, style = MaterialTheme.typography.body2)
             Spacer(modifier = modifier.height(24.dp))
             Text(text = "Totals for month")
             Spacer(modifier = modifier.height(16.dp))
