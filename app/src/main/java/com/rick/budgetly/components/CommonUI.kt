@@ -30,7 +30,7 @@ fun BaseRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val typography = MaterialTheme.typography
-            Icon(imageVector = icon, contentDescription = icon.name, modifier = Modifier.padding(start = 12.dp))
+            Icon(imageVector = icon, contentDescription = title, modifier = Modifier.padding(start = 12.dp))
             Spacer(modifier = Modifier.width(12.dp))
             Column {
                 Text(

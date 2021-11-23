@@ -25,6 +25,7 @@ import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountA
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
 import com.rick.budgetly.feature_account.ui.components.AccountInputText
+import com.rick.budgetly.feature_account.ui.util.TestTags
 import com.rick.budgetly.feature_account.ui.util.dummyAccounts
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -89,22 +90,22 @@ fun TopBarWithTextField(
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 imageVector = Icons.Default.Close,
-                contentDescription = null,
+                contentDescription = "CancelAccount",
                 modifier = Modifier
                     .clickable { onCancelAccount() }
-                    .height(24.dp)
+                    .padding(16.dp)
             )
             Text(text = stringResource(R.string.NEWACCOUNT), style = MaterialTheme.typography.h5)
             Icon(
                 imageVector = Icons.Default.Check,
-                contentDescription = null,
+                contentDescription = "SaveAccount",
                 modifier = Modifier
                     .clickable { onSaveAccount() }
-                    .height(24.dp)
+                    .padding(16.dp)
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        AccountInputText(text = text, onTextChange = onTextChange)
+        AccountInputText(text = text, onTextChange = onTextChange, testTag = TestTags.newAccountTitle)
         Spacer(modifier = Modifier.height(8.dp))
         if (iconsVisible) {
             Column {

@@ -69,7 +69,12 @@ class AccountsViewModel @Inject constructor(
 
     private fun getQuote() {
         viewModelScope.launch {
-            response.value = getQuote.invoke()
+            try {
+                getQuote.invoke()
+            } catch (e: Exception){
+                Log.d("quote", e.message!!)
+            }
+
         }
     }
 

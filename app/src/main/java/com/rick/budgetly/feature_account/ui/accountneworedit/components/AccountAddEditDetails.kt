@@ -20,6 +20,7 @@ import com.rick.budgetly.components.TextDropdownMenu
 import com.rick.budgetly.feature_account.domain.AccountCurrency
 import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.ui.components.AccountInputText
+import com.rick.budgetly.feature_account.ui.util.TestTags
 
 @ExperimentalMaterialApi
 @Composable
@@ -90,6 +91,7 @@ fun AccountAddEditDetails(
                 text = description,
                 onTextChange = onDescriptionChange,
                 label = "Description",
+                testTag = TestTags.newAccountDescription,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
@@ -98,6 +100,7 @@ fun AccountAddEditDetails(
                 text = limit,
                 onTextChange = onLimitChange,
                 label = "Account Limit",
+                testTag = TestTags.newAccountLimit,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
@@ -110,6 +113,7 @@ fun AccountAddEditDetails(
                 text = balance,
                 onTextChange = onBalanceChange,
                 label = "Account Balance",
+                testTag = TestTags.newAccountBalance,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number

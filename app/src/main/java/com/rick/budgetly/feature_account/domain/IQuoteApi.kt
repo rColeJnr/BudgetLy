@@ -11,5 +11,5 @@ interface IQuoteApi {
 }
 
 interface IQuoteRepository {
-    suspend fun getQuote(): Response<Quote>
+    suspend fun getQuote(): Result<Response<Quote>>
 }

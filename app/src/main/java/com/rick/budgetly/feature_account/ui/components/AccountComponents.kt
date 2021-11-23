@@ -10,6 +10,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -47,6 +48,7 @@ fun AccountInputText(
     onTextChange: (String) -> Unit,
     singleLine: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    testTag: String = "",
     onImeAction: () -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -61,6 +63,6 @@ fun AccountInputText(
             onImeAction()
             keyboardController?.hide()
         }),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth().testTag(testTag)
     )
 }

@@ -11,7 +11,7 @@ class GetQuote @Inject constructor(
 ) {
 
     suspend operator fun invoke(): Response<Quote> {
-       return repository.getQuote()
+       return repository.getQuote().getOrNull()!!
     }
 
 }

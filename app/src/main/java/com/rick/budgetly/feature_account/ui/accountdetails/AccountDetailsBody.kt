@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.budgetly.components.IconDropdownMenu
 import com.rick.budgetly.feature_account.domain.AccountIcon
+import com.rick.budgetly.feature_account.ui.util.TestTags
 import com.rick.budgetly.feature_account.ui.util.formatAmount
 import kotlinx.coroutines.*
 
@@ -47,15 +48,19 @@ fun AccountDetailsBody(
                 navigationIcon = {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null,
+                        contentDescription = "NavigateUp",
                         modifier = Modifier.clickable { onNavigationIconClick() }
                     )
                 },
                 actions = {
-                    IconButton(onClick = { onSettingsClick( viewModel.accountId!!) } ){ Icon(imageVector = Icons.Default.Settings, contentDescription = null) }
+                    IconButton(onClick = { onSettingsClick( viewModel.accountId!!) } ){ Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = "Settings"
+                    ) }
                     Spacer(modifier = modifier.width(8.dp))
                     DetailsDropDownMenu(
                         icon = Icons.Default.MoreVert,
+                        contentDescription = TestTags.detailsMoreVert,
                         onMenuItemOneClick = { viewModel.onEvent( AccountDetailsEvents.ChangeMainStatus) },
                         menuItemOneContent = { Text(text = "Set as main account") },
                         onMenuItemSecondClick = { viewModel.onEvent( AccountDetailsEvents.ChangeIncludeInTotalStatus) },
@@ -158,6 +163,7 @@ fun AccountIncomeExpenses(modifier: Modifier, text: String, money: String, image
 @Composable
 fun DetailsDropDownMenu(
     icon: ImageVector,
+    contentDescription: String = "",
     onMenuItemOneClick: () -> Unit,
     menuItemOneContent: @Composable () -> Unit,
     onMenuItemSecondClick: () -> Unit,
@@ -167,6 +173,7 @@ fun DetailsDropDownMenu(
 ) {
     IconDropdownMenu(
         icon = icon,
+        cDescription = contentDescription,
         onMenuItemOneClick = { onMenuItemOneClick() },
         menuItemOneContent = { menuItemOneContent() },
         onMenuItemSecondClick = { onMenuItemSecondClick() },

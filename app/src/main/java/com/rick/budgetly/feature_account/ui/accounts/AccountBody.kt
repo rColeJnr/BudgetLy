@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,33 +36,23 @@ import com.rick.budgetly.feature_account.ui.util.dummyAccounts
 import com.rick.budgetly.feature_account.ui.util.formatAmount
 
 @Composable
-fun AccountBody(
-    accountsViewModel: AccountsViewModel = hiltViewModel()
-) {
-
-    // Accounts list
-    val  accounts = accountsViewModel.accountsState.value.accounts
-
-    // Api response
-    val quoute = accountsViewModel.response.observeAsState().value
-    if (quoute?.isSuccessful != null){
-        accountsViewModel.quote.value = quoute.body()?.quote!!
-    }
+fun AccountsNavHost() {
 
     val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = AccountsScreen.Accounts.name,
         modifier = Modifier
-    ){
-        composable(AccountsScreen.Accounts.name){
-            AccountBody(accounts, accountsViewModel.quote.value, navController)
+    ) {
+        composable(AccountsScreen.Accounts.name) {
+            AccountBody(navController = navController)
         }
         val routeAddEdit = AccountsScreen.AccountsAddEdit.name
         composable(
             route = "$routeAddEdit?accountToEdit={accountToEdit}",
             arguments = listOf(
-                navArgument(accountToEdit) {
+                navArgument("accountToEdit") {
                     type = NavType.IntType
                     defaultValue = -1
                 }
@@ -86,33 +78,42 @@ fun AccountBody(
                 onSettingsClick = {
                     navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${it}")
                 },
-            // i am undecided about moving the all the state up here or passing navController and viewModel as parameters
-            // so it's salad.
+                // i am undecided about moving the all the state up here or passing navController and viewModel as parameters
+                // so it's salad.
                 navController = navController
             )
         }
 
     }
-
 }
 
 @Composable
 private fun AccountBody(
-    accounts: List<Account>,
-    quote: String,
+    accountsViewModel: AccountsViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
+    // Accounts list
+    val accounts = accountsViewModel.accountsState.value.accounts
+
+    // Api response
+    val quoute = accountsViewModel.response.observeAsState().value
+    if (quoute?.isSuccessful != null) {
+        accountsViewModel.quote.value = quoute.body()?.quote!!
+    }
 
 
     Surface(
-        Modifier.fillMaxSize()
+        Modifier
+            .fillMaxSize()
+            .semantics { contentDescription = "Accounts Screen" }
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             val amount =
-                formatAmount(accounts.map { account -> if (account.include) account.balance.toFloat() else 0f }.sum())
+                formatAmount(accounts.map { account -> if (account.include) account.balance.toFloat() else 0f }
+                    .sum())
             AccountTopBar(
                 modifier = Modifier
                     .wrapContentHeight(),
@@ -121,14 +122,14 @@ private fun AccountBody(
             ) {
                 Icon(
                     imageVector = Icons.Default.PieChart,
-                    contentDescription = null,
+                    contentDescription = "PieIcon",
                     modifier = Modifier
                         .padding(end = 4.dp)
                         .size(26.dp)
                 )
             }
 
-            Text(text = quote, style = MaterialTheme.typography.h4, modifier = Modifier.clickable {
+            Text(text = accountsViewModel.quote.value, style = MaterialTheme.typography.h4, modifier = Modifier.clickable {
 
             })
 
@@ -146,8 +147,6 @@ private fun AccountBody(
     }
 }
 
-private const val accountToEdit = "accountToEdit"
-
 @Composable
 private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
     TextButton(
@@ -157,14 +156,18 @@ private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
             .wrapContentHeight(align = Alignment.Bottom)
             .padding(bottom = 8.dp)
     ) {
-        Icon(imageVector = Icons.Default.PlusOne, contentDescription = "Add a new account")
+        Icon(imageVector = Icons.Default.PlusOne, contentDescription = "Add new account")
         Spacer(modifier = Modifier.width(8.dp))
         Text(text = "Add a new Card, Debt, Saving, Loan...", textAlign = TextAlign.Start)
     }
 }
 
 @Composable
-private fun AccountList(accounts: List<Account>, onAccountClick: (Int) -> Unit, modifier: Modifier) {
+private fun AccountList(
+    accounts: List<Account>,
+    onAccountClick: (Int) -> Unit,
+    modifier: Modifier
+) {
     LazyColumn(
         modifier = modifier
     ) {
@@ -172,7 +175,7 @@ private fun AccountList(accounts: List<Account>, onAccountClick: (Int) -> Unit, 
             BaseRow(
                 modifier = Modifier.clickable {
                     onAccountClick(it.id!!)
-                },
+                }.semantics { contentDescription = "AccountRow" },
                 icon = AccountIcon.values()[it.icon].imageVector,
                 title = it.title,
                 currency = it.currency,
@@ -181,6 +184,7 @@ private fun AccountList(accounts: List<Account>, onAccountClick: (Int) -> Unit, 
         }
     }
 }
+
 @Preview
 @Composable
 fun PreviewEverything() {
@@ -207,7 +211,7 @@ fun PreviewEverything() {
                 modifier = Modifier.size(24.dp)
             )
         }
-        AccountList(accounts = dummyAccounts, onAccountClick = {} , modifier = Modifier.weight(1f))
+        AccountList(accounts = dummyAccounts, onAccountClick = {}, modifier = Modifier.weight(1f))
 //        AddNewAccount {}
     }
 }
