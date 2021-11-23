@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.rick.budgetly.components.IconDropdownMenu
 import com.rick.budgetly.feature_account.domain.AccountIcon
 import com.rick.budgetly.feature_account.ui.util.formatAmount
+import kotlinx.coroutines.*
 
 @Composable
 fun AccountDetailsBody(
@@ -31,8 +33,12 @@ fun AccountDetailsBody(
     viewModel: AccountDetailsViewModel = hiltViewModel(),
 ) {
 
+    val scope = rememberCoroutineScope()
+    val scaffoldSate = rememberScaffoldState()
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
+        scaffoldState = scaffoldSate,
         topBar = {
             TopAppBar(
                 modifier = modifier,
@@ -58,7 +64,20 @@ fun AccountDetailsBody(
                             viewModel.onEvent(
                                 AccountDetailsEvents.DeleteAccount(viewModel.currentAccount!!)
                             )
-                            navController.navigateUp()
+                            CoroutineScope(Dispatchers.Main).launch{
+                                val job = scope.launch {
+                                    val result = scaffoldSate.snackbarHostState.showSnackbar(
+                                        message = "Account deleted",
+                                        actionLabel = "Undo"
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
+                                    }
+                                    delay(1500)
+                                }
+                                job.join()
+                                navController.navigateUp()
+                            }
                         },
                         menuItemThirdContent = { Text(text = "Delete account") }
                     )

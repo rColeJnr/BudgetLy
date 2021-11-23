@@ -30,7 +30,7 @@ class AccountDetailsViewModel @Inject constructor(
 
     internal var currentAccount: Account? = null
     private var deletedAccount: Account? = null
-    private lateinit var prevAccountMain: Account
+    private var prevAccountMain: Account? = null
     internal val accountInclude = mutableStateOf(true)
     internal var accountBalance = mutableStateOf("0")
     internal val accountTitle = mutableStateOf("")
@@ -76,7 +76,10 @@ class AccountDetailsViewModel @Inject constructor(
                     main = accountMain.value
                 )
             )
-            accountUseCases.saveAccount(prevAccountMain)
+        }
+
+        prevAccountMain?.let{
+            accountUseCases.saveAccount(it)
         }
     }
 
@@ -88,7 +91,7 @@ class AccountDetailsViewModel @Inject constructor(
     private fun onMainStatusChanged() = launch{
         accountUseCases.getAccounts().onEach { accounts ->
             prevAccountMain = getMainAccount(accounts)
-            prevAccountMain.main = false
+            prevAccountMain?.main = false
             accountMain.value = true
         }
         onAccountChanged()

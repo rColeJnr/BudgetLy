@@ -93,16 +93,17 @@ private fun AccountBody(
     accounts: List<Account>,
     navController: NavHostController
 ) {
+
+
     Surface(
         Modifier.fillMaxSize()
     ) {
-        //  A column would have done this job just fine, but i wnted to mess with this layout
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             val amount =
-                formatAmount(accounts.map { account -> account.balance.toFloat() }.sum())
+                formatAmount(accounts.map { account -> if (account.include) account.balance.toFloat() else 0f }.sum())
             AccountTopBar(
                 modifier = Modifier
                     .wrapContentHeight(),
@@ -118,7 +119,9 @@ private fun AccountBody(
                 )
             }
 
-            Text(text = "Random kanye Quote", style = MaterialTheme.typography.h4)
+            Text(text = "Random kanye Quote", style = MaterialTheme.typography.h4, modifier = Modifier.clickable {
+
+            })
 
             AccountList(
                 accounts = accounts,

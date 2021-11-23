@@ -24,8 +24,8 @@ fun AccountTopBar(
 ) {
     TopAppBar(
         modifier = modifier,
-        backgroundColor = Color.White,
-        contentColor = Color.Black,
+//        backgroundColor = MaterialTheme.colors.background,
+        contentColor = Color.White,
         title = {
             Column{
                 Text(text = title, style = toolBar.body1, textAlign = TextAlign.Start)
