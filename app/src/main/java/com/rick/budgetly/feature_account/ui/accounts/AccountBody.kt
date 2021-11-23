@@ -96,9 +96,9 @@ private fun AccountBody(
     val accounts = accountsViewModel.accountsState.value.accounts
 
     // Api response
-    val quoute = accountsViewModel.response.observeAsState().value
-    if (quoute?.isSuccessful != null) {
-        accountsViewModel.quote.value = quoute.body()?.quote!!
+    val quoute = accountsViewModel.response.observeAsState()
+    if (quoute.value?.isSuccessful != null) {
+        accountsViewModel.quote.value = quoute.value?.body()?.quote!!
     }
 
 
