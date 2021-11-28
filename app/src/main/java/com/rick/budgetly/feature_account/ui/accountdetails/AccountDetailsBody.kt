@@ -78,7 +78,7 @@ fun AccountDetailsBody(
                                     if (result == SnackbarResult.ActionPerformed) {
                                         viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
                                     }
-                                    delay(1500)
+                                    delay(300)
                                 }
                                 job.join()
                                 navController.navigateUp()
@@ -181,10 +181,4 @@ fun DetailsDropDownMenu(
         onMenuItemThirdClick = { onMenuItemThirdClick() },
         menuItemThirdContent = { menuItemThirdContent() }
     )
-}
-
-@Preview
-@Composable
-fun PreviewAccountDetailsScreen() {
-//    AccountDetailsBody()
 }

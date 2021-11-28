@@ -17,7 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rick.budgetly.components.BudgetLyTabRow
-import com.rick.budgetly.feature_account.ui.accounts.AccountsNavHost
+import com.rick.budgetly.feature_account.ui.AccountsNavHost
 import com.rick.budgetly.ui.theme.BudgetLyTheme
 import dagger.hilt.android.AndroidEntryPoint
 

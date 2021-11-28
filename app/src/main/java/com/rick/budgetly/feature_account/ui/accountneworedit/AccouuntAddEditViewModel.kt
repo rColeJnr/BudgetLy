@@ -1,6 +1,5 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -11,7 +10,10 @@ import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.*
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
+import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +23,6 @@ class AccountAddEditViewModel @Inject constructor(
     private val dispatcher: ProductionDispatcherProvider,
     savedStateHandle: SavedStateHandle
 ): ViewModel(), BaseLogic<AccountAddEditEvents> {
-
 
     var currentAccount: Account? = null
 
@@ -47,6 +48,8 @@ class AccountAddEditViewModel @Inject constructor(
 
     private  val accountMain = mutableStateOf(false)
 
+    private val _eventFlow = MutableSharedFlow<AccountsContainer>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     override fun onEvent(event: AccountAddEditEvents) {
         when (event){
@@ -111,10 +114,6 @@ class AccountAddEditViewModel @Inject constructor(
         accountInTotalStatus.value = include
     }
 
-    private fun onMainStatusChange(main: Boolean){
-        accountMain.value = main
-    }
-
     private fun onCurrencyChange(currency: String) {
         accountCurrency.value = currency
     }
@@ -145,34 +144,19 @@ class AccountAddEditViewModel @Inject constructor(
             main = accountMain.value,
             id = currentAccount?.id
         )
-        accountUseCases.saveAccount(currentAccount!!)
+        try{
+            accountUseCases.saveAccount(currentAccount!!)
+            _eventFlow.emit(AccountsContainer.ShowSuccess)
+        } catch (e: InvalidAccountException){
+            _eventFlow.emit(
+                AccountsContainer.ShowError(message = e.message ?: "Couldn't save note")
+            )
+        }
         currentAccount = null
-        cleanFields()
     }
 
     private fun onCancelAccount() {
         currentAccount = null
-        cleanFields()
     }
 
-    private fun cleanFields(){
-
-        onIconChange(AccountIcon.Position)
-
-        onTypeChange(AccountType.Default.type)
-
-        onCurrencyChange(AccountCurrency.Default.currency)
-
-        onLimitEntered("")
-
-        onBalanceEntered("")
-
-        onTitleEntered("")
-
-        onDescriptionEntered("")
-
-        onIncludeInTotalStatusChange(true)
-
-        onMainStatusChange(false)
-    }
 }

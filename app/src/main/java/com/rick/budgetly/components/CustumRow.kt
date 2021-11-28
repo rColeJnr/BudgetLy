@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,74 +76,4 @@ fun CustomRow(
             }
         }
     }
-}
-
-val lilst = listOf(
-    "7", "4", "1", ".", "8", "5", "2", "0", "9", "6", "3", "<"
-)
-val list = listOf(
-    "+", "-", "x", "/", "="
-)
-
-@Composable
-fun Calculator() {
-    Column(Modifier.wrapContentWidth(align = Alignment.CenterHorizontally)) {
-        val text = mutableStateOf("343")
-        val operator = mutableStateOf("")
-        val num1 = mutableStateOf("")
-        val num2 = mutableStateOf("")
-//        var result = ""
-//        TextField(
-//            value = text,
-//            onValueChange = onTextChange,
-//            color = Color.White
-//        )
-        CustomRow(
-            modifier = Modifier.wrapContentWidth(align = Alignment.CenterHorizontally),
-            rows = 1,
-            onClick = {}
-        ) {
-            for (i in list) {
-                TextButton(
-                    onClick = {
-                        if (i != "=") {
-                            operator.value = i
-                            num1.value = text.value
-//                            onTextChange = ""
-                        } else {
-                            num2.value = text.value
-//                            text = calculate(num1.value, num2.value, Operators.valueOf(operator.value))
-                        }
-                    }, modifier = Modifier.wrapContentWidth(align = Alignment.CenterHorizontally)
-                ) {
-                    Text(text = i)
-                }
-            }
-        }
-        CustomRow(
-            modifier = Modifier
-                .wrapContentWidth(align = Alignment.CenterHorizontally)
-                .padding(start = 8.dp),
-            onClick = {}
-        ) {
-            for (i in lilst) {
-                TextButton(
-                    onClick = {
-                        text.value += i
-                    },
-                    modifier = Modifier
-                        .wrapContentWidth(align = Alignment.CenterHorizontally)
-                        .widthIn(min = 100.dp, max = 140.dp)
-                ) {
-                    Text(text = i)
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewCalculator() {
-    Calculator()
 }

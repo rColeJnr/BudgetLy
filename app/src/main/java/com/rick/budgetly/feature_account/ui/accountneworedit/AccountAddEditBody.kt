@@ -1,40 +1,81 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.budgetly.R
-import com.rick.budgetly.feature_account.common.AccountsScreen
-import com.rick.budgetly.feature_account.domain.*
+import com.rick.budgetly.components.BaseBottomSheet
+import com.rick.budgetly.components.Calculator
+import com.rick.budgetly.components.numero
+import com.rick.budgetly.feature_account.domain.AccountColor
+import com.rick.budgetly.feature_account.domain.AccountCurrency
+import com.rick.budgetly.feature_account.domain.AccountIcon
+import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountAddEditDetails
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
+import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 import com.rick.budgetly.feature_account.ui.components.AccountInputText
 import com.rick.budgetly.feature_account.ui.util.TestTags
-import com.rick.budgetly.feature_account.ui.util.dummyAccounts
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AccountAddEditBody(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    viewModel: AccountAddEditViewModel = hiltViewModel()) {
+    viewModel: AccountAddEditViewModel = hiltViewModel(),
+    ) {
 
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is AccountsContainer.ShowError -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                }
+                is AccountsContainer.ShowSuccess ->
+                    navController.navigateUp()
+            }
+        }
+    }
+
+    val state = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
+    BaseBottomSheet(
+        state = state,
+        scope = scope,
+        sheetContent = { Calculator(viewModel, state = state, scope = scope) }) {
+        ScreenContent (modifier, viewModel, navController, state, scope)
+        if (!state.isVisible) numero.value = ""
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+private fun ScreenContent(
+    modifier: Modifier,
+    viewModel: AccountAddEditViewModel,
+    navController: NavHostController,
+    state: ModalBottomSheetState,
+    scope: CoroutineScope,
+) {
     Column(
         modifier = modifier
             .fillMaxHeight(),
@@ -49,7 +90,6 @@ fun AccountAddEditBody(
             onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
             onSaveAccount = {
                 viewModel.onEvent(AccountAddEditEvents.SaveAccount)
-                navController.navigateUp()
             },
             onCancelAccount = {
                 viewModel.onEvent(AccountAddEditEvents.CancelAccount)
@@ -58,20 +98,27 @@ fun AccountAddEditBody(
         )
         AccountAddEditDetails(
             type = viewModel.accountType.value,
-            onTypeChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountType(AccountType.values()[it].type))},
+            onTypeChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountType(AccountType.values()[it].type)) },
             currency = viewModel.accountCurrency.value,
-            onCurrencyChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountCurrency(AccountCurrency.values()[it].currency))},
+            onCurrencyChange = {
+                viewModel.onEvent(
+                    AccountAddEditEvents.ChangeAccountCurrency(
+                        AccountCurrency.values()[it].currency
+                    )
+                )
+            },
             checked = viewModel.accountInTotalStatus.value,
             onCheckedChange = { viewModel.onEvent(AccountAddEditEvents.ChangeIncludeInTotalStatus(it)) },
             description = viewModel.accountDescription.value,
             onDescriptionChange = { viewModel.onEvent(AccountAddEditEvents.EnteredDescription(it)) },
             limit = viewModel.accountLimit.value,
-            onLimitChange = { viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(it)) },
+//            onLimitChange = { viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(it)) },
             balance = viewModel.accountBalance.value,
-            onBalanceChange = { viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it)) },
+            scope = scope,
+            state = state,
+//            onBalanceChange = { viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it)) },
         )
     }
-
 }
 
 @Composable
@@ -87,13 +134,18 @@ fun TopBarWithTextField(
     onCancelAccount: () -> Unit
 ) {
     Column {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = "CancelAccount",
                 modifier = Modifier
                     .clickable { onCancelAccount() }
-                    .padding(16.dp)
+                    .size(24.dp)
+                    .padding(start = 4.dp)
             )
             Text(text = stringResource(R.string.NEWACCOUNT), style = MaterialTheme.typography.h5)
             Icon(
@@ -101,12 +153,15 @@ fun TopBarWithTextField(
                 contentDescription = "SaveAccount",
                 modifier = Modifier
                     .clickable { onSaveAccount() }
-                    .padding(16.dp)
+                    .size(24.dp)
+                    .padding(end = 4.dp)
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        AccountInputText(text = text, onTextChange = onTextChange, testTag = TestTags.newAccountTitle)
-        Spacer(modifier = Modifier.height(8.dp))
+        AccountInputText(
+            text = text,
+            onTextChange = onTextChange,
+            testTag = TestTags.newAccountTitle
+        )
         if (iconsVisible) {
             Column {
                 // I should have just one animated row
@@ -124,40 +179,6 @@ fun TopBarWithTextField(
         } else {
             Spacer(modifier = Modifier.height(16.dp))
         }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@ExperimentalAnimationApi
-@Preview
-@Composable
-fun PreviewAccountTopBar() {
-    Column {
-        TopBarWithTextField(
-            iconsVisible = true,
-            text = "Text",
-            onTextChange = {},
-            icon = AccountIcon.Default,
-            onIconChange = {},
-            color = AccountColor.Default,
-            onColorChange = {},
-            onSaveAccount = {},
-            onCancelAccount = {}
-        )
-        AccountAddEditDetails(
-            description = "Account descript",
-            onDescriptionChange = {},
-            limit = "1434",
-            onLimitChange = {},
-            balance = "13454",
-            onBalanceChange = {},
-            checked = true,
-            onCheckedChange = {},
-            onTypeChange = {},
-            onCurrencyChange = {},
-            type = "TYPE",
-            currency = "MZN"
-        )
     }
 }
 

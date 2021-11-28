@@ -20,75 +20,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.rick.budgetly.components.BaseRow
 import com.rick.budgetly.feature_account.common.AccountsScreen
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.AccountIcon
-import com.rick.budgetly.feature_account.ui.accountdetails.AccountDetailsBody
-import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditBody
 import com.rick.budgetly.feature_account.ui.components.AccountTopBar
 import com.rick.budgetly.feature_account.ui.util.dummyAccounts
 import com.rick.budgetly.feature_account.ui.util.formatAmount
 
 @Composable
-fun AccountsNavHost() {
-
-    val navController = rememberNavController()
-
-    NavHost(
-        navController = navController,
-        startDestination = AccountsScreen.Accounts.name,
-        modifier = Modifier
-    ) {
-        composable(AccountsScreen.Accounts.name) {
-            AccountBody(navController = navController)
-        }
-        val routeAddEdit = AccountsScreen.AccountsAddEdit.name
-        composable(
-            route = "$routeAddEdit?accountToEdit={accountToEdit}",
-            arguments = listOf(
-                navArgument("accountToEdit") {
-                    type = NavType.IntType
-                    defaultValue = -1
-                }
-            )
-        ) {
-            AccountAddEditBody(
-                modifier = Modifier,
-                navController = navController,
-            )
-        }
-
-        val accountsName = AccountsScreen.AccountsDetails.name
-        composable(
-            route = accountsName + "account={account}",
-            arguments = listOf(
-                navArgument("account") {
-                    type = NavType.IntType
-                }
-            )
-        ) {
-            AccountDetailsBody(
-                onNavigationIconClick = { navController.navigateUp() },
-                onSettingsClick = {
-                    navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${it}")
-                },
-                // i am undecided about moving the all the state up here or passing navController and viewModel as parameters
-                // so it's salad.
-                navController = navController
-            )
-        }
-
-    }
-}
-
-@Composable
-private fun AccountBody(
+fun AccountBody(
     accountsViewModel: AccountsViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
@@ -96,11 +37,10 @@ private fun AccountBody(
     val accounts = accountsViewModel.accountsState.value.accounts
 
     // Api response
-    val quoute = accountsViewModel.response.observeAsState()
-    if (quoute.value?.isSuccessful != null) {
-        accountsViewModel.quote.value = quoute.value?.body()?.quote!!
+    val quoute = accountsViewModel.response.observeAsState().value
+    if (quoute?.isSuccessful != null) {
+        accountsViewModel.quote.value = quoute.body()?.quote!!
     }
-
 
     Surface(
         Modifier
@@ -129,9 +69,13 @@ private fun AccountBody(
                 )
             }
 
-            Text(text = accountsViewModel.quote.value, style = MaterialTheme.typography.h4, modifier = Modifier.clickable {
-
-            })
+            Text(
+                text = accountsViewModel.quote.value,
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .wrapContentHeight()
+            )
 
             AccountList(
                 accounts = accounts,
@@ -175,7 +119,8 @@ private fun AccountList(
             BaseRow(
                 modifier = Modifier.clickable {
                     onAccountClick(it.id!!)
-                }.semantics { contentDescription = "AccountRow" },
+                }
+                    .semantics { contentDescription = "AccountRow" },
                 icon = AccountIcon.values()[it.icon].imageVector,
                 title = it.title,
                 currency = it.currency,
@@ -189,9 +134,7 @@ private fun AccountList(
 @Composable
 fun PreviewEverything() {
 
-    Column(
-//        verticalArrangement = Arrangement.SpaceBetween
-    ) {
+    Column {
         AccountTopBar(
             modifier = Modifier
                 .weight(1f)

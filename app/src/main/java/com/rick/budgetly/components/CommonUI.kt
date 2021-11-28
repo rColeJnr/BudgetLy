@@ -9,6 +9,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rick.budgetly.feature_account.ui.util.formatAmount
 
@@ -30,8 +31,8 @@ fun BaseRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val typography = MaterialTheme.typography
-            Icon(imageVector = icon, contentDescription = title, modifier = Modifier.padding(start = 12.dp))
-            Spacer(modifier = Modifier.width(12.dp))
+            Icon(imageVector = icon, contentDescription = title, modifier = Modifier.padding(start = 8.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Column {
                 Text(
                     text = title,
@@ -45,12 +46,13 @@ fun BaseRow(
             Text(
                 text = formattedAmount,
                 style = typography.h6,
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterVertically),
+                textAlign = TextAlign.End
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Icon(imageVector = Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier
-                    .padding(12.dp)
+                    .padding(end = 12.dp)
                     .size(24.dp))
             }
         }

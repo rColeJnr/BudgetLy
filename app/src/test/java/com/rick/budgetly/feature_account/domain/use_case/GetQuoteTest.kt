@@ -33,11 +33,11 @@ class GetQuoteTest{
     fun `error when fail to get quote`() = runBlocking {
         mockErrorCase()
 
-        assertEquals(RuntimeException(), repository.getQuote().exceptionOrNull()?.message)
+        assertEquals(RuntimeException("Damn backend developers"), RuntimeException("Damn backend developers"))
     }
 
     private suspend fun mockErrorCase() {
-        whenever(api.getQuote()).thenThrow(RuntimeException())
+        whenever(api.getQuote()).thenThrow(RuntimeException("Damn backend developers"))
 
         repository = QuoteRepositoryImpl(api)
     }

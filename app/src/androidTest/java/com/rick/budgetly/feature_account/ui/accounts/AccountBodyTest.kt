@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.rick.budgetly.BudgetLyActivity
+import com.rick.budgetly.feature_account.ui.AccountsNavHost
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before

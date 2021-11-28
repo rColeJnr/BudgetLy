@@ -8,7 +8,6 @@ import com.rick.budgetly.BudgetLyActivity
 import com.rick.budgetly.BudgetLyNavHost
 import com.rick.budgetly.feature_account.domain.AccountCurrency
 import com.rick.budgetly.feature_account.domain.AccountType
-import com.rick.budgetly.feature_account.ui.accounts.AccountsNavHost
 import com.rick.budgetly.feature_account.ui.util.TestTags
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -32,7 +31,6 @@ class AccountsEndToEndTest {
         composeRule.setContent {
             navController = rememberNavController()
             BudgetLyNavHost(navController = navController)
-
         }
     }
 
@@ -136,7 +134,7 @@ class AccountsEndToEndTest {
             .onNodeWithText("test-title").assertIsDisplayed()
 
         composeRule
-            .onNodeWithText("$ 3,435").assertIsDisplayed()
+            .onNodeWithText("3,435").assertIsDisplayed()
 
         composeRule
             .onAllNodesWithContentDescription("AccountRow")

@@ -10,9 +10,8 @@ private fun dollarSign(amount: Float): String{
 private val AmountDecimalFormat = DecimalFormat("#,###.##")
 
 fun formatAmount(amount: Float): String {
-    return dollarSign(amount) + AmountDecimalFormat.format(amount)
+    return AmountDecimalFormat.format(amount)
 }
-
 
 fun getMainAccount(accounts: List<Account>): Account {
     return accounts.first { it.main }
