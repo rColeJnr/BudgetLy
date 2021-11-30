@@ -72,10 +72,10 @@ fun BudgetLyNavHost(
         composable(BudgetLyScreen.Accounts.name) {
             AccountsNavHost()
         }
-        composable(BudgetLyScreen.Transactions.name){
+        composable(BudgetLyScreen.Bills.name){
             Text(text = "Stupid text2", modifier = Modifier.semantics { contentDescription = "Transactions Screen" })
         }
-        composable(BudgetLyScreen.Overview.name){
+        composable(BudgetLyScreen.Categories.name){
             Text(text = "Stupid text3", modifier = Modifier.semantics { contentDescription = "Overview Screen" })
         }
     }

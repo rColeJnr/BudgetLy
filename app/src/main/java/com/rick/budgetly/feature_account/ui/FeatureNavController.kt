@@ -1,24 +1,17 @@
 package com.rick.budgetly.feature_account.ui
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.rick.budgetly.components.BaseBottomSheet
-import com.rick.budgetly.components.Calculator
 import com.rick.budgetly.feature_account.common.AccountsScreen
 import com.rick.budgetly.feature_account.ui.accountdetails.AccountDetailsBody
 import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditBody
 import com.rick.budgetly.feature_account.ui.accounts.AccountBody
 
-@ExperimentalMaterialApi
 @Composable
 fun AccountsNavHost() {
 
@@ -67,6 +60,5 @@ fun AccountsNavHost() {
                 navController = navController
             )
         }
-
     }
 }

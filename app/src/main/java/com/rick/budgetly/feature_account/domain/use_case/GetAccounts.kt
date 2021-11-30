@@ -27,6 +27,7 @@ class GetAccountById @Inject constructor(
     }
 }
 
+// This doesn't work, it's not well done, but i'll get to it when we write room db tests
 class GetAccountByType @Inject constructor(
     private val repository: IAccountRepository
 ){
