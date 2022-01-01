@@ -40,7 +40,7 @@ fun AccountAddEditBody(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     viewModel: AccountAddEditViewModel = hiltViewModel(),
-    ) {
+) {
 
     val context = LocalContext.current
 
