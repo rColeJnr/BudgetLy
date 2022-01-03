@@ -5,13 +5,14 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity
 data class Bill(
     @PrimaryKey val id: Int? = null,
     val title: String,
     val amount: Int,
-    val dueData: Int,
+    val dueDate: Calendar,
     val icon: Int,
     val isPaid: Boolean,
     val isArchived: Boolean

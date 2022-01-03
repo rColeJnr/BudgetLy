@@ -13,7 +13,7 @@ abstract class AccountDatabase: RoomDatabase() {
     abstract val accountDao: AccountDao
 
     companion object {
-        const val DATABASE_NAME = "ACCOUNTOFDB"
+        const val ACCOUNT_DATABASE_NAME = "ACCOUNTOFDB"
     }
 
 }

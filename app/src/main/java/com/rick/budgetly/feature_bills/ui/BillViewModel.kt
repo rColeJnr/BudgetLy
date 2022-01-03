@@ -12,7 +12,8 @@ class BillViewModel: ViewModel(), BaseLogic<BillEvents> {
 
     internal val title = mutableStateOf("")
     internal val amount = mutableStateOf(0)
-    internal val dueDate = mutableStateOf("Todays date")
+    internal val dueDate = mutableStateOf(0L)
+
 
     override fun onEvent(event: BillEvents) {
         when(event){

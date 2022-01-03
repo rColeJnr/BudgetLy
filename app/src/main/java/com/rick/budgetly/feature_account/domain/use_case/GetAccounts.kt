@@ -2,14 +2,9 @@ package com.rick.budgetly.feature_account.domain.use_case
 
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.IAccountRepository
-import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
-import com.rick.budgetly.feature_account.ui.accounts.AccountsViewModel
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-//TODO Forward retrieved data to viewModel
-
-class GetAccounts @Inject constructor(
+class GetAccounts (
     private val repository: IAccountRepository
 ) {
 
@@ -19,7 +14,7 @@ class GetAccounts @Inject constructor(
 
 }
 
-class GetAccountById @Inject constructor(
+class GetAccountById (
     private val repository: IAccountRepository
 ){
     suspend operator fun invoke(id: Int): Account? {
@@ -28,7 +23,7 @@ class GetAccountById @Inject constructor(
 }
 
 // This doesn't work, it's not well done, but i'll get to it when we write room db tests
-class GetAccountByType @Inject constructor(
+class GetAccountByType (
     private val repository: IAccountRepository
 ){
     suspend operator fun invoke(type: String): Flow<List<Account>> {

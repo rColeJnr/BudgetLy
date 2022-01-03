@@ -8,7 +8,7 @@ import com.rick.budgetly.feature_account.domain.IQuoteApi
 import com.rick.budgetly.feature_account.domain.IQuoteRepository
 import com.rick.budgetly.feature_account.domain.use_case.*
 import com.rick.budgetly.feature_account.persistence.AccountDatabase
-import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.DATABASE_NAME
+import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.ACCOUNT_DATABASE_NAME
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
 import com.rick.budgetly.feature_account.persistence.QuoteRepositoryImpl
 import dagger.Module
@@ -30,7 +30,7 @@ object AccountModule {
         Room.databaseBuilder(
             app,
             AccountDatabase::class.java,
-            DATABASE_NAME
+            ACCOUNT_DATABASE_NAME
         ).build()
 
     @Provides
@@ -55,11 +55,11 @@ object AccountModule {
 
     @Provides
     @Singleton
-    fun quoteAPI(retrofit: Retrofit) = retrofit.create(IQuoteApi::class.java)
+    fun quoteAPI(retrofit: Retrofit): IQuoteApi = retrofit.create(IQuoteApi::class.java)
 
     @Provides
     @Singleton
-    fun retrofit() = Retrofit.Builder()
+    fun retrofit(): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.kanye.rest")
         .client(OkHttpClient())
         .addConverterFactory(GsonConverterFactory.create())
