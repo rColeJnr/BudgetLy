@@ -6,5 +6,5 @@ import java.util.*
 
 fun validateBill(bill: Bill) {
     if (bill.title.isEmpty()) throw InvalidBillException("The name of the bill can't be empty")
-//    if (bill.dueDate < 0) throw InvalidBillException("Invalid due date")
+    if (bill.amount <= 0) throw InvalidBillException("The amount of the bill can't be less or equal to zero")
 }

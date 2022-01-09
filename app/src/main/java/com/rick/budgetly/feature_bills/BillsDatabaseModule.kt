@@ -20,7 +20,7 @@ object BillsDatabaseModule {
 
     @Singleton
     @Provides
-    fun providesDatabase(@ApplicationContext context: Context): RoomDatabase =
+    fun providesBillDatabase(@ApplicationContext context: Context): BillDatabase =
         Room.databaseBuilder(
             context,
             BillDatabase::class.java,

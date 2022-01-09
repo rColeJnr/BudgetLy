@@ -1,5 +1,6 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -61,7 +63,8 @@ fun AccountAddEditBody(
     BaseBottomSheet(
         state = state,
         scope = scope,
-        sheetContent = { Calculator(viewModel, state = state, scope = scope) }) {
+        sheetContent = { Calculator(viewModel, state = state, scope = scope) }
+    ) {
         ScreenContent (modifier, viewModel, navController, state, scope)
         if (!state.isVisible) numero.value = ""
     }
@@ -84,7 +87,7 @@ private fun ScreenContent(
             iconsVisible = viewModel.accountTitle.value.isNotEmpty(),
             text = viewModel.accountTitle.value,
             onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },
-            icon = AccountIcon.values()[viewModel.accountIcon.value],
+            icon = AccountIcon.values()[viewModel.accountIcon.value].imageVector,
             onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },
             color = AccountColor.values()[viewModel.accountColor.value],
             onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
@@ -126,7 +129,7 @@ fun TopBarWithTextField(
     iconsVisible: Boolean,
     text: String,
     onTextChange: (String) -> Unit,
-    icon: AccountIcon,
+    icon: ImageVector,
     onIconChange: (Int) -> Unit,
     color: AccountColor,
     onColorChange: (AccountColor) -> Unit,

@@ -11,7 +11,7 @@ import java.util.*
 data class Bill(
     @PrimaryKey val id: Int? = null,
     val title: String,
-    val amount: Int,
+    val amount: Float,
     val dueDate: Calendar,
     val icon: Int,
     val isPaid: Boolean,
@@ -27,6 +27,7 @@ enum class BillIcon(val imageVector: ImageVector, val contentDescription: String
 
     companion object {
         val Default = INTERNET
+        const val Position = 0
     }
 
 }

@@ -24,7 +24,7 @@ class AccountAddEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ): ViewModel(), BaseLogic<AccountAddEditEvents> {
 
-    var currentAccount: Account? = null
+    private var currentAccount: Account? = null
 
     internal val accountColor = mutableStateOf(AccountColor.Position)
 
@@ -44,7 +44,7 @@ class AccountAddEditViewModel @Inject constructor(
 
     internal  val accountInTotalStatus = mutableStateOf(true)
 
-    internal var accountId: Int? = null
+    private var accountId: Int? = null
 
     private  val accountMain = mutableStateOf(false)
 
