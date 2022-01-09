@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 enum class BudgetLyScreen(val icon: ImageVector) {
     Accounts (icon = Icons.Default.AttachMoney),
     Bills (icon = Icons.Default.MoneyOff),
-    Categories (icon = Icons.Default.Category);
+    Settings (icon = Icons.Default.Settings);
 //    TODO categories,
 //    TODO Overview
 
@@ -17,7 +17,7 @@ enum class BudgetLyScreen(val icon: ImageVector) {
             when (route?.substringBefore("/")){
                 Accounts.name -> Accounts
                 Bills.name -> Bills
-                Categories.name -> Categories
+                Settings.name -> Settings
                 null -> Accounts
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }

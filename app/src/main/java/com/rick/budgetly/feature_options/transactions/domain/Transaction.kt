@@ -3,6 +3,7 @@ package com.rick.budgetly.feature_options.transactions.domain
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.lang.Exception
 import java.util.*
 
 @Entity
@@ -16,8 +17,10 @@ data class Transaction(
 )
 
 enum class TransactionType(val type: String){
-    Transfer("Transfer"),
-    Payment("Payment"),
-    Deposit("Deposit"),
-    Withdraw("Withdraw")
+    TRANSFER("Transfer"),
+    PAYMENT("Payment"),
+    DEPOSIT("Deposit"),
+    WITHDRAW("Withdraw")
 }
+
+class TransactionException(message: String): Exception(message)
