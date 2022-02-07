@@ -1,6 +1,5 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,7 +30,7 @@ import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountA
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
 import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
-import com.rick.budgetly.feature_account.ui.components.AccountInputText
+import com.rick.budgetly.feature_account.ui.components.DefaultInputText
 import com.rick.budgetly.feature_account.ui.util.TestTags
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -62,7 +61,6 @@ fun AccountAddEditBody(
     val scope = rememberCoroutineScope()
     BaseBottomSheet(
         state = state,
-        scope = scope,
         sheetContent = { Calculator(viewModel, state = state, scope = scope) }
     ) {
         ScreenContent (modifier, viewModel, navController, state, scope)
@@ -79,6 +77,10 @@ private fun ScreenContent(
     state: ModalBottomSheetState,
     scope: CoroutineScope,
 ) {
+    val iconList = mutableListOf<ImageVector>()
+    for (icon in AccountIcon.values()){
+        iconList.add(icon.imageVector)
+    }
     Column(
         modifier = modifier
             .fillMaxHeight(),
@@ -88,6 +90,7 @@ private fun ScreenContent(
             text = viewModel.accountTitle.value,
             onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },
             icon = AccountIcon.values()[viewModel.accountIcon.value].imageVector,
+            iconList = iconList,
             onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },
             color = AccountColor.values()[viewModel.accountColor.value],
             onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
@@ -129,6 +132,7 @@ fun TopBarWithTextField(
     iconsVisible: Boolean,
     text: String,
     onTextChange: (String) -> Unit,
+    iconList: List<ImageVector>,
     icon: ImageVector,
     onIconChange: (Int) -> Unit,
     color: AccountColor,
@@ -160,7 +164,7 @@ fun TopBarWithTextField(
                     .padding(end = 4.dp)
             )
         }
-        AccountInputText(
+        DefaultInputText(
             text = text,
             onTextChange = onTextChange,
             testTag = TestTags.newAccountTitle
@@ -169,6 +173,7 @@ fun TopBarWithTextField(
             Column {
                 // I should have just one animated row
                 AnimatedIconRow(
+                    iconList = iconList,
                     icon = icon,
                     onIconChange = onIconChange,
                     modifier = Modifier.padding(top = 8.dp)

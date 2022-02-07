@@ -18,7 +18,7 @@ fun BaseRow(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     title: String,
-    currency: String,
+    bottomRowText: String,
     balance: Float,
 ) {
     val formattedAmount = formatAmount(balance)
@@ -39,7 +39,7 @@ fun BaseRow(
                     style = typography.body1
                 )
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    Text(text = currency, style = typography.subtitle1)
+                    Text(text = bottomRowText, style = typography.subtitle1)
                 }
             }
             Spacer(modifier = Modifier.weight(1f))

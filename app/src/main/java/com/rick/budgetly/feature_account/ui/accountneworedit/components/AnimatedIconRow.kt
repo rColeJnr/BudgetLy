@@ -83,6 +83,7 @@ fun SelectableColorButton(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedIconRow(
+    iconList: List<ImageVector>,
     icon: ImageVector,
     onIconChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -96,11 +97,7 @@ fun AnimatedIconRow(
             enter = enter,
             exit = exit,
         ) {
-            val list: MutableList<ImageVector> = mutableListOf()
-            for (icon in AccountIcon.values()){
-                list.add(icon.imageVector)
-            }
-            IconRow(icon, list, onIconChange)
+            IconRow(icon, iconList, onIconChange)
         }
     }
 }
@@ -152,7 +149,7 @@ fun SelectableIconButton(
                         .height(1.dp)
                         .background(tint)
                 )
-            } else Spacer(Modifier.height(4.dp))
+            } else Spacer(Modifier.height(2.dp))
         }
     }
 }

@@ -55,12 +55,9 @@ class BudgetLyNavHostTest {
     fun budgetLyNavHost_navigateToOverview_callingNavigate() {
         runBlocking {
             withContext(Dispatchers.Main) {
-                navController.navigate(BudgetLyScreen.Transactions.name)
+                navController.navigate(BudgetLyScreen.Bills.name)
             }
         }
-        composeRule
-            .onNodeWithContentDescription("Transactions Screen")
-            .assertIsDisplayed()
     }
 
 }

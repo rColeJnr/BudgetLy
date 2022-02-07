@@ -23,11 +23,15 @@ enum class BillIcon(val imageVector: ImageVector, val contentDescription: String
     TV(Icons.Default.Tv, "TvIcon"),
     RENT(Icons.Default.House, "HouseIcon"),
     PHONE(Icons.Default.NetworkCell, "PhoneIcon"),
-    LOAN(Icons.Default.MoneyOff, "LoanIcon");
+    LOAN(Icons.Default.MoneyOff, "LoanIcon"),
+    LIGHT(Icons.Default.Lightbulb, "LightBulbIcon"),
+    GAS(Icons.Default.LocalGasStation, "GasIcon"),
+    BUS(Icons.Default.CarRental, "CarIcon"),
+    BOOKS(Icons.Default.LibraryBooks, "BookIcon");
 
     companion object {
         val Default = INTERNET
-        const val Position = 0
+        const val Position = 4
     }
 
 }

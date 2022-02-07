@@ -26,12 +26,12 @@ class BillViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
 
-    var currentBill: Bill? = null
+    private var viewModelBill: Bill? = null
     private var deletedBill: Bill? = null
 
     internal val billTitle = mutableStateOf("")
-    internal val billAmount = mutableStateOf(0f)
-    internal val billDueDate = mutableStateOf(Calendar.getInstance())
+    internal val billAmount = mutableStateOf("")
+    internal val billDueDate = Calendar.getInstance()
     internal val billIcon = mutableStateOf(BillIcon.Position)
     internal val billIsPaid = mutableStateOf(false)
     internal val billArchived = mutableStateOf(false)
@@ -53,71 +53,79 @@ class BillViewModel @Inject constructor(
             is BillEvents.ChangeIsArchived -> changeIsArchived(event.isArchived)
             is BillEvents.ChangeIsPaid -> changeIsPaid(event.isPaid)
             is BillEvents.EnteredAmount -> enteredAmount(event.amount)
-            is BillEvents.EnteredDueDate -> enteredDueDate(event.dueDate)
+            is BillEvents.EnteredDueDate -> enteredDueDate(event.year, event.month, event.day)
             is BillEvents.EnteredTitle -> enteredTitle(event.billTitle)
-            is BillEvents.BillSelected -> billSelected(event.bill)
             is BillEvents.DeleteBill -> deleteBill(event.bill)
             BillEvents.SaveBill -> saveBill()
             BillEvents.UpdateBill -> updateBill()
             BillEvents.RestoreBill -> restoreBill()
+            BillEvents.CancelNewBill -> cancelBill()
         }
+    }
+
+    private fun cancelBill(){
+
+        billTitle.value = ""
+        billAmount.value = ""
+        billIcon.value = BillIcon.Position
+        billIsPaid.value = false
+        billArchived.value = false
+
     }
 
     private fun restoreBill() {
         launch {
-            billUseCases.createBill( deletedBill ?: return@launch )
+            billUseCases.createBill( deletedBill!!)
             deletedBill = null
         }
-    }
-
-    private fun billSelected(bill: Bill) {
-// Unnecessary
     }
 
     private fun deleteBill(bill: Bill) {
         launch {
             deletedBill = bill
+            billUseCases.removeBill(bill = bill)
         }
     }
 
     private fun updateBill(){
-        currentBill = Bill(
+        viewModelBill = Bill(
             title = billTitle.value,
-            amount = billAmount.value,
-            dueDate = billDueDate.value,
+            amount = billAmount.value.toFloat(),
+            dueDate = Calendar.getInstance().apply { timeInMillis = 457195L },
             icon = billIcon.value,
             isPaid = billIsPaid.value,
             isArchived = billArchived.value
         )
         launch {
-            billUseCases.updateBill(bill = currentBill!!)
+            billUseCases.updateBill(bill = viewModelBill!!)
         }
+        cancelBill()
     }
 
     private fun saveBill() {
-        currentBill = Bill(
+        viewModelBill = Bill(
             title = billTitle.value,
-            amount = billAmount.value,
-            dueDate = billDueDate.value,
+            amount = billAmount.value.toFloat(),
+            dueDate = Calendar.getInstance().apply { timeInMillis = 457195L },
             icon = billIcon.value,
             isPaid = billIsPaid.value,
             isArchived = billArchived.value
         )
         launch {
-            billUseCases.createBill(bill = currentBill!!)
+            billUseCases.createBill(bill = viewModelBill!!)
         }
+        cancelBill()
     }
 
     private fun enteredTitle(title: String) {
         billTitle.value = title
     }
 
-    private fun enteredDueDate(dueData: Long) {
-        val date = Calendar.getInstance().apply { timeInMillis = dueData }
-        billDueDate.value = date
+    private fun enteredDueDate(year: Int, month: Int, day: Int) {
+        billDueDate.set(year, month, day)
     }
 
-    private fun enteredAmount(amount: Float) {
+    private fun enteredAmount(amount: String) {
         billAmount.value = amount
     }
 

@@ -2,7 +2,6 @@ package com.rick.budgetly.feature_account.ui.accountneworedit.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MergeType
@@ -11,12 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.rick.budgetly.components.TextDropdownMenu
 import com.rick.budgetly.feature_account.domain.AccountCurrency
 import com.rick.budgetly.feature_account.domain.AccountType
-import com.rick.budgetly.feature_account.ui.components.AccountInputText
+import com.rick.budgetly.feature_account.ui.components.DefaultInputText
 import com.rick.budgetly.feature_account.ui.util.TestTags
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -86,7 +84,7 @@ fun AccountAddEditDetails(
             Spacer(modifier = Modifier.height(24.dp))
             Divider()
 
-            AccountInputText(
+            DefaultInputText(
                 text = description,
                 onTextChange = onDescriptionChange,
                 label = "Description",

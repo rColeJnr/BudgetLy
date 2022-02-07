@@ -123,7 +123,7 @@ private fun AccountList(
                     .semantics { contentDescription = "AccountRow" },
                 icon = AccountIcon.values()[it.icon].imageVector,
                 title = it.title,
-                currency = it.currency,
+                bottomRowText = it.currency,
                 balance = it.balance.toFloat()
             )
         }

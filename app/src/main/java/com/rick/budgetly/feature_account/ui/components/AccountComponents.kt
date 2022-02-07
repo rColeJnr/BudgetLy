@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import com.rick.budgetly.ui.theme.toolBar
 
@@ -41,7 +42,7 @@ fun AccountTopBar(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun AccountInputText(
+fun DefaultInputText(
     modifier: Modifier = Modifier,
     text: String,
     label: String = "",
