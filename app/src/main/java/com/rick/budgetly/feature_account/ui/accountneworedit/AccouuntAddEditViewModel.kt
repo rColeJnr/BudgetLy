@@ -6,11 +6,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rick.budgetly.BudgetLyContainer
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.*
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
-import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -48,7 +48,7 @@ class AccountAddEditViewModel @Inject constructor(
 
     private  val accountMain = mutableStateOf(false)
 
-    private val _eventFlow = MutableSharedFlow<AccountsContainer>()
+    private val _eventFlow = MutableSharedFlow<BudgetLyContainer>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     override fun onEvent(event: AccountAddEditEvents) {
@@ -146,10 +146,10 @@ class AccountAddEditViewModel @Inject constructor(
         )
         try{
             accountUseCases.saveAccount(currentAccount!!)
-            _eventFlow.emit(AccountsContainer.ShowSuccess)
+            _eventFlow.emit(BudgetLyContainer.ShowSuccess)
         } catch (e: InvalidAccountException){
             _eventFlow.emit(
-                AccountsContainer.ShowError(message = e.message ?: "Couldn't save note")
+                BudgetLyContainer.ShowError(message = e.message ?: "Couldn't save note")
             )
         }
         currentAccount = null

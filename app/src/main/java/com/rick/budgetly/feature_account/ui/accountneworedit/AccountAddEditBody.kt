@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.rick.budgetly.BudgetLyContainer
 import com.rick.budgetly.R
 import com.rick.budgetly.components.BaseBottomSheet
 import com.rick.budgetly.components.Calculator
@@ -29,7 +30,6 @@ import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountAddEditDetails
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
-import com.rick.budgetly.feature_account.ui.accounts.AccountsContainer
 import com.rick.budgetly.feature_account.ui.components.DefaultInputText
 import com.rick.budgetly.feature_account.ui.util.TestTags
 import kotlinx.coroutines.CoroutineScope
@@ -48,10 +48,10 @@ fun AccountAddEditBody(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is AccountsContainer.ShowError -> {
+                is BudgetLyContainer.ShowError -> {
                     Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                 }
-                is AccountsContainer.ShowSuccess ->
+                is BudgetLyContainer.ShowSuccess ->
                     navController.navigateUp()
             }
         }
@@ -61,6 +61,8 @@ fun AccountAddEditBody(
     val scope = rememberCoroutineScope()
     BaseBottomSheet(
         state = state,
+        scope = scope,
+        navController = navController,
         sheetContent = { Calculator(viewModel, state = state, scope = scope) }
     ) {
         ScreenContent (modifier, viewModel, navController, state, scope)

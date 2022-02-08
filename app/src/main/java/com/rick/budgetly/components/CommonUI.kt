@@ -19,6 +19,7 @@ fun BaseRow(
     icon: ImageVector,
     title: String,
     bottomRowText: String,
+    midRowText: String = "",
     balance: Float,
 ) {
     val formattedAmount = formatAmount(balance)
@@ -28,12 +29,13 @@ fun BaseRow(
         .fillMaxWidth()
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             val typography = MaterialTheme.typography
             Icon(imageVector = icon, contentDescription = title, modifier = Modifier.padding(start = 8.dp))
             Spacer(modifier = Modifier.width(8.dp))
-            Column {
+            Column(Modifier.wrapContentWidth()) {
                 Text(
                     text = title,
                     style = typography.body1
@@ -42,6 +44,14 @@ fun BaseRow(
                     Text(text = bottomRowText, style = typography.subtitle1)
                 }
             }
+
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = midRowText,
+                style = typography.h6,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = formattedAmount,

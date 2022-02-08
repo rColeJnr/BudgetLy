@@ -72,7 +72,7 @@ fun BudgetLyNavHost(
             AccountsNavHost()
         }
         composable(BudgetLyScreen.Bills.name){
-            BillsBody()
+            BillsBody(navController = navController)
         }
         composable(BudgetLyScreen.Options.name){
             OptionsNavHost()

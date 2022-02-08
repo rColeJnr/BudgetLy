@@ -98,7 +98,7 @@ private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Bottom)
-            .padding(bottom = 8.dp)
+            .padding(vertical = 8.dp)
     ) {
         Icon(imageVector = Icons.Default.PlusOne, contentDescription = "Add new account")
         Spacer(modifier = Modifier.width(8.dp))

@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,7 +22,10 @@ import com.rick.budgetly.components.IconDropdownMenu
 import com.rick.budgetly.feature_account.domain.AccountIcon
 import com.rick.budgetly.feature_account.ui.util.TestTags
 import com.rick.budgetly.feature_account.ui.util.formatAmount
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun AccountDetailsBody(
@@ -78,7 +80,7 @@ fun AccountDetailsBody(
                                     if (result == SnackbarResult.ActionPerformed) {
                                         viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
                                     }
-                                    delay(300)
+                                    delay(250)
                                 }
                                 job.join()
                                 navController.navigateUp()
