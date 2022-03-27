@@ -3,7 +3,6 @@ package com.rick.budgetly.feature_account.ui.accounts
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +14,6 @@ import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import com.rick.budgetly.feature_account.domain.use_case.GetQuote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -141,6 +139,7 @@ class AccountsViewModel @Inject constructor(
 
     private fun onStop() {
         TODO("dont remember what i'm supposed to do here")
+        // for starters you could make sure that the quote is saved
     }
 
 }

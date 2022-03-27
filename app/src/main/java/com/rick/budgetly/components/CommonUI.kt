@@ -17,6 +17,7 @@ import com.rick.budgetly.feature_account.ui.util.formatAmount
 fun BaseRow(
     modifier: Modifier = Modifier,
     icon: ImageVector,
+    arrowIcon: ImageVector = Icons.Default.ChevronRight,
     title: String,
     bottomRowText: String,
     midRowText: String = "",
@@ -61,7 +62,7 @@ fun BaseRow(
             )
             Spacer(modifier = Modifier.width(8.dp))
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Icon(imageVector = Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier
+                Icon(imageVector = arrowIcon, contentDescription = null, modifier = Modifier
                     .padding(end = 12.dp)
                     .size(24.dp))
             }

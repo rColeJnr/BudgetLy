@@ -98,6 +98,7 @@ class AccountDetailsViewModel @Inject constructor(
     }
 
     private fun onRestoreAccount() {
+        // should share account with accounts viewmodel
         launch {
             accountUseCases.saveAccount(deletedAccount ?: return@launch)
             deletedAccount = null

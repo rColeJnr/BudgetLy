@@ -36,6 +36,7 @@ fun AccountBody(
     // Accounts list
     val accounts = accountsViewModel.accountsState.value.accounts
 
+    // Move this to the viewModel, and only load it once a day.
     // Api response
     val quoute = accountsViewModel.response.observeAsState().value
     if (quoute?.isSuccessful != null) {

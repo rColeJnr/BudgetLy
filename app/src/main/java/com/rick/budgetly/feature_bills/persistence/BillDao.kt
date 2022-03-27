@@ -13,7 +13,7 @@ interface BillDao {
     @Query("SELECT * FROM bill WHERE id = :id")
     fun getBillById(id: Int): Flow<Bill?>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(bill: Bill)
 
     @Update

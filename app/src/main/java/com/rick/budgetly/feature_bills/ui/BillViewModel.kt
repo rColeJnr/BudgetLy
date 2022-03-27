@@ -14,7 +14,6 @@ import com.rick.budgetly.feature_bills.domain.use_case.BillUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -32,7 +31,7 @@ class BillViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
 
-    internal var viewModelBill: MutableState<Bill?> = mutableStateOf(null)
+    private var viewModelBill: MutableState<Bill?> = mutableStateOf(null)
     private var deletedBill: Bill? = null
 
     internal val billTitle = mutableStateOf(viewModelBill.value?.title ?: "")
@@ -42,16 +41,13 @@ class BillViewModel @Inject constructor(
     internal val billIsPaid = mutableStateOf(viewModelBill.value?.isPaid ?: false)
     internal val billArchived = mutableStateOf(viewModelBill.value?.isArchived ?: false)
 
+    private var billId: Int? = null
+
     private val _billsState = mutableStateOf(BillsState())
     internal val billsState: State<BillsState> = _billsState
 
     private val _eventFlow = MutableSharedFlow<BudgetLyContainer>()
     val eventFlow = _eventFlow.asSharedFlow()
-
-    val snackbarMessage = mutableStateOf("")
-
-    val showSnackbar = mutableStateOf(false)
-
 
     init {
         billUseCases.getBills().onEach { bills ->
@@ -70,6 +66,7 @@ class BillViewModel @Inject constructor(
             is BillEvents.EnteredDueDate -> enteredDueDate(event.year, event.month, event.day)
             is BillEvents.EnteredTitle -> enteredTitle(event.billTitle)
             is BillEvents.DeleteBill -> deleteBill(event.bill)
+            is BillEvents.EditBill -> editBill(event.bill)
             BillEvents.SaveBill -> saveBill()
             BillEvents.UpdateBill -> updateBill()
             BillEvents.RestoreBill -> restoreBill()
@@ -85,7 +82,23 @@ class BillViewModel @Inject constructor(
         billIsPaid.value = false
         billArchived.value = false
         billDueDate.toInstant()
+        billId = null
 
+    }
+
+    // i don't like this fun
+    private fun editBill(bill: Bill){
+        billTitle.value = bill.title
+        billAmount.value = bill.amount.toString()
+        billDueDate.set(
+            bill.dueDate.get(Calendar.YEAR),
+            bill.dueDate.get(Calendar.MONTH),
+            bill.dueDate.get(Calendar.DAY_OF_MONTH)
+        )
+        billIcon.value = bill.icon
+        billIsPaid.value = bill.isPaid
+        billArchived.value = bill.isArchived
+        billId = bill.id
     }
 
     private fun restoreBill() {
@@ -95,15 +108,9 @@ class BillViewModel @Inject constructor(
         }
     }
     private fun deleteBill(bill: Bill) = viewModelScope.launch {
-        launch {
-            deletedBill = bill
-            billUseCases.removeBill(bill = bill)
-            _eventFlow.emit(BudgetLyContainer.ShowRestoreSnackbar("bill deleted"))
-
-            // delay time to display snackbar with restore option
-            delay(250)
-        }.join()
-        showSnackbar.value = false
+        deletedBill = bill
+        billUseCases.removeBill(bill = bill)
+        _eventFlow.emit(BudgetLyContainer.ShowRestoreSnackbar("bill deleted"))
     }
 
 
@@ -135,7 +142,8 @@ class BillViewModel @Inject constructor(
             dueDate = billDueDate,
             icon = billIcon.value,
             isPaid = billIsPaid.value,
-            isArchived = billArchived.value
+            isArchived = billArchived.value,
+            id = billId
         )
         try {
             billUseCases.createBill(bill = viewModelBill.value!!)
@@ -143,7 +151,7 @@ class BillViewModel @Inject constructor(
         } catch (e: InvalidBillException) {
             _eventFlow.emit(
                 BudgetLyContainer
-                    .ShowError(message = e.message ?: "Couldn't create bill")
+                    .ShowError(message = e.message ?: "Couldn't save bill")
             )
         }
 
@@ -168,6 +176,7 @@ class BillViewModel @Inject constructor(
 
     private fun changeIsArchived(archived: Boolean) {
         billArchived.value = !archived
+        updateBill()
     }
 
     private fun changeBillIcon(icon: Int) {

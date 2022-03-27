@@ -71,13 +71,10 @@ fun AccountDetailsBody(
                             viewModel.onEvent(
                                 AccountDetailsEvents.DeleteAccount(viewModel.currentAccount!!)
                             )
+                            // We then share data between viewModels, i dont' like this no bit.
                             CoroutineScope(Dispatchers.Main).launch{
                                 val job = scope.launch {
-                                    val result = scaffoldSate.snackbarHostState.showSnackbar(
-                                        message = "Account deleted",
-                                        actionLabel = "Undo"
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
+                                    simpleSnackbar(scaffoldSate, "Account deleted", "Undo"){
                                         viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
                                     }
                                     delay(250)
@@ -122,6 +119,22 @@ fun AccountDetailsBody(
             }
         }
 
+    }
+}
+
+suspend fun simpleSnackbar(
+    scaffoldSate: ScaffoldState,
+    message: String,
+    actionLabel: String,
+    onDismiss: () -> Unit
+) {
+    val result = scaffoldSate.snackbarHostState.showSnackbar(
+        message = message,
+        actionLabel = actionLabel,
+        duration = SnackbarDuration.Long
+    )
+    if (result == SnackbarResult.ActionPerformed) {
+        onDismiss()
     }
 }
 
