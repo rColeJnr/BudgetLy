@@ -38,13 +38,13 @@ fun OptionsBody(viewModel: OptionsViewModel = hiltViewModel(), navController: Na
 
             }
             OptionsRow(optionText = "Categories", optionImage = Icons.Default.Category, contentDescp = "categories"){
-
+                navController.navigate(OptionsScreen.Categories.name)
             }
             OptionsRow(optionText = "Overview", optionImage = Icons.Default.Analytics, contentDescp = "overview"){
-
+                navController.navigate(OptionsScreen.Overview.name)
             }
             OptionsRow(optionText = "Transactions", optionImage = Icons.Default.History, contentDescp = "transactions"){
-
+                navController.navigate(OptionsScreen.Transactions.name)
             }
         }
     }
