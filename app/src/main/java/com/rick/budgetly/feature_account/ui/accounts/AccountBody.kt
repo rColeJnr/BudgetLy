@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
@@ -35,13 +34,6 @@ fun AccountBody(
 ) {
     // Accounts list
     val accounts = accountsViewModel.accountsState.value.accounts
-
-    // Move this to the viewModel, and only load it once a day.
-    // Api response
-    val quoute = accountsViewModel.response.observeAsState().value
-    if (quoute?.isSuccessful != null) {
-        accountsViewModel.quote.value = quoute.body()?.quote!!
-    }
 
     Surface(
         Modifier
@@ -71,7 +63,7 @@ fun AccountBody(
             }
 
             Text(
-                text = accountsViewModel.quote.value,
+                text = accountsViewModel.accountsState.value.quote,
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .padding(8.dp)

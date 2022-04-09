@@ -3,13 +3,11 @@ package com.rick.budgetly.feature_account.ui.accounts
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.AccountType
-import com.rick.budgetly.feature_account.domain.Quote
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import com.rick.budgetly.feature_account.domain.use_case.GetQuote
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +16,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -37,8 +34,6 @@ class AccountsViewModel @Inject constructor(
     private val _accountsState = mutableStateOf(AccountsState())
     internal val accountsState: State<AccountsState> = _accountsState
 
-    val response: MutableLiveData<Response<Quote>> = MutableLiveData()
-    internal val quote = mutableStateOf("Random Kanye Quote")
     init {
         // Get accounts
         onStart()
@@ -67,12 +62,18 @@ class AccountsViewModel @Inject constructor(
 
     private fun getQuote() {
         viewModelScope.launch {
-            try {
-                response.value = getQuote.invoke()
-            } catch (e: Exception){
-                Log.d("quote", e.message!!)
+            if (_accountsState.value.quote.isBlank()){
+                try {
+                    val response = getQuote.invoke().body()
+                    // Move this to the viewModel, and only load it once a day.
+                    // Api response
+                    _accountsState.value = accountsState.value.copy(
+                        quote = response!!.quote
+                    )
+                } catch (e: Exception) {
+                    Log.d("quote", e.message!!)
+                }
             }
-
         }
     }
 
