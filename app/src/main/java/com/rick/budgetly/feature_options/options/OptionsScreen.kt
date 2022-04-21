@@ -4,7 +4,8 @@ enum class OptionsScreen {
     Options,
     Overview,
     Transactions,
-    Categories;
+    Categories,
+    Settings;
 
     companion object {
         // idk how this keeps track of the backstack
@@ -14,6 +15,7 @@ enum class OptionsScreen {
                 Overview.name -> Overview
                 Transactions.name -> Transactions
                 Categories.name -> Categories
+                Settings.name -> Settings
                 null -> Options
                 else -> throw IllegalArgumentException("Route $route is not recognized")
             }

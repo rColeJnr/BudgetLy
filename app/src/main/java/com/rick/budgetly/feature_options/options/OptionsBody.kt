@@ -35,7 +35,7 @@ fun OptionsBody(viewModel: OptionsViewModel = hiltViewModel(), navController: Na
             UserDetailsBox(name = "aldfjd", isActive = true, profilePic = Icons.Default.Person)
 
             OptionsRow(optionText = "Options", optionImage = Icons.Default.Settings, contentDescp = "options"){
-
+                navController.navigate(OptionsScreen.Settings.name)
             }
             OptionsRow(optionText = "Categories", optionImage = Icons.Default.Category, contentDescp = "categories"){
                 navController.navigate(OptionsScreen.Categories.name)
@@ -91,7 +91,7 @@ fun UserDetailsBox(
 fun OptionsRow(
     optionText: String,
     optionImage: ImageVector,
-    contentDescp: String,
+    contentDescp: String ="",
     onClick: () -> Unit
 ) {
     Box(modifier = Modifier

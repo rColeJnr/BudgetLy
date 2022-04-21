@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rick.budgetly.BudgetLyScreen
 import com.rick.budgetly.feature_options.categories.ui.CategoriesBody
 import com.rick.budgetly.feature_options.overview.OverviewBody
+import com.rick.budgetly.feature_options.settings.ui.SettingsBody
 import com.rick.budgetly.feature_options.transactions.ui.TransactionsBody
 
 @Composable
@@ -25,6 +26,9 @@ fun OptionsNavHost() {
         }
         composable(OptionsScreen.Overview.name){
             OverviewBody(navController = navController)
+        }
+        composable(OptionsScreen.Settings.name){
+            SettingsBody(navController = navController)
         }
     }
 }
