@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.rick.budgetly.feature_options.overview.AnimatedPieChart
 
 //1137
 @Composable
@@ -48,15 +49,6 @@ fun OptionsBody(viewModel: OptionsViewModel = hiltViewModel(), navController: Na
             }
         }
     }
-}
-
-@Composable
-fun AnimatedPieChart() {
-    Box(
-        Modifier
-            .padding(vertical = 24.dp)
-            .size(255.dp)
-            .background(color = Color.White, shape = RoundedCornerShape(360.dp)))
 }
 
 @Composable

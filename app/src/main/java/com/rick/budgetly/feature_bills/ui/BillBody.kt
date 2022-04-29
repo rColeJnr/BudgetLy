@@ -64,7 +64,11 @@ fun BillsBody(
                 ).show()
                 BudgetLyContainer.ShowSuccess -> navController.navigateUp()
                 is BudgetLyContainer.ShowRestoreSnackbar -> {
-                    simpleSnackbar(scaffoldSate = scaffoldState, message = event.message, actionLabel = "Undo"){
+                    simpleSnackbar(
+                        scaffoldSate = scaffoldState,
+                        message = event.message,
+                        actionLabel = "Undo"
+                    ) {
                         viewModel.onEvent(BillEvents.RestoreBill)
                     }
                 }
@@ -77,12 +81,14 @@ fun BillsBody(
             state = modalBottomSheetState,
             scope = scope,
             navController = navController,
-            sheetContent = { NewBillSheet(
-                modifier,
-                viewModel,
-                modalBottomSheetState,
-                scope,
-            ) }
+            sheetContent = {
+                NewBillSheet(
+                    modifier,
+                    viewModel,
+                    modalBottomSheetState,
+                    scope,
+                )
+            }
         ) {
             ScreenContent(
                 Modifier,
