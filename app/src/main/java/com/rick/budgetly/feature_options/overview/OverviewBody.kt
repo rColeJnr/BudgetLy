@@ -2,7 +2,10 @@ package com.rick.budgetly.feature_options.overview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -20,21 +23,21 @@ import androidx.navigation.NavHostController
 fun OverviewBody(navController: NavHostController) {
 
     Surface() {
-        Column {
+        Column(Modifier.scrollable(rememberScrollState(), orientation = Orientation.Vertical), horizontalAlignment = Alignment.CenterHorizontally) {
             AnimatedPieChart()
-            OverviewRow(title = "Account MZN", amount = 454f, percentage = 454f) {
+            OverviewRow(title = "Account MZN", amount = 454f, percentage = 7.5f) {
 
             }
-            OverviewRow(title = "AccountRuble", amount = 454f, percentage = 454f) {
+            OverviewRow(title = "AccountRuble", amount = 454f, percentage = 45.4f) {
 
             }
-            OverviewRow(title = "Total Money", amount = 454f, percentage = 454f) {
+            OverviewRow(title = "Total Money", amount = 454f, percentage = 5f) {
 
             }
-            OverviewRow(title = "Bills", amount = 454f, percentage = 454f) {
+            OverviewRow(title = "Bills", amount = 454f, percentage = 4.5f) {
 
             }
-            OverviewRow(title = "Categories", amount = 454f, percentage = 454f) {
+            OverviewRow(title = "Categories", amount = 454f, percentage = 54.2f) {
                 Icon(imageVector = Icons.Default.ArrowRight, contentDescription = "show categories")
             }
         }
@@ -46,7 +49,7 @@ fun OverviewBody(navController: NavHostController) {
 fun AnimatedPieChart() {
     Box(
         Modifier
-            .padding(vertical = 24.dp)
+            .padding(vertical = 20.dp)
             .size(255.dp)
             .background(color = Color.White, shape = RoundedCornerShape(360.dp)))
 }

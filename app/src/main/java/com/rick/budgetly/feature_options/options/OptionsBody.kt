@@ -1,7 +1,6 @@
 package com.rick.budgetly.feature_options.options
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -32,7 +31,6 @@ fun OptionsBody(viewModel: OptionsViewModel = hiltViewModel(), navController: Na
         ) {
             // am going to bed, love me, you.
             AnimatedPieChart()
-
             UserDetailsBox(name = "aldfjd", isActive = true, profilePic = Icons.Default.Person)
 
             OptionsRow(optionText = "Options", optionImage = Icons.Default.Settings, contentDescp = "options"){
@@ -58,7 +56,7 @@ fun UserDetailsBox(
     profilePic: ImageVector
 ) {
     Box(modifier = Modifier
-        .padding(vertical = 32.dp, horizontal = 8.dp)
+        .padding(top = 0.dp, bottom = 16.dp, start = 8.dp, end = 8.dp)
         .height(80.dp)
         .border(2.dp, color = Color.DarkGray, shape = RoundedCornerShape(16.dp))
     ){
@@ -66,7 +64,7 @@ fun UserDetailsBox(
             Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(12.dp),
+                .padding(horizontal = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -87,7 +85,7 @@ fun OptionsRow(
     onClick: () -> Unit
 ) {
     Box(modifier = Modifier
-        .padding(8.dp)
+        .padding(bottom = 8.dp)
         .border(
             width = 2.dp,
             color = Color.DarkGray,
