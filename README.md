@@ -5,8 +5,8 @@ The original was good and worked just fine, but with not so much time to refine 
 Being that I wanted to dive into Jetpack compose and Clean Architecture I decided to make the app again in a way where I will feel proud of the final product
 
 Everything is benig build with Jetpack Compose.
-Tecnologies used to the moment:
+Technologies used to the moment:
   - Room Database;
   - Retrofit2;
-  - Dependecy injection (Dagger 2)
+  - Dependency injection (Dagger 2)
   - Kotlin Coroutine, LiveData and Flow
