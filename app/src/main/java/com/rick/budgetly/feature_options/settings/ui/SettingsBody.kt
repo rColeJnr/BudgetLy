@@ -1,5 +1,6 @@
 package com.rick.budgetly.feature_options.settings.ui
 
+import UserDetailsBox
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,79 +12,80 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rick.budgetly.feature_options.options.UserDetailsBox
+import com.rick.budgetly.R
 
 @Composable
 fun SettingsBody(navController: NavController) {
 
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceBetween) {
-        UserDetailsBox(name = "Name", isActive = true, profilePic = Icons.Default.Person)
-        SettingAndIcon(setting = "Dark/Light Mode", icon = {
+        UserDetailsBox(name = stringResource(id = R.string.name), isActive = true, profilePic = Icons.Default.Person)
+        SettingAndIcon(setting = stringResource(R.string.dark_light_mode), icon = {
             Switch(
                 checked = true,
                 onCheckedChange = {}
             )
         }) {}
         SettingAndIcon(
-            setting = "Currency",
+            setting = stringResource(id = R.string.Currency),
             icon = {
                 Icon(
                     imageVector = Icons.Default.Explore,
-                    contentDescription = "currency"
+                    contentDescription = stringResource(id = R.string.Currency)
                 )
             }) {}
         SettingAndIcon(
-            setting = "First screen",
-            icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "screen") }) {}
+            setting = stringResource(R.string.first_screen),
+            icon = { Icon(imageVector = Icons.Default.Home, contentDescription = stringResource(R.string.screen)) }) {}
         SettingAndIcon(
-            setting = "Push notifications",
+            setting = stringResource(R.string.push_notification),
             icon = {
                 Icon(
                     imageVector = Icons.Default.Notifications,
-                    contentDescription = "push"
+                    contentDescription = stringResource(id = R.string.push_notification)
                 )
             }) {}
         SettingAndIcon(
-            setting = "Email notifications",
+            setting = stringResource(R.string.email_notifications),
             icon = {
                 Icon(
                     imageVector = Icons.Default.NotificationsActive,
-                    contentDescription = "email"
+                    contentDescription = stringResource(id = R.string.email_notifications)
                 )
             }) {}
         SettingAndIcon(
-            setting = "Password on/off",
+            setting = stringResource(R.string.password_on_off),
             icon = {
                 Icon(
                     imageVector = Icons.Default.Password,
-                    contentDescription = "password"
+                    contentDescription = stringResource(R.string.password_on_off)
                 )
             }) {}
-        SettingAndIcon(setting = "Offline mode", icon = {
+        SettingAndIcon(setting = stringResource(R.string.offline_mode), icon = {
             Switch(
                 checked = true,
                 onCheckedChange = {}
             )
         }) {}
-        SettingAndIcon(setting = "Delete all data", icon = {
+        SettingAndIcon(setting = stringResource(R.string.delete_data), icon = {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = "delete data"
+                contentDescription = stringResource(R.string.delete_data)
             )
         }) {}
         SettingAndIcon(
-            setting = "Language",
+            setting = stringResource(R.string.language),
             icon = {
                 Icon(
                     imageVector = Icons.Default.Language,
-                    contentDescription = "language"
+                    contentDescription = stringResource(R.string.language)
                 )
             }) {}
         SettingAndIcon(
-            setting = "Share us",
-            icon = { Icon(imageVector = Icons.Default.Share, contentDescription = "share") }) {}
+            setting = stringResource(R.string.share_us),
+            icon = { Icon(imageVector = Icons.Default.Share, contentDescription = stringResource(R.string.share_us)) }) {}
     }
 
 }

@@ -19,15 +19,15 @@ data class Bill(
 )
 
 enum class BillIcon(val imageVector: ImageVector, val contentDescription: String){
-    INTERNET(Icons.Default.NetworkWifi, "InternetIcon"),
-    TV(Icons.Default.Tv, "TvIcon"),
-    RENT(Icons.Default.House, "HouseIcon"),
-    PHONE(Icons.Default.NetworkCell, "PhoneIcon"),
-    LOAN(Icons.Default.MoneyOff, "LoanIcon"),
-    LIGHT(Icons.Default.Lightbulb, "LightBulbIcon"),
-    GAS(Icons.Default.LocalGasStation, "GasIcon"),
-    BUS(Icons.Default.CarRental, "CarIcon"),
-    BOOKS(Icons.Default.LibraryBooks, "BookIcon");
+    INTERNET(Icons.Default.NetworkWifi, Icons.Default.NetworkWifi.name),
+    TV(Icons.Default.Tv, Icons.Default.Tv.name),
+    RENT(Icons.Default.House, Icons.Default.House.name),
+    PHONE(Icons.Default.NetworkCell, Icons.Default.Phone.name),
+    LOAN(Icons.Default.MoneyOff, Icons.Default.MoneyOff.name),
+    LIGHT(Icons.Default.Lightbulb, Icons.Default.Lightbulb.name),
+    GAS(Icons.Default.LocalGasStation, Icons.Default.LocalGasStation.name),
+    BUS(Icons.Default.CarRental, Icons.Default.CarRental.name),
+    BOOKS(Icons.Default.LibraryBooks, Icons.Default.LibraryBooks.name);
 
     companion object {
         val Default = INTERNET

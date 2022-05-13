@@ -13,10 +13,12 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.rick.budgetly.feature_options.transactions.domain.Transaction
 import com.rick.budgetly.feature_options.transactions.domain.TransactionType
+import com.rick.budgetly.R
 import java.util.*
 
 val transactions = listOf(
@@ -45,7 +47,7 @@ fun TransactionsBody(navController: NavHostController) {
 
     Column(verticalArrangement = Arrangement.SpaceBetween) {
         TopAppBar(
-            title = { Text(text = "Transactions") },
+            title = { Text(text = stringResource(id = R.string.transactions)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),

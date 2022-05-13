@@ -1,11 +1,13 @@
 package com.rick.budgetly.feature_bills.ui
 
+import android.content.res.Resources
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rick.budgetly.BudgetLyContainer
+import com.rick.budgetly.R
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_bills.domain.Bill
 import com.rick.budgetly.feature_bills.domain.BillIcon
@@ -31,15 +33,16 @@ class BillViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
 
-    private var viewModelBill: MutableState<Bill?> = mutableStateOf(null)
+    private var _viewModelBill: MutableState<Bill?> = mutableStateOf(null)
+    internal val viewModelBill get() = _viewModelBill
     private var deletedBill: Bill? = null
 
-    internal val billTitle = mutableStateOf(viewModelBill.value?.title ?: "")
-    internal val billAmount = mutableStateOf("${viewModelBill.value?.amount ?: ""}")
-    internal val billDueDate = viewModelBill.value?.dueDate ?: Calendar.getInstance()
-    internal val billIcon = mutableStateOf(viewModelBill.value?.icon ?: BillIcon.Position)
-    internal val billIsPaid = mutableStateOf(viewModelBill.value?.isPaid ?: false)
-    internal val billArchived = mutableStateOf(viewModelBill.value?.isArchived ?: false)
+    internal val billTitle = mutableStateOf(_viewModelBill.value?.title ?: "")
+    internal val billAmount = mutableStateOf("${_viewModelBill.value?.amount ?: ""}")
+    internal val billDueDate = _viewModelBill.value?.dueDate ?: Calendar.getInstance()
+    internal val billIcon = mutableStateOf(_viewModelBill.value?.icon ?: BillIcon.Position)
+    internal val billIsPaid = mutableStateOf(_viewModelBill.value?.isPaid ?: false)
+    internal val billArchived = mutableStateOf(_viewModelBill.value?.isArchived ?: false)
 
     private var billId: Int? = null
 
@@ -67,11 +70,16 @@ class BillViewModel @Inject constructor(
             is BillEvents.EnteredTitle -> enteredTitle(event.billTitle)
             is BillEvents.DeleteBill -> deleteBill(event.bill)
             is BillEvents.EditBill -> editBill(event.bill)
+            is BillEvents.BillSelected -> selectedBill(event.bill)
             BillEvents.SaveBill -> saveBill()
             BillEvents.UpdateBill -> updateBill()
             BillEvents.RestoreBill -> restoreBill()
             BillEvents.CancelNewBill -> cancelBill()
         }
+    }
+
+    private fun selectedBill(bill: Bill) {
+        _viewModelBill.value = bill
     }
 
     private fun cancelBill() {
@@ -110,12 +118,13 @@ class BillViewModel @Inject constructor(
     private fun deleteBill(bill: Bill) = viewModelScope.launch {
         deletedBill = bill
         billUseCases.removeBill(bill = bill)
-        _eventFlow.emit(BudgetLyContainer.ShowRestoreSnackbar("bill deleted"))
+        _eventFlow.emit(BudgetLyContainer.ShowRestoreSnackbar(Resources.getSystem().getString(R.string.bill_deleted)))
+        _viewModelBill.value = null
     }
 
 
     private fun updateBill() = viewModelScope.launch {
-        viewModelBill.value = Bill(
+        _viewModelBill.value = Bill(
             title = billTitle.value,
             amount = billAmount.value.toFloat(),
             dueDate = billDueDate,
@@ -124,19 +133,19 @@ class BillViewModel @Inject constructor(
             isArchived = billArchived.value
         )
         try {
-            billUseCases.updateBill(bill = viewModelBill.value!!)
+            billUseCases.updateBill(bill = _viewModelBill.value!!)
             _eventFlow.emit(BudgetLyContainer.ShowSuccess)
         } catch (e: InvalidBillException) {
             _eventFlow.emit(
                 BudgetLyContainer
-                    .ShowError(message = e.message ?: "Couldn't update bill")
+                    .ShowError(message = e.message ?: Resources.getSystem().getString(R.string.failed_to_update_bill))
             )
         }
         cancelBill()
     }
 
     private fun saveBill() = launch {
-        viewModelBill.value = Bill(
+        _viewModelBill.value = Bill(
             title = billTitle.value,
             amount = billAmount.value.toFloat(),
             dueDate = billDueDate,
@@ -146,15 +155,14 @@ class BillViewModel @Inject constructor(
             id = billId
         )
         try {
-            billUseCases.createBill(bill = viewModelBill.value!!)
+            billUseCases.createBill(bill = _viewModelBill.value!!)
             _eventFlow.emit(BudgetLyContainer.ShowSuccess)
         } catch (e: InvalidBillException) {
             _eventFlow.emit(
                 BudgetLyContainer
-                    .ShowError(message = e.message ?: "Couldn't save bill")
+                    .ShowError(message = e.message ?: Resources.getSystem().getString(R.string.couldnt_save_bill))
             )
         }
-
         cancelBill()
     }
 

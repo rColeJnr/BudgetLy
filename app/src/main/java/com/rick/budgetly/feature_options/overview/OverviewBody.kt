@@ -16,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.rick.budgetly.R
 
 @Composable
 fun OverviewBody(navController: NavHostController) {
@@ -25,20 +27,20 @@ fun OverviewBody(navController: NavHostController) {
     Surface() {
         Column(Modifier.scrollable(rememberScrollState(), orientation = Orientation.Vertical), horizontalAlignment = Alignment.CenterHorizontally) {
             AnimatedPieChart()
-            OverviewRow(title = "Account MZN", amount = 454f, percentage = 7.5f) {
+            OverviewRow(title = stringResource(R.string.account_name, stringResource(id = R.string.MZN)), amount = 454f, percentage = 7.5f) {
 
             }
-            OverviewRow(title = "AccountRuble", amount = 454f, percentage = 45.4f) {
+            OverviewRow(title = stringResource(R.string.account_name, stringResource(R.string.RUBLE)), amount = 454f, percentage = 45.4f) {
 
             }
-            OverviewRow(title = "Total Money", amount = 454f, percentage = 5f) {
+            OverviewRow(title = stringResource(R.string.total_money), amount = 454f, percentage = 5f) {
 
             }
-            OverviewRow(title = "Bills", amount = 454f, percentage = 4.5f) {
+            OverviewRow(title = stringResource(R.string.bills), amount = 454f, percentage = 4.5f) {
 
             }
-            OverviewRow(title = "Categories", amount = 454f, percentage = 54.2f) {
-                Icon(imageVector = Icons.Default.ArrowRight, contentDescription = "show categories")
+            OverviewRow(title = stringResource(id = R.string.overview), amount = 454f, percentage = 54.2f) {
+                Icon(imageVector = Icons.Default.ArrowRight, contentDescription = stringResource(R.string.show_categories))
             }
         }
     }

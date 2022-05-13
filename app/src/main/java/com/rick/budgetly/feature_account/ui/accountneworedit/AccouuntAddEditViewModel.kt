@@ -1,5 +1,6 @@
 package com.rick.budgetly.feature_account.ui.accountneworedit
 
+import android.content.res.Resources
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -7,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rick.budgetly.BudgetLyContainer
+import com.rick.budgetly.R
 import com.rick.budgetly.feature_account.common.BaseLogic
 import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.*
@@ -70,7 +72,7 @@ class AccountAddEditViewModel @Inject constructor(
     init{
         viewModelScope.launch{
             val job = viewModelScope.launch(dispatcher.provideIOContext()) {
-                savedStateHandle.get<Int>("accountToEdit")?.let { it ->
+                savedStateHandle.get<Int>(Resources.getSystem().getString(R.string.account_to_edit))?.let { it ->
                     if (it != -1){
                         currentAccount = accountUseCases.getAccountById(it)
                     }
@@ -149,7 +151,7 @@ class AccountAddEditViewModel @Inject constructor(
             _eventFlow.emit(BudgetLyContainer.ShowSuccess)
         } catch (e: InvalidAccountException){
             _eventFlow.emit(
-                BudgetLyContainer.ShowError(message = e.message ?: "Couldn't save note")
+                BudgetLyContainer.ShowError(message = e.message ?: Resources.getSystem().getString(R.string.couldnt_save_account))
             )
         }
         currentAccount = null

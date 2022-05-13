@@ -37,7 +37,7 @@ fun CategoriesBody(navController: NavHostController) {
             state = modalBottomSheetState,
             scope = scope,
             navController = navController,
-            sheetContent = { /*TODO*/ }
+            sheetContent = {  }
         ) {
             LazyColumn{
                 items(listOf<Category>()){

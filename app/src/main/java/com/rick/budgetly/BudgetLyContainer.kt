@@ -6,5 +6,4 @@ sealed class BudgetLyContainer {
     data class ShowRestoreSnackbar(val message: String): BudgetLyContainer()
     object ShowSuccess: BudgetLyContainer()
 
-
 }

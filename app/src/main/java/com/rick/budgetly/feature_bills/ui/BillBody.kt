@@ -1,5 +1,6 @@
 package com.rick.budgetly.feature_bills.ui
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.budgetly.BudgetLyContainer
+import com.rick.budgetly.R
 import com.rick.budgetly.components.BaseBottomSheet
 import com.rick.budgetly.components.BaseRow
 import com.rick.budgetly.feature_account.ui.accountdetails.simpleSnackbar
@@ -29,6 +32,7 @@ import com.rick.budgetly.feature_account.ui.util.formatAmount
 import com.rick.budgetly.feature_bills.domain.Bill
 import com.rick.budgetly.feature_bills.domain.BillIcon
 import com.rick.budgetly.feature_bills.ui.components.BillDetails
+import com.rick.budgetly.feature_bills.ui.components.NewBillSheet
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
@@ -41,7 +45,7 @@ fun BillsBody(
     viewModel: BillViewModel = hiltViewModel()
 ) {
 
-    val context = LocalContext.current
+    context = LocalContext.current
 
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -50,9 +54,7 @@ fun BillsBody(
     val scaffoldState = rememberScaffoldState()
 
     val bills = viewModel.billsState.value.bills
-    val bill: MutableState<Bill?> = remember {
-        mutableStateOf(bills.firstOrNull())
-    }
+    val bill: Bill = viewModel.viewModelBill.value!!
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -62,12 +64,14 @@ fun BillsBody(
                     event.message,
                     Toast.LENGTH_SHORT
                 ).show()
-                BudgetLyContainer.ShowSuccess -> navController.navigateUp()
+
+                BudgetLyContainer.ShowSuccess -> { modalBottomSheetState.hide() }
+
                 is BudgetLyContainer.ShowRestoreSnackbar -> {
                     simpleSnackbar(
                         scaffoldSate = scaffoldState,
                         message = event.message,
-                        actionLabel = "Undo"
+                        actionLabel = context.getString(R.string.undo)
                     ) {
                         viewModel.onEvent(BillEvents.RestoreBill)
                     }
@@ -93,18 +97,18 @@ fun BillsBody(
             ScreenContent(
                 Modifier,
                 bills = bills,
-                bill = bill.value,
+                bill = bill,
                 onNewBillClick = { scope.launch { modalBottomSheetState.show() } },
                 onClickDelete = {
                     viewModel.onEvent(BillEvents.DeleteBill(it))
-                    bill.value = null
                 },
-                onBillClick = { bill.value = it },
+                onBillClick = { viewModel.onEvent(BillEvents.BillSelected(it)) },
                 onClickEdit = {
                     viewModel.onEvent(BillEvents.EditBill(it))
                     scope.launch { modalBottomSheetState.show() }
                 },
-                onClickArchive = { viewModel.onEvent(BillEvents.ChangeIsArchived(it.isArchived)) }
+                onClickArchive = {
+                    viewModel.onEvent(BillEvents.ChangeIsArchived(it.isArchived)) }
             )
         }
     }
@@ -130,11 +134,11 @@ private fun ScreenContent(
             modifier = Modifier
                 .wrapContentHeight(align = Alignment.Top),
             title = formatAmount(bills.map { bill -> bill.amount }.sum()),
-            secondTitle = "Due"
+            secondTitle = stringResource(R.string.due)
         ) {
             Icon(
                 imageVector = Icons.Default.PieChart,
-                contentDescription = "PieIcon",
+                contentDescription = Icons.Default.PieChart.name,
                 modifier = Modifier
                     .padding(end = 4.dp)
                     .size(26.dp)
@@ -180,14 +184,14 @@ fun BillsList(
                     .clickable {
                         onBillClick(it)
                     }
-                    .semantics { contentDescription = "BillRow" },
+                    .semantics { contentDescription = context.getString(R.string.bill_row) },
                 icon = BillIcon.values()[it.icon].imageVector,
                 arrowIcon = Icons.Default.KeyboardArrowUp,
                 title = it.title,
                 bottomRowText = "${it.dueDate.get(Calendar.DAY_OF_MONTH)} " +
                         "${it.dueDate.get(Calendar.MONTH)} " +
                         "${it.dueDate.get(Calendar.YEAR)}",
-                midRowText = if (it.isPaid) "paid" else "due",
+                midRowText = if (it.isPaid) stringResource(R.string.paid) else stringResource(id = R.string.due),
                 balance = it.amount
             )
         }
@@ -207,9 +211,11 @@ private fun AddNewBill(
             .wrapContentHeight(align = Alignment.Bottom)
             .padding(vertical = 8.dp)
     ) {
-        Icon(imageVector = Icons.Default.PlusOne, contentDescription = "Add new bill")
+        Icon(imageVector = Icons.Default.PlusOne, contentDescription = stringResource(R.string.add_new_bill))
         Spacer(modifier = Modifier.width(8.dp))
-        Text(text = "Add a new Bill", textAlign = TextAlign.Start)
+        Text(text = stringResource(id = R.string.add_new_bill), textAlign = TextAlign.Start)
     }
 
 }
+
+private lateinit var context: Context

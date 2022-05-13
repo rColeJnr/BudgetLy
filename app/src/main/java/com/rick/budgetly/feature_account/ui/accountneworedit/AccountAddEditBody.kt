@@ -53,6 +53,7 @@ fun AccountAddEditBody(
                 }
                 is BudgetLyContainer.ShowSuccess ->
                     navController.navigateUp()
+                else -> {}
             }
         }
     }
@@ -150,16 +151,16 @@ fun TopBarWithTextField(
         ) {
             Icon(
                 imageVector = Icons.Default.Close,
-                contentDescription = "CancelAccount",
+                contentDescription = stringResource(id = R.string.cancel),
                 modifier = Modifier
                     .clickable { onCancelAccount() }
                     .size(24.dp)
                     .padding(start = 4.dp)
             )
-            Text(text = stringResource(R.string.NEWACCOUNT), style = MaterialTheme.typography.h5)
+            Text(text = stringResource(R.string.new_account), style = MaterialTheme.typography.h5)
             Icon(
                 imageVector = Icons.Default.Check,
-                contentDescription = "SaveAccount",
+                contentDescription = stringResource(id = R.string.save),
                 modifier = Modifier
                     .clickable { onSaveAccount() }
                     .size(24.dp)
@@ -180,6 +181,7 @@ fun TopBarWithTextField(
                     onIconChange = onIconChange,
                     modifier = Modifier.padding(top = 8.dp)
                 )
+                // TODO to be implement after i complete base functionality of app
                 AnimatedColorsRow(
                     colorsVisible = false,
                     color = color,

@@ -1,5 +1,7 @@
-package com.rick.budgetly.feature_options.options
-
+import androidx.compose.ui.res.stringResource
+import com.rick.budgetly.feature_options.options.OptionsScreen
+import com.rick.budgetly.feature_options.options.OptionsViewModel
+import com.rick.budgetly.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,18 +33,18 @@ fun OptionsBody(viewModel: OptionsViewModel = hiltViewModel(), navController: Na
         ) {
             // am going to bed, love me, you.
             AnimatedPieChart()
-            UserDetailsBox(name = "aldfjd", isActive = true, profilePic = Icons.Default.Person)
+            UserDetailsBox(name = "user email", isActive = true, profilePic = Icons.Default.Person)
 
-            OptionsRow(optionText = "Options", optionImage = Icons.Default.Settings, contentDescp = "options"){
+            OptionsRow(optionText = stringResource(R.string.options), optionImage = Icons.Default.Settings, contentDescp = stringResource(R.string.options)){
                 navController.navigate(OptionsScreen.Settings.name)
             }
-            OptionsRow(optionText = "Categories", optionImage = Icons.Default.Category, contentDescp = "categories"){
+            OptionsRow(optionText = stringResource(R.string.categories), optionImage = Icons.Default.Category, contentDescp = stringResource(R.string.categories)){
                 navController.navigate(OptionsScreen.Categories.name)
             }
-            OptionsRow(optionText = "Overview", optionImage = Icons.Default.Analytics, contentDescp = "overview"){
+            OptionsRow(optionText = stringResource(R.string.overview), optionImage = Icons.Default.Analytics, contentDescp = stringResource(R.string.overview)){
                 navController.navigate(OptionsScreen.Overview.name)
             }
-            OptionsRow(optionText = "Transactions", optionImage = Icons.Default.History, contentDescp = "transactions"){
+            OptionsRow(optionText = stringResource(id = R.string.transactions ), optionImage = Icons.Default.History, contentDescp = stringResource(R.string.transactions)){
                 navController.navigate(OptionsScreen.Transactions.name)
             }
         }

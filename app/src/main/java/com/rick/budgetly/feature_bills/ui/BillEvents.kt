@@ -12,6 +12,8 @@ sealed class BillEvents {
     data class ChangeIsArchived(val isArchived: Boolean): BillEvents()
     data class DeleteBill(val bill: Bill): BillEvents()
     data class EditBill(val bill: Bill): BillEvents()
+    // TODO temporal soluction
+    data class BillSelected(val bill: Bill): BillEvents()
     object SaveBill: BillEvents()
     object UpdateBill: BillEvents()
     object RestoreBill: BillEvents()

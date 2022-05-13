@@ -1,24 +1,71 @@
 <resources>
     <string name="app_name">BudgetLy</string>
+
     <string name="cash">CASH</string>
     <string name="debit">DEBIT</string>
     <string name="loans">LOANS</string>
     <string name="savings">SAVINGS</string>
-    <string name="Money">Money</string>
-    <string name="Bank">Bank</string>
-    <string name="Safe">Safe</string>
-    <string name="Smile">Smile</string>
-    <string name="Wallet">Wallet</string>
-    <string name="Card">Card</string>
-    <string name="Coins">Coins</string>
-    <string name="NEWACCOUNT">New or Edit Account</string>
-
-    <string name="Description">Description</string>
-
-    <string name="Type">Type</string>
 
     <string name="Currency">Currency</string>
     <string name="MZN">MZN</string>
+
     <string name="balane">Balance</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="undo">Undo</string>
+    <string name="due">Due</string>
+    <string name="pie_icon">PieIcon</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="description">Description</string>
+    <string name="name">Name</string>
+    <string name="Type">Type</string>
+
+    <!-- accoutns -->
+    <string name="accounts_screen">Accounts Screen</string>
+    <string name="account_type">Type</string>
+    <string name="account_currency">Currency</string>
+    <string name="account_include_in_total">IncludeInTotal</string>
+    <string name="account_limit">Account Limit</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="add_new_account">Add new account</string>
+    <string name="add_new_card">Add a new Card, Debt, Saving, Loan…</string>
+    <string name="balance">Balance</string>
+    <string name="new_account">New or Edit Account</string>
+    <string name="account_equals">account=%1$d</string>
+    <string name="nav_add_new_acount">\?accountToEdit=%1$d</string>
+
+    <!-- Bills -->
+    <string name="due_date">Due date</string>
+    <string name="amount">Amount</string>
+    <string name="bill_row">BillRow</string>
+    <string name="paid">paid</string>
+    <string name="add_new_bill">Add a new bill</string>
+    <string name="is_bill_paid">Is bill paid</string>
+    <string name="is_bill_archived">Is bill archived</string>
+    <string name="couldnt_save_bill">Couldn\'t save bill</string>
+    <string name="bill_deleted">bill deleted</string>
+    <string name="failed_to_update_bill">Couldn\'t update bill</string>
+    <string name="account_to_edit">accountToEdit</string>
+    <string name="couldnt_save_account">Couln\'t save account</string>
+    <string name="transactions">Transactions</string>
+    <string name="overview">Overview</string>
+    <string name="categories">Categories</string>
+    <string name="options">Options</string>
+    <string name="account_name">Account %1%s</string>
+    <string name="total_money">Total Money</string>
+    <string name="bills">Bills</string>
+    <string name="show_categories">show categories</string>
+    <string name="RUBLE">Ruble</string>
+    <string name="dark_light_mode">Dark/Light Mode</string>
+    <string name="first_screen">First screen</string>
+    <string name="push_notification">Push notifications</string>
+    <string name="screen">screen</string>
+    <string name="email_notifications">Email notifications</string>
+    <string name="password_on_off">Password on/off</string>
+    <string name="offline_mode">Offline mode</string>
+    <string name="delete_data">Delete all data</string>
+    <string name="language">Language</string>
+    <string name="share_us">Share us</string>
 
 </resources>

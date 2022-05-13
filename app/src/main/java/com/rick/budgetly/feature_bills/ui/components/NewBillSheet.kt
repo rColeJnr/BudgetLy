@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_bills.ui
+package com.rick.budgetly.feature_bills.ui.components
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -17,11 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.rick.budgetly.R
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
 import com.rick.budgetly.feature_account.ui.components.DefaultInputText
 import com.rick.budgetly.feature_bills.domain.BillIcon
+import com.rick.budgetly.feature_bills.ui.BillEvents
+import com.rick.budgetly.feature_bills.ui.BillViewModel
 import com.rick.budgetly.feature_bills.util.TestTags
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -50,7 +54,7 @@ fun NewBillSheet(
             DefaultInputText(
                 text = viewModel.billTitle.value,
                 onTextChange = { viewModel.onEvent(BillEvents.EnteredTitle(it)) },
-                label = "Name",
+                label = stringResource(R.string.name),
                 testTag = TestTags.newBillTitle
             )
             if (viewModel.billTitle.value.isNotEmpty()) {
@@ -58,7 +62,7 @@ fun NewBillSheet(
                     iconList = iconList,
                     icon = BillIcon.values()[viewModel.billIcon.value].imageVector,
                     onIconChange = { viewModel.onEvent(BillEvents.ChangeBillIcon(it)) },
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = BASE_DP_VALUE)
                 )
             }
 
@@ -66,26 +70,26 @@ fun NewBillSheet(
                 text = viewModel.billAmount.value,
                 onTextChange = { viewModel.onEvent(BillEvents.EnteredAmount(it)) },
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                label = "Amount",
+                label = stringResource(R.string.amount),
                 testTag = TestTags.newBillAmount
             )
 
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(BASE_DP_VALUE))
 
             CustomDatePicker(context, viewModel)
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(BASE_DP_VALUE))
 
             YesOrNoRow(
-                question = "Is bill paid",
+                question = stringResource(R.string.is_bill_paid),
                 answer = viewModel.billIsPaid.value
             ) { viewModel.onEvent(BillEvents.ChangeIsPaid(viewModel.billIsPaid.value)) }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(BASE_DP_VALUE))
 
             YesOrNoRow(
-                question = "Is bill archived",
+                question = stringResource(R.string.is_bill_archived),
                 answer = viewModel.billArchived.value
             ) { viewModel.onEvent(BillEvents.ChangeIsArchived(viewModel.billArchived.value)) }
 
@@ -100,25 +104,24 @@ fun NewBillSheet(
                     modifier = Modifier.border(
                         width = 2.dp,
                         color = Color.LightGray,
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(BASE_DP_VALUE)
                     ), onClick = {
                         viewModel.onEvent(BillEvents.CancelNewBill)
                         hideSheet()
                     }
                 ) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(R.string.cancel))
                 }
                 TextButton(
                     modifier = Modifier.border(
                         width = 2.dp,
                         color = Color.LightGray,
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(BASE_DP_VALUE)
                     ), onClick = {
                         viewModel.onEvent(BillEvents.SaveBill)
-//                        hideSheet()
                     }
                 ) {
-                    Text(text = "Save")
+                    Text(text = stringResource(R.string.save))
                 }
             }
 
@@ -147,11 +150,11 @@ private fun CustomDatePicker(context: Context, viewModel: BillViewModel) {
     )
 
     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-        Text(text = "Due date", modifier = Modifier.padding(horizontal = 16.dp))
+        Text(text = stringResource(R.string.due_date), modifier = Modifier.padding(horizontal = 16.dp))
     }
     TextButton(
         onClick = { timePickerDialog.show() },
-        modifier = Modifier.padding(horizontal = 8.dp)
+        modifier = Modifier.padding(horizontal = BASE_DP_VALUE)
     ) {
         Text(
             text = dueDateDisplayed.value,
@@ -169,6 +172,8 @@ private fun YesOrNoRow(question: String, answer: Boolean, onClick: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = question, style = MaterialTheme.typography.body1)
-        Text(text = if (answer) "Yes" else "No", style = MaterialTheme.typography.body1)
+        Text(text = if (answer) stringResource(R.string.yes) else stringResource(R.string.no), style = MaterialTheme.typography.body1)
     }
 }
+
+private val BASE_DP_VALUE = 8.dp

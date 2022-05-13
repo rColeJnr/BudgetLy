@@ -10,7 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.rick.budgetly.R
 import com.rick.budgetly.components.TextDropdownMenu
 import com.rick.budgetly.feature_account.domain.AccountCurrency
 import com.rick.budgetly.feature_account.domain.AccountType
@@ -42,8 +44,17 @@ fun AccountAddEditDetails(
         color = MaterialTheme.colors.background
     ) {
         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceEvenly) {
+            DefaultInputText(
+                text = description,
+                onTextChange = onDescriptionChange,
+                label = stringResource(R.string.description),
+                testTag = TestTags.newAccountDescription,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider()
+
             AccountTitleDetailColumn(
-                title = "Type",
+                title = stringResource(R.string.account_type),
                 icon = Icons.Default.MergeType,
                 detail = {
                     TextDropdownMenu(
@@ -60,7 +71,7 @@ fun AccountAddEditDetails(
             Divider()
 
             AccountTitleDetailColumn(
-                title = "Currency",
+                title = stringResource(R.string.account_currency),
                 icon = Icons.Default.MergeType,
                 detail = {
                     TextDropdownMenu(
@@ -76,41 +87,34 @@ fun AccountAddEditDetails(
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
 
-            AccountTitleOptionRow(
-                title = "IncludeInTotal",
-                boolean = checked,
-                onCheckedChange = onCheckedChange
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            Divider()
-
-            DefaultInputText(
-                text = description,
-                onTextChange = onDescriptionChange,
-                label = "Description",
-                testTag = TestTags.newAccountDescription,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Divider()
-
             AccountTitleDetailColumn(
-                title = "Account Limit",
+                title = stringResource(R.string.account_limit),
                 icon = Icons.Default.MergeType,
                 detail = {
                     Text(text = limit, modifier = Modifier.padding(start = 16.dp))
                 },
+                // TODO replace/clean this field code
                 onClick = { scope.launch { state.show() }; field = "l" }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
 
             AccountTitleDetailColumn(
-                title = "Account Balance",
+                title = stringResource(R.string.account_balance),
                 icon = Icons.Default.MergeType,
                 detail = {
                     Text(text = balance, modifier = Modifier.padding(start = 16.dp))
                 },
                 onClick = { scope.launch { state.show() }; field = "b" }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider()
+
+            AccountTitleOptionRow(
+                title = stringResource(R.string.account_include_in_total),
+                boolean = checked,
+                onCheckedChange = onCheckedChange
             )
         }
     }

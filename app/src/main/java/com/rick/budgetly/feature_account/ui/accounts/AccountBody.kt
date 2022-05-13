@@ -12,6 +12,8 @@ import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -19,12 +21,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.rick.budgetly.R
 import com.rick.budgetly.components.BaseRow
 import com.rick.budgetly.feature_account.common.AccountsScreen
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.AccountIcon
 import com.rick.budgetly.feature_account.ui.components.AccountTopBar
-import com.rick.budgetly.feature_account.ui.util.dummyAccounts
 import com.rick.budgetly.feature_account.ui.util.formatAmount
 
 @Composable
@@ -32,13 +34,15 @@ fun AccountBody(
     accountsViewModel: AccountsViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
+
+    val context = LocalContext.current
     // Accounts list
     val accounts = accountsViewModel.accountsState.value.accounts
 
     Surface(
         Modifier
             .fillMaxSize()
-            .semantics { contentDescription = "Accounts Screen" }
+            .semantics { contentDescription = context.getString(R.string.accounts_screen) }
     ) {
         Column(
             modifier = Modifier
@@ -51,11 +55,11 @@ fun AccountBody(
                 modifier = Modifier
                     .wrapContentHeight(),
                 title = amount,
-                secondTitle = "Balance",
+                secondTitle = stringResource(R.string.balance),
             ) {
                 Icon(
                     imageVector = Icons.Default.PieChart,
-                    contentDescription = "PieIcon",
+                    contentDescription = stringResource(id = R.string.pie_icon),
                     modifier = Modifier
                         .padding(end = 4.dp)
                         .size(26.dp)
@@ -72,14 +76,22 @@ fun AccountBody(
 
             AccountList(
                 accounts = accounts,
-                onAccountClick = { navController.navigate(AccountsScreen.AccountsDetails.name + "account=${it}") },
+                onAccountClick = {
+                    navController.navigate(
+                        AccountsScreen.AccountsDetails.name + context.getString(
+                            R.string.account_equals, it
+                        )
+                    )
+                },
                 modifier = Modifier
                     .weight(1f)
                     .wrapContentHeight(align = Alignment.Bottom)
                     .heightIn(0.dp, max = 298.dp)
             )
             // you implement this click here, i guess
-            AddNewAccount(modifier = Modifier) { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${-1}") }
+            AddNewAccount(modifier = Modifier) { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + context.getString(
+                R.string.nav_add_new_acount, -1
+            )) }
         }
     }
 }
@@ -93,9 +105,9 @@ private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
             .wrapContentHeight(align = Alignment.Bottom)
             .padding(vertical = 8.dp)
     ) {
-        Icon(imageVector = Icons.Default.PlusOne, contentDescription = "Add new account")
+        Icon(imageVector = Icons.Default.PlusOne, contentDescription = stringResource(R.string.add_new_account))
         Spacer(modifier = Modifier.width(8.dp))
-        Text(text = "Add a new Card, Debt, Saving, Loan...", textAlign = TextAlign.Start)
+        Text(text = stringResource(R.string.add_new_card), textAlign = TextAlign.Start)
     }
 }
 
@@ -110,9 +122,10 @@ private fun AccountList(
     ) {
         items(accounts) {
             BaseRow(
-                modifier = Modifier.clickable {
-                    onAccountClick(it.id!!)
-                }
+                modifier = Modifier
+                    .clickable {
+                        onAccountClick(it.id!!)
+                    }
                     .semantics { contentDescription = "AccountRow" },
                 icon = AccountIcon.values()[it.icon].imageVector,
                 title = it.title,
@@ -147,7 +160,7 @@ fun PreviewEverything() {
                 modifier = Modifier.size(24.dp)
             )
         }
-        AccountList(accounts = dummyAccounts, onAccountClick = {}, modifier = Modifier.weight(1f))
+        AccountList(accounts = listOf(), onAccountClick = {}, modifier = Modifier.weight(1f))
 //        AddNewAccount {}
     }
 }

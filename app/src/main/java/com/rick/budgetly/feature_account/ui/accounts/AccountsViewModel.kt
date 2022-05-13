@@ -1,6 +1,8 @@
 package com.rick.budgetly.feature_account.ui.accounts
 
+import android.content.res.Resources
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -11,11 +13,9 @@ import com.rick.budgetly.feature_account.domain.AccountType
 import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
 import com.rick.budgetly.feature_account.domain.use_case.GetQuote
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -43,6 +43,7 @@ class AccountsViewModel @Inject constructor(
     override fun onEvent(event: AccountEvents) {
         when (event) {
             AccountEvents.ToggleAccount -> onAccountToggled()
+            // TODO implement account type feature
             is AccountEvents.ToggleAccountType -> onAccountTypeToggled(event.accountType)
             AccountEvents.OnStart -> onStart()
             AccountEvents.OnStop -> onStop()
@@ -65,13 +66,14 @@ class AccountsViewModel @Inject constructor(
             if (_accountsState.value.quote.isBlank()){
                 try {
                     val response = getQuote.invoke().body()
-                    // Move this to the viewModel, and only load it once a day.
+                    // TODO: Move this to the viewModel, and only load it once a day.
                     // Api response
                     _accountsState.value = accountsState.value.copy(
                         quote = response!!.quote
                     )
                 } catch (e: Exception) {
-                    Log.d("quote", e.message!!)
+                    // TODO: Reload functionality.
+                    // TODO: Show toast
                 }
             }
         }
@@ -144,15 +146,3 @@ class AccountsViewModel @Inject constructor(
     }
 
 }
-
-/*
-* because as much as you may not likeTo admit, idid get quiter
-* keyboard, and supposingly moch comforable
-* than the previous one, i just odnt dont kf the size
-* will come to be a problm wiith egonormics but as far as placing it in aconfortable place
-* that wotnbe a probwm
-* plus the keys are layout jsut like the notebook keys
-* what is dope and more confortable to which between keyboard
-* also it chicklet keys, what means that the typing experience
-* is shit faced, but yeah, 1550, fuck me.
-* */
