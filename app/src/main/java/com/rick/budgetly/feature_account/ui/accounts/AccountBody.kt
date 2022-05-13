@@ -89,9 +89,7 @@ fun AccountBody(
                     .heightIn(0.dp, max = 298.dp)
             )
             // you implement this click here, i guess
-            AddNewAccount(modifier = Modifier) { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + context.getString(
-                R.string.nav_add_new_acount, -1
-            )) }
+            AddNewAccount(modifier = Modifier) { navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${-1}") }
         }
     }
 }

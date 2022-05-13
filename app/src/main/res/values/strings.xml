@@ -33,7 +33,7 @@
     <string name="balance">Balance</string>
     <string name="new_account">New or Edit Account</string>
     <string name="account_equals">account=%1$d</string>
-    <string name="nav_add_new_acount">\?accountToEdit=%1$d</string>
+    <string name="nav_add_new_acount">accountToEdit=%1$d</string>
 
     <!-- Bills -->
     <string name="due_date">Due date</string>
