@@ -17,6 +17,10 @@
             <option value="$PROJECT_DIR$/account/data" />
             <option value="$PROJECT_DIR$/account/details" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/bill" />
+            <option value="$PROJECT_DIR$/bill/bills" />
+            <option value="$PROJECT_DIR$/bill/components-bill" />
+            <option value="$PROJECT_DIR$/bill/data" />
             <option value="$PROJECT_DIR$/core" />
           </set>
         </option>
