@@ -22,6 +22,12 @@
             <option value="$PROJECT_DIR$/bill/components-bill" />
             <option value="$PROJECT_DIR$/bill/data" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/options" />
+            <option value="$PROJECT_DIR$/options/categories" />
+            <option value="$PROJECT_DIR$/options/options" />
+            <option value="$PROJECT_DIR$/options/overview" />
+            <option value="$PROJECT_DIR$/options/settings" />
+            <option value="$PROJECT_DIR$/options/transactions" />
           </set>
         </option>
       </GradleProjectSettings>
