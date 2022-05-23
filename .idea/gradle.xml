@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/bill/bills" />
             <option value="$PROJECT_DIR$/bill/components-bill" />
             <option value="$PROJECT_DIR$/bill/data" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/options" />
             <option value="$PROJECT_DIR$/options/categories" />
