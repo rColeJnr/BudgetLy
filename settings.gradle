@@ -8,3 +8,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "BudgetLy"
 include ':app'
+include ':account:accounts'
+include ':account:add-edit'
+include ':account:details'
+include ':account:data'
+include ':account:components'

@@ -10,6 +10,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/account" />
+            <option value="$PROJECT_DIR$/account/accounts" />
+            <option value="$PROJECT_DIR$/account/add-edit" />
+            <option value="$PROJECT_DIR$/account/components" />
+            <option value="$PROJECT_DIR$/account/data" />
+            <option value="$PROJECT_DIR$/account/details" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
