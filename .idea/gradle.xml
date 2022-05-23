@@ -24,10 +24,14 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/options" />
             <option value="$PROJECT_DIR$/options/categories" />
+            <option value="$PROJECT_DIR$/options/categories/data-categories" />
+            <option value="$PROJECT_DIR$/options/categories/screen-categories" />
             <option value="$PROJECT_DIR$/options/options" />
             <option value="$PROJECT_DIR$/options/overview" />
             <option value="$PROJECT_DIR$/options/settings" />
             <option value="$PROJECT_DIR$/options/transactions" />
+            <option value="$PROJECT_DIR$/options/transactions/data-transactions" />
+            <option value="$PROJECT_DIR$/options/transactions/screen-transactions" />
           </set>
         </option>
       </GradleProjectSettings>
