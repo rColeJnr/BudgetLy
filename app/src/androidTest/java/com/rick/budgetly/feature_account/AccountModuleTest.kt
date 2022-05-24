@@ -12,7 +12,6 @@ import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
 import com.rick.budgetly.feature_account.persistence.QuoteRepositoryImpl
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import okhttp3.OkHttpClient

@@ -10,13 +10,13 @@ object Deps {
     // LiveData
     private const val livedata_version = "1.2.0-beta01"
     const val livedata = "androidx.compose.runtime:runtime-livedata:1.2.0-beta01"
+}
 
-    object Tests {
-        const val extJunit = "androidx.test.ext:junit:1.1.3"
-        const val expresso = "androidx.test.espresso:espresso-core:3.4.0"
-        const val composeUi =  "androidx.compose.ui:ui-test-junit4:$compose_version"
-        const val composeUiTooling = "androidx.compose.ui:ui-tooling:$compose_version"
-    }
+object Tests {
+    const val extJunit = "androidx.test.ext:junit:1.1.3"
+    const val expresso = "androidx.test.espresso:espresso-core:3.4.0"
+    const val composeUi =  "androidx.compose.ui:ui-test-junit4:$compose_version"
+    const val composeUiTooling = "androidx.compose.ui:ui-tooling:$compose_version"
 }
 
 object Compose {

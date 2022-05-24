@@ -1,8 +1,5 @@
 package com.rick.budgetly.feature_account.ui.accounts
 
-import android.content.res.Resources
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

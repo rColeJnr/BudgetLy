@@ -59,9 +59,9 @@ dependencies {
     implementation Deps.coil
 
     // Tests
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    androidTestImplementation Tests.extJunit
+    androidTestImplementation Tests.expresso
+    androidTestImplementation Tests.composeUi
+    debugImplementation Tests.composeUiTooling
 
 }
