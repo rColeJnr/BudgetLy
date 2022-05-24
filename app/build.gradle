@@ -83,36 +83,36 @@ dependencies {
 //    implementation project(Modules.options_categories_data)
 //    implementation project(Modules.options_transaction_screen)
 
-    implementation Deps.androidxCore
-    implementation Deps.appCompat
-    implementation Deps.composeMaterial
-    implementation Deps.compose
-    implementation Deps.composeUi
-    implementation Deps.material
-    implementation Deps.lifecycle
-    implementation Deps.activityCompose
+    implementation AndroidX.androidxCore
+    implementation AndroidX.appCompat
+    implementation Compose.composeMaterial
+    implementation Compose.compose
+    implementation Compose.composeUi
+    implementation AndroidX.material
+    implementation Lifecycle.lifecycle
+    implementation Compose.activityCompose
 
     implementation Deps.livedata
-    implementation Deps.constraint
-    implementation Deps.viewmodel
-    implementation Deps.navigation
-    implementation Deps.hiltNav
-    implementation Deps.extraIcons
-    implementation Deps.coroutines
-    implementation Deps.coroutinesCore
+    implementation Compose.constraint
+    implementation Lifecycle.viewmodel
+    implementation Nav.navigation
+    implementation Nav.hiltNav
+    implementation Compose.extraIcons
+    implementation KotlinX.coroutines
+    implementation KotlinX.coroutinesCore
 
-    implementation Deps.hilt
-    kapt Deps.hiltGoogleCompiler
-    implementation Deps.hiltViewmodel
-    kapt Deps.hiltCompiler
+    implementation Hilt.hilt
+    kapt Hilt.hiltGoogleCompiler
+    implementation Hilt.hiltViewmodel
+    kapt Hilt.hiltCompiler
 
-    implementation Deps.roomRuntime
-    kapt Deps.roomCompiler
-    implementation Deps.roomExtensions
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
+    implementation Room.roomExtensions
 
     implementation Deps.coil
-    implementation Deps.retrofit
-    implementation Deps.gson
+    implementation Retrofit.retrofit
+    implementation Retrofit.gson
     
     // Tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
