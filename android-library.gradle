@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk 31
@@ -24,18 +25,43 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
     }
     buildFeatures {
         compose true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion Compose.compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    namespace 'com.rick.budgetly'
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
-    testImplementation 'junit:junit:4.13.2'
+    implementation AndroidX.androidxCore
+    implementation AndroidX.appCompat
+    implementation AndroidX.material
+    implementation Lifecycle.lifecycle
+
+    implementation Compose.compose
+    implementation Compose.activityCompose
+    implementation Compose.composeMaterial
+    implementation Compose.composeUi
+
+    implementation KotlinX.coroutines
+    implementation KotlinX.coroutinesCore
+
+    implementation Deps.coil
+
+    // Tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
 }
