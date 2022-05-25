@@ -11,16 +11,16 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/account" />
-            <option value="$PROJECT_DIR$/account/accounts" />
-            <option value="$PROJECT_DIR$/account/add-edit" />
-            <option value="$PROJECT_DIR$/account/components" />
-            <option value="$PROJECT_DIR$/account/data" />
-            <option value="$PROJECT_DIR$/account/details" />
+            <option value="$PROJECT_DIR$/account/components-account" />
+            <option value="$PROJECT_DIR$/account/data-account" />
+            <option value="$PROJECT_DIR$/account/screen-account" />
+            <option value="$PROJECT_DIR$/account/screen-add-edit" />
+            <option value="$PROJECT_DIR$/account/screen-details" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bill" />
-            <option value="$PROJECT_DIR$/bill/bills" />
             <option value="$PROJECT_DIR$/bill/components-bill" />
-            <option value="$PROJECT_DIR$/bill/data" />
+            <option value="$PROJECT_DIR$/bill/data-bill" />
+            <option value="$PROJECT_DIR$/bill/screen-bills" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/options" />

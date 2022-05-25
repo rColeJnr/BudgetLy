@@ -1,5 +1,5 @@
 apply {
-    from( "$rootDir/kotlin-library.gradle")
+    from( "$rootDir/android-library.gradle")
 }
 
 dependencies {

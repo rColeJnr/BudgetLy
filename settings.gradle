@@ -9,24 +9,22 @@ rootProject.name = "BudgetLy"
 include ':app'
 include ':core'
 
-include ':account:accounts'
-include ':account:add-edit'
-include ':account:details'
-include ':account:data'
-include ':account:components'
+include ':account:screen-account'
+include ':account:screen-add-edit'
+include ':account:screen-details'
+include ':account:data-account'
+include ':account:components-account'
 
-include ':bill:bills'
-include ':bill:data'
+include ':bill:screen-bills'
+include ':bill:data-bill'
 include ':bill:components-bill'
 
 include ':options:options'
 include ':options:overview'
 include ':options:settings'
 
-include ':options:categories'
 include ':options:categories:data-categories'
 include ':options:categories:screen-categories'
 
-include ':options:transactions'
 include ':options:transactions:data-transactions'
 include ':options:transactions:screen-transactions'
