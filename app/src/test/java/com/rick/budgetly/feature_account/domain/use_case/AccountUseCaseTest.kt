@@ -2,7 +2,7 @@ package com.rick.budgetly.feature_account.domain.use_case
 
 import com.google.common.truth.Truth.assertThat
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImplTest
-import com.rick.budgetly.feature_account.ui.util.dummyAccounts
+import com.rick.util.dummyAccounts
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account
+package com.rick.accounts.accounts
 
 import android.app.Application
 import androidx.room.Room
@@ -8,30 +8,30 @@ import com.rick.budgetly.feature_account.domain.IQuoteApi
 import com.rick.budgetly.feature_account.domain.IQuoteRepository
 import com.rick.budgetly.feature_account.domain.use_case.*
 import com.rick.budgetly.feature_account.persistence.AccountDatabase
+import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.ACCOUNT_DATABASE_NAME
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
 import com.rick.budgetly.feature_account.persistence.QuoteRepositoryImpl
-import com.rick.accounts.accounts.AccountModule
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import kotlin.text.Typography.dagger
 
-@TestInstallIn(
-    components = [SingletonComponent::class],
-    replaces = [AccountModule::class]
-)
 @Module
-object AccountModuleTest{
+@InstallIn(SingletonComponent::class)
+object AccountModule {
+
     @Provides
     @Singleton
     fun providesAccountDatabase(app: Application): AccountDatabase =
-        Room.inMemoryDatabaseBuilder(
+        Room.databaseBuilder(
             app,
-            AccountDatabase::class.java
+            AccountDatabase::class.java,
+            ACCOUNT_DATABASE_NAME
         ).build()
 
     @Provides
@@ -41,7 +41,7 @@ object AccountModuleTest{
 
     @Provides
     @Singleton
-    fun providesAccountUseCases(repository: IAccountRepository): AccountUseCases = AccountUseCases(
+    fun providesAccountUseCases(repository: IAccountRepository): AccountUseCases  = AccountUseCases(
         getAccounts = GetAccounts(repository),
         getAccountsByType = GetAccountByType(repository),
         getAccountById = GetAccountById(repository),
@@ -56,11 +56,11 @@ object AccountModuleTest{
 
     @Provides
     @Singleton
-    fun quoteAPI(retrofit: Retrofit) = retrofit.create(IQuoteApi::class.java)
+    fun quoteAPI(retrofit: Retrofit): IQuoteApi = retrofit.create(IQuoteApi::class.java)
 
     @Provides
     @Singleton
-    fun retrofit() = Retrofit.Builder()
+    fun retrofit(): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.kanye.rest")
         .client(OkHttpClient())
         .addConverterFactory(GsonConverterFactory.create())
@@ -68,7 +68,7 @@ object AccountModuleTest{
 
     @Provides
     @Singleton
-    fun providesQuoteRepository(api: IQuoteApi): IQuoteRepository {
+    fun providesQuoteRepository(api: IQuoteApi): IQuoteRepository{
         return QuoteRepositoryImpl(api)
     }
 }

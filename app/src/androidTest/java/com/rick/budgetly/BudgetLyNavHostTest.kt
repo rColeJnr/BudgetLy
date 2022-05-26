@@ -1,22 +1,12 @@
 package com.rick.budgetly
 
-import androidx.activity.viewModels
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.rick.budgetly.BudgetLyActivity
-import com.rick.budgetly.BudgetLyNavHost
-import com.rick.budgetly.BudgetLyScreen
-import com.rick.budgetly.feature_account.common.AccountsScreen
-import com.rick.budgetly.ui.theme.BudgetLyTheme
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
