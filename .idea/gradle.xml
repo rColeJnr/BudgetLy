@@ -7,6 +7,7 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="Embedded JDK" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -20,7 +21,7 @@
             <option value="$PROJECT_DIR$/bill" />
             <option value="$PROJECT_DIR$/bill/components-bill" />
             <option value="$PROJECT_DIR$/bill/data-bill" />
-            <option value="$PROJECT_DIR$/bill/screen-bills" />
+            <option value="$PROJECT_DIR$/bill/screen-bill" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/options" />
@@ -37,6 +38,5 @@
         </option>
       </GradleProjectSettings>
     </option>
-    <option name="offlineMode" value="true" />
   </component>
 </project>

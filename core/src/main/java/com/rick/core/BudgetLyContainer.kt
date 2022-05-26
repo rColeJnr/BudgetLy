@@ -1,4 +1,4 @@
-package com.rick.budgetly
+package com.rick.core
 
 sealed class BudgetLyContainer {
 

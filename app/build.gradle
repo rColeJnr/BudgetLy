@@ -92,19 +92,27 @@ dependencies {
 
     implementation AndroidX.androidxCore
     implementation AndroidX.appCompat
+    implementation AndroidX.material
+
     implementation Compose.composeMaterial
     implementation Compose.compose
     implementation Compose.composeUi
-    implementation AndroidX.material
-    implementation Lifecycle.lifecycle
+    implementation Compose.constraint
     implementation Compose.activityCompose
+    implementation Compose.extraIcons
+
+    implementation Lifecycle.lifecycle
+    implementation Lifecycle.viewmodel
 
     implementation Deps.livedata
-    implementation Compose.constraint
-    implementation Lifecycle.viewmodel
+    implementation Deps.coil
+
+    implementation Retrofit.retrofit
+    implementation Retrofit.gson
+
     implementation Nav.navigation
     implementation Nav.hiltNav
-    implementation Compose.extraIcons
+
     implementation KotlinX.coroutines
     implementation KotlinX.coroutinesCore
 
@@ -117,9 +125,6 @@ dependencies {
     kapt Room.roomCompiler
     implementation Room.roomExtensions
 
-    implementation Deps.coil
-    implementation Retrofit.retrofit
-    implementation Retrofit.gson
     
     // Tests
     androidTestImplementation Tests.extJunit

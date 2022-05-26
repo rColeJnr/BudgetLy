@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk 31
@@ -32,4 +33,10 @@ android {
 
 dependencies {
 
+    implementation KotlinX.coroutines
+    implementation KotlinX.coroutinesCore
+
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
+    implementation Room.roomExtensions
 }

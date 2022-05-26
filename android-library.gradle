@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdk 31
@@ -53,15 +54,12 @@ dependencies {
     implementation Compose.composeMaterial
     implementation Compose.composeUi
 
+    implementation Hilt.hilt
+    kapt Hilt.hiltGoogleCompiler
+    implementation Hilt.hiltViewmodel
+    kapt Hilt.hiltCompiler
+
     implementation KotlinX.coroutines
     implementation KotlinX.coroutinesCore
-
-    implementation Deps.coil
-
-    // Tests
-    androidTestImplementation Tests.extJunit
-    androidTestImplementation Tests.expresso
-    androidTestImplementation Tests.composeUi
-    debugImplementation Tests.composeUiTooling
 
 }
