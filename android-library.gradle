@@ -47,17 +47,23 @@ dependencies {
     implementation AndroidX.androidxCore
     implementation AndroidX.appCompat
     implementation AndroidX.material
-    implementation Lifecycle.lifecycle
 
     implementation Compose.compose
     implementation Compose.activityCompose
     implementation Compose.composeMaterial
     implementation Compose.composeUi
+    implementation Compose.extraIcons
+
+    implementation Lifecycle.lifecycle
+    implementation Lifecycle.viewmodel
 
     implementation Hilt.hilt
     kapt Hilt.hiltGoogleCompiler
     implementation Hilt.hiltViewmodel
     kapt Hilt.hiltCompiler
+
+    implementation Nav.navigation
+    implementation Nav.hiltNav
 
     implementation KotlinX.coroutines
     implementation KotlinX.coroutinesCore

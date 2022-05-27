@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.domain
+package com.rick.data
 
 data class Quote(
     val quote: String

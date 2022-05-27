@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_bills.ui.components
+package com.rick.components_bill
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi

@@ -3,4 +3,6 @@ apply {
 }
 
 dependencies {
+    implementation project(Modules.bill_data)
+    implementation project(Modules.bill_components)
 }

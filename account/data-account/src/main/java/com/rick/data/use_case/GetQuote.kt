@@ -1,8 +1,7 @@
-package com.rick.budgetly.feature_account.domain.use_case
+package com.rick.data.use_case
 
-import com.rick.budgetly.feature_account.domain.IQuoteRepository
-import com.rick.budgetly.feature_account.domain.Quote
-import kotlinx.coroutines.flow.flow
+import com.rick.data.IQuoteRepository
+import com.rick.data.Quote
 import retrofit2.Response
 import javax.inject.Inject
 

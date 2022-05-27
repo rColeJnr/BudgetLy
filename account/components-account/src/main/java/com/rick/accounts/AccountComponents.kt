@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.ui.components
+package com.rick.accounts
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

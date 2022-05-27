@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_bills
+package com.rick.bills
 
 import com.rick.bill_data.domain.IBillRepository
 import com.rick.bill_data.domain.use_case.*
@@ -19,7 +19,7 @@ object BillRepositoryModule {
             GetBills(repository),
             GetBill(repository),
             CreateBill(repository),
-            UpdateBill(repository),
+            BillEvents.UpdateBill(repository),
             RemoveBill(repository)
         )
 

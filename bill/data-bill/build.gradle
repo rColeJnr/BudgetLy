@@ -4,5 +4,12 @@ apply {
 
 dependencies {
 
+    implementation KotlinX.coroutines
+    implementation KotlinX.coroutinesCore
+
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
+    implementation Room.roomExtensions
+
 
 }

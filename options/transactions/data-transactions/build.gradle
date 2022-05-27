@@ -1,8 +1,14 @@
 apply {
-    from( "$rootDir/kotlin-library.gradle")
+    from( "$rootDir/android-library.gradle")
 }
 
 dependencies {
 
+    implementation KotlinX.coroutines
+    implementation KotlinX.coroutinesCore
+
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
+    implementation Room.roomExtensions
 
 }

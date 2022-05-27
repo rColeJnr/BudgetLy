@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_bills.ui.components
+package com.rick.components_bill
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -24,10 +24,11 @@ import com.rick.budgetly.R
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
 import com.rick.budgetly.feature_account.ui.components.DefaultInputText
 import com.rick.bill_data.domain.BillIcon
-import com.rick.budgetly.feature_bills.ui.BillEvents
-import com.rick.budgetly.feature_bills.ui.BillViewModel
+import com.rick.bills.BillEvents
+import com.rick.bills.BillViewModel
 import com.rick.bill_data.util.TestTags
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.NonCancellable.cancel
 import kotlinx.coroutines.launch
 import java.util.*
 

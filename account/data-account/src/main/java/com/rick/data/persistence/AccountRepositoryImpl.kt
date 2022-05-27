@@ -1,7 +1,7 @@
-package com.rick.budgetly.feature_account.persistence
+package com.rick.data.persistence
 
-import com.rick.budgetly.feature_account.domain.Account
-import com.rick.budgetly.feature_account.domain.IAccountRepository
+import com.rick.data.Account
+import com.rick.data.IAccountRepository
 
 class AccountRepositoryImpl(
     private val accountDao: AccountDao

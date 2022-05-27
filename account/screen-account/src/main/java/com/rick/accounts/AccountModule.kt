@@ -1,4 +1,4 @@
-package com.rick.accounts.accounts
+package com.rick.accounts
 
 import android.app.Application
 import androidx.room.Room

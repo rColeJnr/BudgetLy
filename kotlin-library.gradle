@@ -25,18 +25,21 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
     }
     buildFeatures {
         compose true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion Compose.compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    namespace 'com.rick.budgetly'
 }
 
 dependencies {
-
-    implementation KotlinX.coroutines
-    implementation KotlinX.coroutinesCore
-
-    implementation Room.roomRuntime
-    kapt Room.roomCompiler
-    implementation Room.roomExtensions
 }

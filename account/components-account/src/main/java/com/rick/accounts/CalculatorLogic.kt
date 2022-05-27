@@ -1,4 +1,4 @@
-package com.rick.budgetly.components
+package com.rick.accounts
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -14,7 +14,6 @@ import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditEvent
 import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditViewModel
 import com.rick.budgetly.feature_account.ui.accountneworedit.components.field
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 /*
 * lets sleep early, wake up early and go get us that ipad
@@ -156,10 +155,12 @@ fun Calculator(viewModel: ViewModel? = null, state: ModalBottomSheetState, scope
                             if (viewModel is AccountAddEditViewModel){
                                 viewModel.apply {
                                     if (field == "l"){
-                                        viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(numero.value))
+                                        viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(
+                                            numero.value))
                                     }
                                     if (field == "b"){
-                                        viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(numero.value))
+                                        viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(
+                                            numero.value))
                                     }
                                 }
                             }

@@ -4,5 +4,5 @@ apply {
 
 dependencies {
 
-
+    implementation project(Modules.options_categories_data)
 }

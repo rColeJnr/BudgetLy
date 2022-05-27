@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.ui.accountneworedit
+package com.rick.add_edit
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.key.Key.Companion.Calculator
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,12 +28,13 @@ import com.rick.budgetly.feature_account.domain.AccountColor
 import com.rick.budgetly.feature_account.domain.AccountCurrency
 import com.rick.budgetly.feature_account.domain.AccountIcon
 import com.rick.budgetly.feature_account.domain.AccountType
-import com.rick.budgetly.feature_account.ui.accountneworedit.components.AccountAddEditDetails
-import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedColorsRow
-import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
+import com.rick.add_edit.components.AccountAddEditDetails
+import com.rick.add_edit.components.AnimatedColorsRow
+import com.rick.add_edit.components.AnimatedIconRow
 import com.rick.budgetly.feature_account.ui.components.DefaultInputText
 import com.rick.budgetly.feature_account.ui.util.TestTags
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.NonCancellable.cancel
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterialApi::class)

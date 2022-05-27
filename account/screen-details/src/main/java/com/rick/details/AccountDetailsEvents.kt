@@ -1,6 +1,6 @@
-package com.rick.budgetly.feature_account.ui.accountdetails
+package com.rick.details
 
-import com.rick.budgetly.feature_account.domain.Account
+import android.accounts.Account
 
 sealed class AccountDetailsEvents{
     object ChangeIncludeInTotalStatus: AccountDetailsEvents()

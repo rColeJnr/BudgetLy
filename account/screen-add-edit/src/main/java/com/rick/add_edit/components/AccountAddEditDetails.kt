@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.ui.accountneworedit.components
+package com.rick.add_edit.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

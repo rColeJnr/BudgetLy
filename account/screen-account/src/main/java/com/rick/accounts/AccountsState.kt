@@ -1,5 +1,6 @@
-package com.rick.budgetly.feature_account.ui.accounts
+package com.rick.accounts
 
+import android.accounts.Account
 import com.rick.budgetly.feature_account.domain.Account
 import com.rick.budgetly.feature_account.domain.AccountType
 

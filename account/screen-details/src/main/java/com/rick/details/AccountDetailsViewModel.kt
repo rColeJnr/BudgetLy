@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.ui.accountdetails
+package com.rick.details
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle

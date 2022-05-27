@@ -3,4 +3,10 @@ apply {
 }
 
 dependencies {
+    implementation project(Modules.bill_data)
+
+    implementation Compose.compose
+    implementation Compose.composeMaterial
+    implementation Compose.composeUi
+    implementation project(path: ':bill:screen-bill')
 }

@@ -1,7 +1,7 @@
-package com.rick.budgetly.feature_account.persistence
+package com.rick.data.persistence
 
 import androidx.room.*
-import com.rick.budgetly.feature_account.domain.Account
+import com.rick.data.Account
 import kotlinx.coroutines.flow.Flow
 
 @Dao

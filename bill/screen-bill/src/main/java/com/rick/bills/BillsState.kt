@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_bills.ui
+package com.rick.bills
 
 import com.rick.bill_data.domain.Bill
 

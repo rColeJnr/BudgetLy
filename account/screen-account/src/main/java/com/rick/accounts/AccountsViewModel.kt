@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.ui.accounts
+package com.rick.accounts
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

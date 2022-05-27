@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.ui.accountneworedit.components
+package com.rick.add_edit.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi

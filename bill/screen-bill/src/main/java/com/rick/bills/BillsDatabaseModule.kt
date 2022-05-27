@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_bills
+package com.rick.bills
 
 import android.content.Context
 import androidx.room.Room

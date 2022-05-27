@@ -1,6 +1,6 @@
 package com.rick.util
 
-import com.rick.budgetly.feature_account.domain.Account
+import com.rick.data.Account
 import java.text.DecimalFormat
 
 private fun dollarSign(amount: Float): String{

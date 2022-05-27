@@ -3,4 +3,14 @@ apply {
 }
 
 dependencies {
+    implementation KotlinX.coroutines
+    implementation KotlinX.coroutinesCore
+
+    implementation Retrofit.retrofit
+    implementation Retrofit.gson
+
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
+    implementation Room.roomExtensions
+
 }

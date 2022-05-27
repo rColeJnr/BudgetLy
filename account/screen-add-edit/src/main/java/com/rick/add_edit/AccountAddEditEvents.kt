@@ -1,6 +1,5 @@
-package com.rick.budgetly.feature_account.ui.accountneworedit
+package com.rick.add_edit
 
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.Color
 
 sealed class AccountAddEditEvents {

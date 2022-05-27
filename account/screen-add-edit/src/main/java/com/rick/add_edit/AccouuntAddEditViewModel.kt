@@ -1,5 +1,6 @@
-package com.rick.budgetly.feature_account.ui.accountneworedit
+package com.rick.add_edit
 
+import android.accounts.Account
 import android.content.res.Resources
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color

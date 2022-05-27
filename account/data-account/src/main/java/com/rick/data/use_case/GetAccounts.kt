@@ -1,7 +1,7 @@
-package com.rick.budgetly.feature_account.domain.use_case
+package com.rick.data.use_case
 
-import com.rick.budgetly.feature_account.domain.Account
-import com.rick.budgetly.feature_account.domain.IAccountRepository
+import com.rick.data.Account
+import com.rick.data.IAccountRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetAccounts (

@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.domain
+package com.rick.data
 
 import kotlinx.coroutines.flow.Flow
 

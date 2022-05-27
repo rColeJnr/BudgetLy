@@ -3,4 +3,7 @@ apply {
 }
 
 dependencies {
+    implementation Compose.compose
+    implementation Compose.composeMaterial
+    implementation Compose.composeUi
 }

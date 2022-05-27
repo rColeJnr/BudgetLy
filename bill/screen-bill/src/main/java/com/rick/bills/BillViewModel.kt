@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_bills.ui
+package com.rick.bills
 
 import android.content.res.Resources
 import androidx.compose.runtime.MutableState

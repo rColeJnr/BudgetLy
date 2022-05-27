@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.domain.use_case
+package com.rick.data.use_case
 
 data class AccountUseCases(
     val getAccounts: GetAccounts,

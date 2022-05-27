@@ -1,8 +1,8 @@
-package com.rick.budgetly.feature_account.persistence
+package com.rick.data.persistence
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.rick.budgetly.feature_account.domain.Account
+import com.rick.data.Account
 
 @Database(
     entities = [Account::class],

@@ -1,4 +1,4 @@
-package com.rick.budgetly
+package com.rick.core
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*

@@ -1,4 +1,4 @@
-package com.rick.budgetly.feature_account.ui
+package com.rick.accounts
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
