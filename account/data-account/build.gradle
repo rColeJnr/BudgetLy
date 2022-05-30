@@ -9,6 +9,9 @@ dependencies {
     implementation Retrofit.retrofit
     implementation Retrofit.gson
 
+    implementation Hilt.hilt
+    kapt Hilt.hiltGoogleCompiler
+
     implementation Room.roomRuntime
     kapt Room.roomCompiler
     implementation Room.roomExtensions
