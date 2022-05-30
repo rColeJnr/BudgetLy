@@ -1,6 +1,6 @@
 object Hilt {
 
-    private const val hilt_version = "2.42"
+    const val hilt_version = "2.42"
     const val hilt = "com.google.dagger:hilt-android:$hilt_version"
     const val hiltGoogleCompiler = "com.google.dagger:hilt-android-compiler:$hilt_version"
     private const val hilt_viewmodel_version = "1.0.0-alpha03"

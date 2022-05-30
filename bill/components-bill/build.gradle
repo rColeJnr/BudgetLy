@@ -1,5 +1,5 @@
 apply {
-    from( "$rootDir/android-library.gradle")
+    from( "$rootDir/kotlin-library.gradle")
 }
 
 dependencies {
@@ -8,5 +8,4 @@ dependencies {
     implementation Compose.compose
     implementation Compose.composeMaterial
     implementation Compose.composeUi
-    implementation project(path: ':bill:screen-bill')
 }
