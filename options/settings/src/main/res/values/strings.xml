@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--- settings -->
+    <string name="dark_light_mode">Dark/Light Mode</string>
+    <string name="first_screen">First screen</string>
+    <string name="push_notification">Push notifications</string>
+    <string name="screen">screen</string>
+    <string name="email_notifications">Email notifications</string>
+    <string name="password_on_off">Password on/off</string>
+    <string name="offline_mode">Offline mode</string>
+    <string name="delete_data">Delete all data</string>
+    <string name="language">Language</string>
+    <string name="share_us">Share us</string>
+    <string name="Currency">Currency</string>
+    <string name="name">user name %1$s</string>
+</resources>

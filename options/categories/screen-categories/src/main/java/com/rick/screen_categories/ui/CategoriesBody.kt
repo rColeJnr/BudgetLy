@@ -14,14 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.rick.budgetly.components.BaseBottomSheet
 import com.rick.data_categories.domain.Category
 import com.rick.data_categories.domain.CategoryImages
+import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CategoriesBody(navController: NavHostController) {
+fun CategoriesBody(controlNavigation: () -> Unit) {
     
     val scaffoldState = rememberScaffoldState()
 
@@ -36,7 +35,7 @@ fun CategoriesBody(navController: NavHostController) {
         BaseBottomSheet(
             state = modalBottomSheetState,
             scope = scope,
-            navController = navController,
+            controlNavigation = { controlNavigation() },
             sheetContent = {  }
         ) {
             LazyColumn{
@@ -73,4 +72,25 @@ fun CategoriesRow(category: Category) {
         }
     }
 
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun BaseBottomSheet(
+    state: ModalBottomSheetState,
+    scope: CoroutineScope,
+    controlNavigation: @Composable () -> Unit,
+    sheetContent: @Composable () -> Unit,
+    screenContent: @Composable () -> Unit
+) {
+    ModalBottomSheetLayout(
+        sheetState = state,
+        sheetElevation = 16.dp,
+        sheetContent = {
+            sheetContent()
+            controlNavigation()
+        },
+    ) {
+        screenContent()
+    }
 }

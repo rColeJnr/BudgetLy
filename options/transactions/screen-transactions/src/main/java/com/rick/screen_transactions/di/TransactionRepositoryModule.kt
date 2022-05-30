@@ -1,6 +1,5 @@
 package com.rick.screen_transactions.di
 
-import com.rick.budgetly.feature_options.transactions.domain.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

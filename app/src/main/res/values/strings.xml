@@ -6,7 +6,7 @@
     <string name="loans">LOANS</string>
     <string name="savings">SAVINGS</string>
 
-    <string name="Currency">Currency</string>
+
     <string name="MZN">MZN</string>
 
     <string name="balane">Balance</string>
@@ -23,6 +23,7 @@
 
     <!-- accoutns -->
     <string name="accounts_screen">Accounts Screen</string>
+    <string name="account_name">Account %1%s</string>
     <string name="account_type">Type</string>
     <string name="account_currency">Currency</string>
     <string name="account_include_in_total">IncludeInTotal</string>
@@ -34,6 +35,8 @@
     <string name="new_account">New or Edit Account</string>
     <string name="account_equals">account=%1$d</string>
     <string name="nav_add_new_acount">accountToEdit=%1$d</string>
+    <string name="account_to_edit">accountToEdit</string>
+    <string name="couldnt_save_account">Couln\'t save account</string>
 
     <!-- Bills -->
     <string name="due_date">Due date</string>
@@ -46,26 +49,15 @@
     <string name="couldnt_save_bill">Couldn\'t save bill</string>
     <string name="bill_deleted">bill deleted</string>
     <string name="failed_to_update_bill">Couldn\'t update bill</string>
-    <string name="account_to_edit">accountToEdit</string>
-    <string name="couldnt_save_account">Couln\'t save account</string>
+
     <string name="transactions">Transactions</string>
     <string name="overview">Overview</string>
     <string name="categories">Categories</string>
     <string name="options">Options</string>
-    <string name="account_name">Account %1%s</string>
     <string name="total_money">Total Money</string>
     <string name="bills">Bills</string>
     <string name="show_categories">show categories</string>
     <string name="RUBLE">Ruble</string>
-    <string name="dark_light_mode">Dark/Light Mode</string>
-    <string name="first_screen">First screen</string>
-    <string name="push_notification">Push notifications</string>
-    <string name="screen">screen</string>
-    <string name="email_notifications">Email notifications</string>
-    <string name="password_on_off">Password on/off</string>
-    <string name="offline_mode">Offline mode</string>
-    <string name="delete_data">Delete all data</string>
-    <string name="language">Language</string>
-    <string name="share_us">Share us</string>
+
 
 </resources>

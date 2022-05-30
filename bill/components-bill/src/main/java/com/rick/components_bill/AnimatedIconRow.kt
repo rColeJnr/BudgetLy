@@ -1,4 +1,4 @@
-package com.rick.add_edit.components
+package com.rick.components_bill
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -22,61 +22,58 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.rick.data.AccountColor
 
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun AnimatedColorsRow(
-    colorsVisible: Boolean,
-    color: AccountColor,
-    onColorChange: (AccountColor) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val entry = remember { fadeIn(animationSpec = TweenSpec(300, easing = FastOutLinearInEasing)) }
-    val exit = remember { fadeOut(animationSpec = TweenSpec(100, easing = FastOutSlowInEasing)) }
+//@OptIn(ExperimentalAnimationApi::class)
+//@Composable
+//fun AnimatedColorsRow(
+//    colorsVisible: Boolean,
+//    modifier: Modifier = Modifier
+//) {
+//    val entry = remember { fadeIn(animationSpec = TweenSpec(300, easing = FastOutLinearInEasing)) }
+//    val exit = remember { fadeOut(animationSpec = TweenSpec(100, easing = FastOutSlowInEasing)) }
+//
+//    Box(modifier = modifier.defaultMinSize(minHeight = 16.dp)){
+//        AnimatedVisibility(visible = colorsVisible, enter = entry, exit = exit) {
+//            ColorsRow(color = color, onColorChange = onColorChange, modifier)
+//        }
+//    }
+//}
 
-    Box(modifier = modifier.defaultMinSize(minHeight = 16.dp)){
-        AnimatedVisibility(visible = colorsVisible, enter = entry, exit = exit) {
-            ColorsRow(color = color, onColorChange = onColorChange, modifier)
-        }
-    }
-}
+//@Composable
+//fun ColorsRow(color: AccountColor, onColorChange: (AccountColor) -> Unit, modifier: Modifier) {
+//    Row(Modifier.horizontalScroll(rememberScrollState())) {
+//        for (accountColor in AccountColor.values()){
+//            SelectableColorButton(
+//                color = accountColor,
+//                onColorSelected = { onColorChange(accountColor) },
+//                isSelected = accountColor == color,
+//                modifier = modifier
+//            )
+//        }
+//    }
+//}
 
-@Composable
-fun ColorsRow(color: AccountColor, onColorChange: (AccountColor) -> Unit, modifier: Modifier) {
-    Row(Modifier.horizontalScroll(rememberScrollState())) {
-        for (accountColor in AccountColor.values()){
-            SelectableColorButton(
-                color = accountColor,
-                onColorSelected = { onColorChange(accountColor) },
-                isSelected = accountColor == color,
-                modifier = modifier
-            )
-        }
-    }
-}
-
-@Composable
-fun SelectableColorButton(
-    color: AccountColor,
-    onColorSelected: () -> Unit,
-    isSelected: Boolean,
-    modifier: Modifier = Modifier
-) {
-
-    TextButton(onClick = {onColorSelected()}, modifier = modifier) {
-        Box(modifier = Modifier
-            .padding(3.dp)
-            .size(50.dp)
-            .background(color.color, shape = CircleShape)
-            .border(
-                width = 3.dp,
-                color = if (isSelected) MaterialTheme.colors.onPrimary else Color.Transparent,
-                shape = CircleShape
-            )
-        )
-    }
-}
+//@Composable
+//fun SelectableColorButton(
+//    color: AccountColor,
+//    onColorSelected: () -> Unit,
+//    isSelected: Boolean,
+//    modifier: Modifier = Modifier
+//) {
+//
+//    TextButton(onClick = {onColorSelected()}, modifier = modifier) {
+//        Box(modifier = Modifier
+//            .padding(3.dp)
+//            .size(50.dp)
+//            .background(color.color, shape = CircleShape)
+//            .border(
+//                width = 3.dp,
+//                color = if (isSelected) MaterialTheme.colors.onPrimary else Color.Transparent,
+//                shape = CircleShape
+//            )
+//        )
+//    }
+//}
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

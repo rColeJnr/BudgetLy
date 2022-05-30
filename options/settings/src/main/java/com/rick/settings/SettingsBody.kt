@@ -1,6 +1,5 @@
 package com.rick.settings
 
-import UserDetailsBox
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.rick.budgetly.R
 
 @Composable
 fun SettingsBody(navController: NavController) {
@@ -88,6 +86,11 @@ fun SettingsBody(navController: NavController) {
             icon = { Icon(imageVector = Icons.Default.Share, contentDescription = stringResource(R.string.share_us)) }) {}
     }
 
+}
+
+@Composable
+fun UserDetailsBox(name: String, isActive: Boolean, profilePic: Any) {
+    TODO("Not yet implemented")
 }
 
 @Composable

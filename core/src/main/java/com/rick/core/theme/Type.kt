@@ -1,4 +1,4 @@
-package com.rick.budgetly.ui.theme
+package com.rick.core.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

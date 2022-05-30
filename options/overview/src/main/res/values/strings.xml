@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_name">Account anme %1$s</string>
+    <string name="MZN">MZN</string>
+    <string name="RUBLE">RUBLE</string>
+    <string name="total_money">Total money</string>
+    <string name="bills">bills</string>
+    <string name="overview">overview</string>
+    <string name="show_categories">show categories</string>
+</resources>

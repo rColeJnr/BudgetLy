@@ -4,5 +4,10 @@ apply {
 
 dependencies {
 
+    implementation project(Modules.options_categories_screen)
+    implementation project(Modules.options_transaction_screen)
+    implementation project(Modules.options_settings)
+    implementation project(Modules.options_overview)
+    implementation project(path: ':core')
 
 }

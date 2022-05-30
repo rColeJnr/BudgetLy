@@ -4,28 +4,28 @@ import com.rick.data.Account
 import com.rick.data.IAccountRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetAccounts (
+class GetAccounts(
     private val repository: IAccountRepository
 ) {
 
     operator fun invoke(): Flow<List<Account>> {
-         return repository.getAccounts()
+        return repository.getAccounts()
     }
 
 }
 
-class GetAccountById (
+class GetAccountById(
     private val repository: IAccountRepository
-){
+) {
     suspend operator fun invoke(id: Int): Account? {
         return repository.getAccountById(id)
     }
 }
 
 // This doesn't work, it's not well done, but i'll get to it when we write room db tests
-class GetAccountByType (
+class GetAccountByType(
     private val repository: IAccountRepository
-){
+) {
     suspend operator fun invoke(type: String): Flow<List<Account>> {
         return repository.getAccountByType(type)
     }

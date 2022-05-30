@@ -4,4 +4,6 @@ apply {
 
 dependencies {
     implementation project(Modules.options_transaction_data)
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
 }

@@ -3,7 +3,12 @@ apply {
 }
 
 dependencies {
+    implementation project(Modules.core)
+    implementation project(Modules.account_data)
     implementation Compose.compose
     implementation Compose.composeMaterial
     implementation Compose.composeUi
+    implementation Compose.extraIcons
+
+    implementation Compose.activityCompose
 }

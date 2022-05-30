@@ -16,9 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.rick.data_transactions.domain.Transaction
-import com.rick.data_transactions.domain.TransactionType
-import com.rick.budgetly.R
+import com.rick.screen_transactions.R
 import java.util.*
 
 val transactions = listOf(
@@ -65,12 +63,18 @@ fun TransactionsBody(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            actions = { Icon(modifier = Modifier.padding(8.dp), imageVector = Icons.Default.Edit, contentDescription = "edit icon") },
+            actions = {
+                Icon(
+                    modifier = Modifier.padding(8.dp),
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "edit icon"
+                )
+            },
         )
 
         LazyColumn {
-            items(com.rick.screen_transactions.ui.transactions) {
-                com.rick.screen_transactions.ui.TransactionRow(transaction = it)
+            items(transactions) {
+                TransactionRow(transaction = it)
             }
         }
     }

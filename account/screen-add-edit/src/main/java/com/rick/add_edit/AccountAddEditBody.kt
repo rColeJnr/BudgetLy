@@ -13,28 +13,26 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.key.Key.Companion.Calculator
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.rick.budgetly.BudgetLyContainer
-import com.rick.budgetly.R
-import com.rick.budgetly.components.BaseBottomSheet
-import com.rick.budgetly.components.Calculator
-import com.rick.budgetly.components.numero
-import com.rick.budgetly.feature_account.domain.AccountColor
-import com.rick.budgetly.feature_account.domain.AccountCurrency
-import com.rick.budgetly.feature_account.domain.AccountIcon
-import com.rick.budgetly.feature_account.domain.AccountType
+import com.rick.accounts.BaseBottomSheet
+import com.rick.accounts.Calculator
+import com.rick.accounts.DefaultInputText
+import com.rick.accounts.numero
 import com.rick.add_edit.components.AccountAddEditDetails
 import com.rick.add_edit.components.AnimatedColorsRow
 import com.rick.add_edit.components.AnimatedIconRow
-import com.rick.budgetly.feature_account.ui.components.DefaultInputText
-import com.rick.budgetly.feature_account.ui.util.TestTags
+import com.rick.core.BudgetLyContainer
+import com.rick.data.AccountColor
+import com.rick.data.AccountCurrency
+import com.rick.data.AccountIcon
+import com.rick.data.AccountType
+import com.rick.screen_add_edit.R
+import com.rick.util.TestTags
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.NonCancellable.cancel
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -65,7 +63,7 @@ fun AccountAddEditBody(
     BaseBottomSheet(
         state = state,
         scope = scope,
-        navController = navController,
+        controlNavigation = {TODO("nav controller")},
         sheetContent = { Calculator(viewModel, state = state, scope = scope) }
     ) {
         ScreenContent (modifier, viewModel, navController, state, scope)

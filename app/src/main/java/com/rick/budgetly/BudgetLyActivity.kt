@@ -17,7 +17,7 @@ import com.rick.budgetly.components.BudgetLyTabRow
 import com.rick.budgetly.feature_account.ui.AccountsNavHost
 import com.rick.budgetly.feature_bills.ui.BillsBody
 import com.rick.budgetly.feature_options.options.OptionsNavHost
-import com.rick.budgetly.ui.theme.BudgetLyTheme
+import com.rick.core.theme.BudgetLyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

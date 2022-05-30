@@ -1,6 +1,5 @@
 package com.rick.add_edit
 
-import android.accounts.Account
 import android.content.res.Resources
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
@@ -8,12 +7,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rick.budgetly.BudgetLyContainer
-import com.rick.budgetly.R
-import com.rick.budgetly.feature_account.common.BaseLogic
-import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
-import com.rick.budgetly.feature_account.domain.*
-import com.rick.budgetly.feature_account.domain.use_case.AccountUseCases
+import com.rick.common.BaseLogic
+import com.rick.common.ProductionDispatcherProvider
+import com.rick.core.BudgetLyContainer
+import com.rick.data.*
+import com.rick.data.use_case.AccountUseCases
+import com.rick.screen_add_edit.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

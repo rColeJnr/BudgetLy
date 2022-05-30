@@ -1,4 +1,4 @@
-package com.rick.budgetly.ui.theme
+package com.rick.core.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

@@ -1,6 +1,6 @@
 package com.rick.details
 
-import android.accounts.Account
+import com.rick.data.Account
 
 sealed class AccountDetailsEvents{
     object ChangeIncludeInTotalStatus: AccountDetailsEvents()

@@ -7,6 +7,9 @@ dependencies {
     implementation KotlinX.coroutines
     implementation KotlinX.coroutinesCore
 
+    implementation Compose.extraIcons
+    implementation Compose.composeMaterial
+
     implementation Room.roomRuntime
     kapt Room.roomCompiler
     implementation Room.roomExtensions

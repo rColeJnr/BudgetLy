@@ -20,15 +20,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.rick.budgetly.R
-import com.rick.budgetly.feature_account.ui.accountneworedit.components.AnimatedIconRow
-import com.rick.budgetly.feature_account.ui.components.DefaultInputText
 import com.rick.bill_data.domain.BillIcon
-import com.rick.bills.BillEvents
-import com.rick.bills.BillViewModel
 import com.rick.bill_data.util.TestTags
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.NonCancellable.cancel
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -36,7 +30,20 @@ import java.util.*
 @Composable
 fun NewBillSheet(
     modifier: Modifier,
-    viewModel: BillViewModel,
+    title: String,
+    onTitleChanged: () -> Unit,
+    icon: Int,
+    onIconChanged: () -> Unit,
+    archived: Boolean,
+    onChangeArchived: () -> Unit,
+    paid: Boolean,
+    onChangePaid: () -> Unit,
+    saveBill: () -> Unit,
+    cancelBill: () -> Unit,
+    amount: String,
+    onAmountChanged: () -> Unit,
+    dueDate: Calendar,
+    onDateChanged: (Int, Int, Int) -> Unit,
     state: ModalBottomSheetState,
     scope: CoroutineScope,
 ) {
@@ -53,23 +60,23 @@ fun NewBillSheet(
                 .wrapContentHeight(align = Alignment.Top)
         ) {
             DefaultInputText(
-                text = viewModel.billTitle.value,
-                onTextChange = { viewModel.onEvent(BillEvents.EnteredTitle(it)) },
+                text = title,
+                onTextChange = { onTitleChanged() },
                 label = stringResource(R.string.name),
                 testTag = TestTags.newBillTitle
             )
-            if (viewModel.billTitle.value.isNotEmpty()) {
+            if (title.isNotEmpty()) {
                 AnimatedIconRow(
                     iconList = iconList,
-                    icon = BillIcon.values()[viewModel.billIcon.value].imageVector,
-                    onIconChange = { viewModel.onEvent(BillEvents.ChangeBillIcon(it)) },
+                    icon = BillIcon.values()[icon].imageVector,
+                    onIconChange = { onIconChanged() },
                     modifier = Modifier.padding(top = BASE_DP_VALUE)
                 )
             }
 
             DefaultInputText(
-                text = viewModel.billAmount.value,
-                onTextChange = { viewModel.onEvent(BillEvents.EnteredAmount(it)) },
+                text = amount,
+                onTextChange = { onAmountChanged() },
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 label = stringResource(R.string.amount),
                 testTag = TestTags.newBillAmount
@@ -78,21 +85,21 @@ fun NewBillSheet(
 
             Spacer(modifier = Modifier.height(BASE_DP_VALUE))
 
-            CustomDatePicker(context, viewModel)
+            CustomDatePicker(context, dueDate, onDateChanged)
 
             Spacer(modifier = Modifier.height(BASE_DP_VALUE))
 
             YesOrNoRow(
                 question = stringResource(R.string.is_bill_paid),
-                answer = viewModel.billIsPaid.value
-            ) { viewModel.onEvent(BillEvents.ChangeIsPaid(viewModel.billIsPaid.value)) }
+                answer = paid
+            ) { onChangePaid() }
 
             Spacer(modifier = Modifier.height(BASE_DP_VALUE))
 
             YesOrNoRow(
                 question = stringResource(R.string.is_bill_archived),
-                answer = viewModel.billArchived.value
-            ) { viewModel.onEvent(BillEvents.ChangeIsArchived(viewModel.billArchived.value)) }
+                answer = archived
+            ) { onChangeArchived() }
 
             Row(
                 modifier = Modifier
@@ -107,7 +114,7 @@ fun NewBillSheet(
                         color = Color.LightGray,
                         shape = RoundedCornerShape(BASE_DP_VALUE)
                     ), onClick = {
-                        viewModel.onEvent(BillEvents.CancelNewBill)
+                        cancelBill()
                         hideSheet()
                     }
                 ) {
@@ -119,7 +126,7 @@ fun NewBillSheet(
                         color = Color.LightGray,
                         shape = RoundedCornerShape(BASE_DP_VALUE)
                     ), onClick = {
-                        viewModel.onEvent(BillEvents.SaveBill)
+                        saveBill()
                     }
                 ) {
                     Text(text = stringResource(R.string.save))
@@ -131,23 +138,23 @@ fun NewBillSheet(
 }
 
 @Composable
-private fun CustomDatePicker(context: Context, viewModel: BillViewModel) {
-    val cal = viewModel.billDueDate
+private fun CustomDatePicker(context: Context, dueDate: Calendar, onDataChanged: (Int, Int, Int) -> Unit) {
     val dueDateDisplayed = remember {
         mutableStateOf(
-            "${cal.get(Calendar.DAY_OF_MONTH)}/" +
-                    "${cal.get(Calendar.MONTH) + 1}/" +
-                    "${cal.get(Calendar.YEAR)}"
+            "${dueDate.get(Calendar.DAY_OF_MONTH)}/" +
+                    "${dueDate.get(Calendar.MONTH) + 1}/" +
+                    "${dueDate.get(Calendar.YEAR)}"
         )
     }
     val timePickerDialog = DatePickerDialog(
         context,
         { _, year, month, day ->
-            viewModel.onEvent(
-                BillEvents.EnteredDueDate(year, month + 1, day)
-            )
+            onDataChanged(year, month + 1, day)
             dueDateDisplayed.value = "$day/${month + 1}/$year"
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
+        },
+        dueDate.get(Calendar.YEAR),
+        dueDate.get(Calendar.MONTH),
+        dueDate.get(Calendar.DAY_OF_MONTH)
     )
 
     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {

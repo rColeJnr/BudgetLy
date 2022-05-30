@@ -1,4 +1,4 @@
-package com.rick.budgetly.ui.theme
+package com.rick.core.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

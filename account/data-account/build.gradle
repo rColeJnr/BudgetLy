@@ -9,6 +9,9 @@ dependencies {
     implementation Retrofit.retrofit
     implementation Retrofit.gson
 
+    implementation Compose.extraIcons
+    implementation Compose.composeMaterial
+
     implementation Hilt.hilt
     kapt Hilt.hiltGoogleCompiler
 

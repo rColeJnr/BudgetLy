@@ -9,10 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditEvents
-import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditViewModel
-import com.rick.budgetly.feature_account.ui.accountneworedit.components.field
 import kotlinx.coroutines.CoroutineScope
 
 /*
@@ -136,7 +132,7 @@ val list = listOf(
 
 @ExperimentalMaterialApi
 @Composable
-fun Calculator(viewModel: ViewModel? = null, state: ModalBottomSheetState, scope: CoroutineScope) {
+fun Calculator(viewModel: Any? = null, state: ModalBottomSheetState, scope: CoroutineScope) {
     Column(Modifier.fillMaxWidth()) {
         numero = remember{ mutableStateOf("") }
         Text(text = numero.value, modifier = Modifier.padding(start = 65.dp))
@@ -152,18 +148,19 @@ fun Calculator(viewModel: ViewModel? = null, state: ModalBottomSheetState, scope
                     onClick = {
                         numberAction(i)
                         if (setResult){
-                            if (viewModel is AccountAddEditViewModel){
-                                viewModel.apply {
-                                    if (field == "l"){
-                                        viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(
-                                            numero.value))
-                                    }
-                                    if (field == "b"){
-                                        viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(
-                                            numero.value))
-                                    }
-                                }
-                            }
+                            // TODO(CALCULATOR)
+//                            if (viewModel is AccountAddEditViewModel){
+//                                viewModel.apply {
+//                                    if (field == "l"){
+//                                        viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(
+//                                            numero.value))
+//                                    }
+//                                    if (field == "b"){
+//                                        viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(
+//                                            numero.value))
+//                                    }
+//                                }
+//                            }
 //                            scope.launch { state.animateTo(ModalBottomSheetValue.Hidden, SwipeableDefaults.AnimationSpec) }
                         }
                     }, modifier = Modifier
