@@ -1,7 +1,6 @@
-package com.rick.add_edit.components
+package com.rick.budgetly_components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.TweenSpec
@@ -14,7 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,30 +21,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.rick.data.AccountColor
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedColorsRow(
     colorsVisible: Boolean,
-    color: AccountColor,
-    onColorChange: (AccountColor) -> Unit,
+    colors: List<Color>,
+    color: Color,
+    onColorChange: (Color) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val entry = remember { fadeIn(animationSpec = TweenSpec(300, easing = FastOutLinearInEasing)) }
     val exit = remember { fadeOut(animationSpec = TweenSpec(100, easing = FastOutSlowInEasing)) }
 
-    Box(modifier = modifier.defaultMinSize(minHeight = 16.dp)){
+    Box(modifier = modifier.defaultMinSize(minHeight = 16.dp)) {
         AnimatedVisibility(visible = colorsVisible, enter = entry, exit = exit) {
-            ColorsRow(color = color, onColorChange = onColorChange, modifier)
+            ColorsRow(colors = colors, color = color, onColorChange = onColorChange, modifier)
         }
     }
 }
 
 @Composable
-fun ColorsRow(color: AccountColor, onColorChange: (AccountColor) -> Unit, modifier: Modifier) {
+fun ColorsRow(
+    colors: List<Color>,
+    color: Color,
+    onColorChange: (Color) -> Unit,
+    modifier: Modifier
+) {
     Row(Modifier.horizontalScroll(rememberScrollState())) {
-        for (accountColor in AccountColor.values()){
+        for (accountColor in colors) {
             SelectableColorButton(
                 color = accountColor,
                 onColorSelected = { onColorChange(accountColor) },
@@ -58,27 +61,27 @@ fun ColorsRow(color: AccountColor, onColorChange: (AccountColor) -> Unit, modifi
 
 @Composable
 fun SelectableColorButton(
-    color: AccountColor,
+    color: Color,
     onColorSelected: () -> Unit,
     isSelected: Boolean,
     modifier: Modifier = Modifier
 ) {
 
-    TextButton(onClick = {onColorSelected()}, modifier = modifier) {
-        Box(modifier = Modifier
-            .padding(3.dp)
-            .size(50.dp)
-            .background(color.color, shape = CircleShape)
-            .border(
-                width = 3.dp,
-                color = if (isSelected) MaterialTheme.colors.onPrimary else Color.Transparent,
-                shape = CircleShape
-            )
+    TextButton(onClick = { onColorSelected() }, modifier = modifier) {
+        Box(
+            modifier = Modifier
+                .padding(3.dp)
+                .size(50.dp)
+                .background(color, shape = CircleShape)
+                .border(
+                    width = 3.dp,
+                    color = if (isSelected) colors.onPrimary else Color.Transparent,
+                    shape = CircleShape
+                )
         )
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedIconRow(
     iconList: List<ImageVector>,
@@ -103,7 +106,7 @@ fun AnimatedIconRow(
 @Composable
 fun IconRow(
     icon: ImageVector,
-    icons:  List<ImageVector>,
+    icons: List<ImageVector>,
     onIconChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -129,8 +132,8 @@ fun SelectableIconButton(
 ) {
     //another mathematica onde fazemos essa cena de novo.
     val tint = if (isSelected) {
-        MaterialTheme.colors.primary
-    } else MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+        colors.primary
+    } else colors.onSurface.copy(alpha = 0.6f)
 
     TextButton(onClick = { onIconSelected() }, shape = CircleShape, modifier = modifier) {
         Column {

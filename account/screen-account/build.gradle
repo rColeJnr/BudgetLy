@@ -9,6 +9,9 @@ dependencies {
     implementation project(Modules.account_data)
     implementation project(Modules.core)
 
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
+
     implementation Deps.livedata
     implementation Deps.coil
 

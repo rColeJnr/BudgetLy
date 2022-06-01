@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.rick.accounts.IconDropdownMenu
+import com.rick.budgetly_components.IconDropdownMenu
+import com.rick.budgetly_components.SimpleSnackbar
 import com.rick.core.formatAmount
 import com.rick.data.AccountIcon
 import com.rick.util.TestTags
@@ -76,7 +77,7 @@ fun AccountDetailsBody(
                             // We then share data between viewModels, i dont' like this no bit.
                             CoroutineScope(Dispatchers.Main).launch {
                                 val job = scope.launch {
-                                    simpleSnackbar(scaffoldSate, "Account deleted", "Undo") {
+                                    SimpleSnackbar(scaffoldSate, "Account deleted", "Undo") {
                                         viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
                                     }
                                     delay(250)
@@ -112,7 +113,7 @@ fun AccountDetailsBody(
             Spacer(modifier = modifier.height(16.dp))
             Text(text = formatAmount(balance), style = MaterialTheme.typography.h5)
             Spacer(modifier = modifier.height(8.dp))
-            Text(viewModel.accountType.value, style = MaterialTheme.typography.body2)
+            Text(viewModel.accountType, style = MaterialTheme.typography.body2)
             Spacer(modifier = modifier.height(24.dp))
             Text(text = "Totals for month")
             Spacer(modifier = modifier.height(16.dp))
@@ -139,22 +140,6 @@ fun AccountDetailsBody(
             }
         }
 
-    }
-}
-
-suspend fun simpleSnackbar(
-    scaffoldSate: ScaffoldState,
-    message: String,
-    actionLabel: String,
-    onDismiss: () -> Unit
-) {
-    val result = scaffoldSate.snackbarHostState.showSnackbar(
-        message = message,
-        actionLabel = actionLabel,
-        duration = SnackbarDuration.Long
-    )
-    if (result == SnackbarResult.ActionPerformed) {
-        onDismiss()
     }
 }
 

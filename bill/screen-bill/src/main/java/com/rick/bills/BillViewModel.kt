@@ -66,7 +66,7 @@ class BillViewModel @Inject constructor(
             is BillEvents.ChangeIsArchived -> changeIsArchived(event.isArchived)
             is BillEvents.ChangeIsPaid -> changeIsPaid(event.isPaid)
             is BillEvents.EnteredAmount -> enteredAmount(event.amount)
-            is BillEvents.EnteredDueDate -> enteredDueDate(event.year, event.month, event.day)
+            is BillEvents.EnteredDueDate -> enteredDueDate(event.date.first, event.date.second, event.date.third)
             is BillEvents.EnteredTitle -> enteredTitle(event.billTitle)
             is BillEvents.DeleteBill -> deleteBill(event.bill)
             is BillEvents.EditBill -> editBill(event.bill)

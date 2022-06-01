@@ -4,8 +4,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rick.common.BaseLogic
 import com.rick.common.ProductionDispatcherProvider
+import com.rick.core.BaseLogic
 import com.rick.data.Account
 import com.rick.data.AccountIcon
 import com.rick.data.AccountType

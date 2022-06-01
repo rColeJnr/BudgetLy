@@ -104,7 +104,6 @@ dependencies {
 
     implementation Hilt.hilt
     kapt Hilt.hiltGoogleCompiler
-    implementation Hilt.hiltViewmodel
     kapt Hilt.hiltCompiler
 
     implementation Room.roomRuntime

@@ -18,13 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.rick.accounts.BaseBottomSheet
-import com.rick.accounts.Calculator
-import com.rick.accounts.DefaultInputText
-import com.rick.accounts.numero
 import com.rick.add_edit.components.AccountAddEditDetails
-import com.rick.add_edit.components.AnimatedColorsRow
-import com.rick.add_edit.components.AnimatedIconRow
+import com.rick.budgetly_components.*
 import com.rick.core.BudgetLyContainer
 import com.rick.data.AccountColor
 import com.rick.data.AccountCurrency
@@ -182,11 +177,11 @@ fun TopBarWithTextField(
                     modifier = Modifier.padding(top = 8.dp)
                 )
                 // TODO to be implement after i complete base functionality of app
-                AnimatedColorsRow(
-                    colorsVisible = false,
-                    color = color,
-                    onColorChange = onColorChange
-                )
+//                AnimatedColorsRow(
+//                    colorsVisible = false,
+//                    color = color,
+//                    onColorChange = onColorChange
+//                )
             }
         } else {
             Spacer(modifier = Modifier.height(16.dp))

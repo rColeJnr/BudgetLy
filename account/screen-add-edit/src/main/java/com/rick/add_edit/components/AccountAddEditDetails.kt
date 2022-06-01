@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rick.accounts.DefaultInputText
-import com.rick.accounts.TextDropdownMenu
+import com.rick.budgetly_components.DefaultInputText
+import com.rick.budgetly_components.TextDropdownMenu
 import com.rick.data.AccountCurrency
 import com.rick.data.AccountType
 import com.rick.screen_add_edit.R

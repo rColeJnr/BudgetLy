@@ -1,8 +1,7 @@
 package com.rick.accounts
 
-import android.accounts.Account
-import com.rick.budgetly.feature_account.domain.Account
-import com.rick.budgetly.feature_account.domain.AccountType
+import com.rick.data.Account
+import com.rick.data.AccountType
 
 data class AccountsState(
     val accounts: List<Account> = emptyList(),

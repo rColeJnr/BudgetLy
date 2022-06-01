@@ -4,12 +4,15 @@ import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.material.icons.filled.PlusOne
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,7 +25,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.bill_data.domain.Bill
 import com.rick.bill_data.domain.BillIcon
-import com.rick.components_bill.BaseBottomSheet
+import com.rick.budgetly_components.AccountTopBar
+import com.rick.budgetly_components.BaseBottomSheet
+import com.rick.budgetly_components.BaseRow
+import com.rick.budgetly_components.SimpleSnackbar
 import com.rick.components_bill.BillDetails
 import com.rick.components_bill.NewBillSheet
 import com.rick.core.BudgetLyContainer
@@ -63,7 +69,7 @@ fun BillsBody(
                 BudgetLyContainer.ShowSuccess -> { modalBottomSheetState.hide() }
 
                 is BudgetLyContainer.ShowRestoreSnackbar -> {
-                    simpleSnackbar(
+                    SimpleSnackbar(
                         scaffoldSate = scaffoldState,
                         message = event.message,
                         actionLabel = context.getString(R.string.undo)
@@ -83,9 +89,22 @@ fun BillsBody(
             sheetContent = {
                 NewBillSheet(
                     modifier,
-                    viewModel,
-                    modalBottomSheetState,
-                    scope,
+                    state = modalBottomSheetState,
+                    scope = scope,
+                    icon = viewModel.billIcon.value,
+                    onIconChanged = {viewModel.onEvent(BillEvents.ChangeBillIcon(it))},
+                    amount = viewModel.billAmount.value,
+                    onAmountChanged = {viewModel.onEvent(BillEvents.EnteredAmount(it))},
+                    title = viewModel.billTitle.value,
+                    onTitleChanged = {viewModel.onEvent(BillEvents.EnteredTitle(it))},
+                    dueDate = viewModel.billDueDate,
+                    onDateChanged = {viewModel.onEvent(BillEvents.EnteredDueDate(it))},
+                    archived = viewModel.billArchived.value,
+                    onChangeArchived = {viewModel.onEvent(BillEvents.ChangeIsArchived(it))},
+                    paid = viewModel.billIsPaid.value,
+                    onChangePaid = {viewModel.onEvent(BillEvents.ChangeIsPaid(it))},
+                    saveBill = {viewModel.onEvent(BillEvents.SaveBill)},
+                    cancelBill = {viewModel.onEvent(BillEvents.CancelNewBill)},
                 )
             }
         ) {

@@ -9,6 +9,5 @@ dependencies {
     implementation project(Modules.budgetly_components)
 
     implementation(Room.roomRuntime)
-    implementation(Room.roomExtensions)
     kapt(Room.roomCompiler)
 }

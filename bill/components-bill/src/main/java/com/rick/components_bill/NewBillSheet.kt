@@ -22,6 +22,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.rick.bill_data.domain.BillIcon
 import com.rick.bill_data.util.TestTags
+import com.rick.budgetly_components.AnimatedIconRow
+import com.rick.budgetly_components.DefaultInputText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -31,19 +33,19 @@ import java.util.*
 fun NewBillSheet(
     modifier: Modifier,
     title: String,
-    onTitleChanged: () -> Unit,
+    onTitleChanged: (String) -> Unit,
     icon: Int,
-    onIconChanged: () -> Unit,
+    onIconChanged: (Int) -> Unit,
     archived: Boolean,
-    onChangeArchived: () -> Unit,
+    onChangeArchived: (Boolean) -> Unit,
     paid: Boolean,
-    onChangePaid: () -> Unit,
+    onChangePaid: (Boolean) -> Unit,
     saveBill: () -> Unit,
     cancelBill: () -> Unit,
     amount: String,
-    onAmountChanged: () -> Unit,
+    onAmountChanged: (String) -> Unit,
     dueDate: Calendar,
-    onDateChanged: (Int, Int, Int) -> Unit,
+    onDateChanged: (Triple<Int, Int, Int>) -> Unit,
     state: ModalBottomSheetState,
     scope: CoroutineScope,
 ) {
@@ -61,7 +63,7 @@ fun NewBillSheet(
         ) {
             DefaultInputText(
                 text = title,
-                onTextChange = { onTitleChanged() },
+                onTextChange = { onTitleChanged(it) },
                 label = stringResource(R.string.name),
                 testTag = TestTags.newBillTitle
             )
@@ -69,14 +71,14 @@ fun NewBillSheet(
                 AnimatedIconRow(
                     iconList = iconList,
                     icon = BillIcon.values()[icon].imageVector,
-                    onIconChange = { onIconChanged() },
+                    onIconChange = { onIconChanged(it) },
                     modifier = Modifier.padding(top = BASE_DP_VALUE)
                 )
             }
 
             DefaultInputText(
                 text = amount,
-                onTextChange = { onAmountChanged() },
+                onTextChange = { onAmountChanged(it) },
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 label = stringResource(R.string.amount),
                 testTag = TestTags.newBillAmount
@@ -92,14 +94,14 @@ fun NewBillSheet(
             YesOrNoRow(
                 question = stringResource(R.string.is_bill_paid),
                 answer = paid
-            ) { onChangePaid() }
+            ) { onChangePaid(paid) }
 
             Spacer(modifier = Modifier.height(BASE_DP_VALUE))
 
             YesOrNoRow(
                 question = stringResource(R.string.is_bill_archived),
                 answer = archived
-            ) { onChangeArchived() }
+            ) { onChangeArchived(archived) }
 
             Row(
                 modifier = Modifier
@@ -138,7 +140,7 @@ fun NewBillSheet(
 }
 
 @Composable
-private fun CustomDatePicker(context: Context, dueDate: Calendar, onDataChanged: (Int, Int, Int) -> Unit) {
+private fun CustomDatePicker(context: Context, dueDate: Calendar, onDataChanged: (Triple<Int, Int, Int>) -> Unit) {
     val dueDateDisplayed = remember {
         mutableStateOf(
             "${dueDate.get(Calendar.DAY_OF_MONTH)}/" +
@@ -149,7 +151,7 @@ private fun CustomDatePicker(context: Context, dueDate: Calendar, onDataChanged:
     val timePickerDialog = DatePickerDialog(
         context,
         { _, year, month, day ->
-            onDataChanged(year, month + 1, day)
+            onDataChanged(Triple(year, month + 1, day))
             dueDateDisplayed.value = "$day/${month + 1}/$year"
         },
         dueDate.get(Calendar.YEAR),

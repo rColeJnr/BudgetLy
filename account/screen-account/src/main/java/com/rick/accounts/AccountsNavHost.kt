@@ -7,10 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.rick.add_edit.AccountAddEditBody
 import com.rick.common.AccountsScreen
-import com.rick.budgetly.feature_account.ui.accountdetails.AccountDetailsBody
-import com.rick.budgetly.feature_account.ui.accountneworedit.AccountAddEditBody
-import com.rick.budgetly.feature_account.ui.accounts.AccountBody
+import com.rick.details.AccountDetailsBody
 
 @Composable
 fun AccountsNavHost() {

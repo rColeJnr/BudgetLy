@@ -1,6 +1,6 @@
 package com.rick.accounts
 
-import com.rick.budgetly.feature_account.domain.AccountType
+import com.rick.data.AccountType
 
 sealed class AccountEvents{
 

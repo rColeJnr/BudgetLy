@@ -19,7 +19,7 @@ object BillRepositoryModule {
             GetBills(repository),
             GetBill(repository),
             CreateBill(repository),
-            BillEvents.UpdateBill(repository),
+            UpdateBill(repository),
             RemoveBill(repository)
         )
 

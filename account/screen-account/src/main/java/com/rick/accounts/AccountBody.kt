@@ -1,9 +1,9 @@
 package com.rick.accounts
 
-import android.accounts.Account
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -21,13 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.rick.budgetly.R
-import com.rick.budgetly.components.BaseRow
-import com.rick.budgetly.feature_account.common.AccountsScreen
-import com.rick.budgetly.feature_account.domain.Account
-import com.rick.budgetly.feature_account.domain.AccountIcon
-import com.rick.budgetly.feature_account.ui.components.AccountTopBar
-import com.rick.budgetly.feature_account.ui.util.formatAmount
+import com.rick.budgetly_components.AccountTopBar
+import com.rick.budgetly_components.BaseRow
+import com.rick.common.AccountsScreen
+import com.rick.core.formatAmount
+import com.rick.data.Account
+import com.rick.data.AccountIcon
+import com.rick.screen_account.R
 
 @Composable
 fun AccountBody(
@@ -103,7 +103,10 @@ private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
             .wrapContentHeight(align = Alignment.Bottom)
             .padding(vertical = 8.dp)
     ) {
-        Icon(imageVector = Icons.Default.PlusOne, contentDescription = stringResource(R.string.add_new_account))
+        Icon(
+            imageVector = Icons.Default.PlusOne,
+            contentDescription = stringResource(R.string.add_new_account)
+        )
         Spacer(modifier = Modifier.width(8.dp))
         Text(text = stringResource(R.string.add_new_card), textAlign = TextAlign.Start)
     }

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.rick.core.BudgetLyScreen
 import com.rick.overview.OverviewBody
 import com.rick.screen_categories.ui.CategoriesBody
 import com.rick.screen_transactions.ui.TransactionsBody
@@ -14,7 +13,7 @@ import com.rick.settings.SettingsBody
 fun OptionsNavHost() {
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = BudgetLyScreen.Options.name){
+    NavHost(navController = navController, startDestination = OptionsScreen.Options.name){
         composable(OptionsScreen.Options.name){
             OptionsBody(navController = navController)
         }

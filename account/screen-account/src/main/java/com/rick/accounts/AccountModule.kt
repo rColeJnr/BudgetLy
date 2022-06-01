@@ -3,14 +3,14 @@ package com.rick.accounts
 import android.app.Application
 import androidx.room.Room
 import com.rick.common.ProductionDispatcherProvider
-import com.rick.budgetly.feature_account.domain.IAccountRepository
-import com.rick.budgetly.feature_account.domain.IQuoteApi
-import com.rick.budgetly.feature_account.domain.IQuoteRepository
-import com.rick.budgetly.feature_account.domain.use_case.*
-import com.rick.budgetly.feature_account.persistence.AccountDatabase
-import com.rick.budgetly.feature_account.persistence.AccountDatabase.Companion.ACCOUNT_DATABASE_NAME
-import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
-import com.rick.budgetly.feature_account.persistence.QuoteRepositoryImpl
+import com.rick.data.IAccountRepository
+import com.rick.data.IQuoteApi
+import com.rick.data.IQuoteRepository
+import com.rick.data.persistence.AccountDatabase
+import com.rick.data.persistence.AccountDatabase.Companion.ACCOUNT_DATABASE_NAME
+import com.rick.data.persistence.AccountRepositoryImpl
+import com.rick.data.persistence.QuoteRepositoryImpl
+import com.rick.data.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import kotlin.text.Typography.dagger
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -41,11 +40,11 @@ object AccountModule {
 
     @Provides
     @Singleton
-    fun providesAccountUseCases(repository: IAccountRepository): AccountUseCases  = AccountUseCases(
+    fun providesAccountUseCases(repository: IAccountRepository): AccountUseCases = AccountUseCases(
         getAccounts = GetAccounts(repository),
         getAccountsByType = GetAccountByType(repository),
         getAccountById = GetAccountById(repository),
-        saveAccount = SaveAccount(repository ),
+        saveAccount = SaveAccount(repository),
         deleteAccount = DeleteAccount(repository)
     )
 
@@ -68,7 +67,7 @@ object AccountModule {
 
     @Provides
     @Singleton
-    fun providesQuoteRepository(api: IQuoteApi): IQuoteRepository{
+    fun providesQuoteRepository(api: IQuoteApi): IQuoteRepository {
         return QuoteRepositoryImpl(api)
     }
 }
