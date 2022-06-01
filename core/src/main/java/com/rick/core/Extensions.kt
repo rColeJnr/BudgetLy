@@ -1,4 +1,4 @@
-package com.rick.common
+package com.rick.core
 
 
 // TODO change this implementation

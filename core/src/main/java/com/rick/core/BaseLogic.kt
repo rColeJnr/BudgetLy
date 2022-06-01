@@ -1,4 +1,4 @@
-package com.rick.common
+package com.rick.core
 
 
 interface BaseLogic<EVENT> {

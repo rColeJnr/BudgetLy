@@ -4,6 +4,7 @@ apply {
 
 dependencies {
     implementation project(Modules.bill_data)
+    implementation project(Modules.budgetly_components)
 
     implementation Compose.compose
     implementation Compose.composeMaterial

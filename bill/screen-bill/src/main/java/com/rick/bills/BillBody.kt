@@ -1,6 +1,5 @@
 package com.rick.bills
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,17 +20,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.rick.budgetly.BudgetLyContainer
-import com.rick.budgetly.R
-import com.rick.budgetly.components.BaseBottomSheet
-import com.rick.budgetly.components.BaseRow
-import com.rick.budgetly.feature_account.ui.accountdetails.simpleSnackbar
-import com.rick.budgetly.feature_account.ui.components.AccountTopBar
-import com.rick.util.formatAmount
 import com.rick.bill_data.domain.Bill
 import com.rick.bill_data.domain.BillIcon
-import com.rick.budgetly.feature_bills.ui.components.BillDetails
-import com.rick.budgetly.feature_bills.ui.components.NewBillSheet
+import com.rick.components_bill.BaseBottomSheet
+import com.rick.components_bill.BillDetails
+import com.rick.components_bill.NewBillSheet
+import com.rick.core.BudgetLyContainer
+import com.rick.core.formatAmount
+import com.rick.screen_bill.R
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
@@ -44,7 +40,7 @@ fun BillsBody(
     viewModel: BillViewModel = hiltViewModel()
 ) {
 
-    context = LocalContext.current
+    val context = LocalContext.current
 
     val modalBottomSheetState =
         rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
@@ -83,7 +79,7 @@ fun BillsBody(
         BaseBottomSheet(
             state = modalBottomSheetState,
             scope = scope,
-            navController = navController,
+            controlNavigation = { TODO("bottom sheet navigation") },
             sheetContent = {
                 NewBillSheet(
                     modifier,
@@ -174,6 +170,8 @@ fun BillsList(
     onBillClick: (Bill) -> Unit,
     modifier: Modifier
 ) {
+
+    val context = LocalContext.current
     LazyColumn(
         modifier = modifier
     ) {
@@ -216,5 +214,3 @@ private fun AddNewBill(
     }
 
 }
-
-private lateinit var context: Context

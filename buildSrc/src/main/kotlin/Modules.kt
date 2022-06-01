@@ -1,7 +1,8 @@
 object Modules {
 
-    const val core = ":core"
     const val app = ":app"
+    const val core = ":core"
+    const val budgetly_components = ":budgetly-components"
 
     const val options_options = ":options:options"
 
@@ -17,7 +18,7 @@ object Modules {
     const val options_transaction_data = ":options:transactions:data-transactions"
     const val options_transaction_screen = ":options:transactions:screen-transactions"
 
-    const val bill_bills = ":bill:screen-bill"
+    const val bill_screen = ":bill:screen-bill"
     const val bill_data = ":bill:data-bill"
     const val bill_components = ":bill:components-bill"
 

@@ -6,13 +6,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rick.budgetly.BudgetLyContainer
-import com.rick.budgetly.R
-import com.rick.common.BaseLogic
 import com.rick.bill_data.domain.Bill
 import com.rick.bill_data.domain.BillIcon
 import com.rick.bill_data.domain.InvalidBillException
 import com.rick.bill_data.domain.use_case.BillUseCases
+import com.rick.core.BaseLogic
+import com.rick.core.BudgetLyContainer
+import com.rick.screen_bill.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

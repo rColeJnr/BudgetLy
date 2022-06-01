@@ -1,4 +1,4 @@
-package com.rick.accounts
+package com.rick.budgetly_components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*

@@ -1,0 +1,11 @@
+apply {
+    from("$rootDir/kotlin-library.gradle")
+}
+
+dependencies {
+
+    implementation project(Modules.core)
+
+    implementation Compose.composeMaterial
+    implementation Compose.extraIcons
+}

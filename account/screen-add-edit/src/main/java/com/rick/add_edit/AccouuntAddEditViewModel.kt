@@ -7,8 +7,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rick.common.BaseLogic
 import com.rick.common.ProductionDispatcherProvider
+import com.rick.core.BaseLogic
 import com.rick.core.BudgetLyContainer
 import com.rick.data.*
 import com.rick.data.use_case.AccountUseCases

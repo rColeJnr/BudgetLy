@@ -5,7 +5,7 @@ apply {
 dependencies {
     implementation project(Modules.account_details)
     implementation project(Modules.account_add_edit)
-    implementation project(Modules.account_components)
+    implementation project(Modules.budgetly_components)
     implementation project(Modules.account_data)
     implementation project(Modules.core)
 

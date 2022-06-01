@@ -67,25 +67,13 @@ dependencies {
     implementation project(Modules.core)
 
     implementation project(Modules.account_accounts)
-    implementation project(Modules.account_add_edit)
-    implementation project(Modules.account_details)
-    implementation project(Modules.account_data)
-    implementation project(Modules.account_components)
 
-    implementation project(Modules.bill_bills)
-    implementation project(Modules.bill_components)
-    implementation project(Modules.bill_data)
+    implementation project(Modules.bill_screen)
 
     implementation project(Modules.options_options)
     implementation project(Modules.options_overview)
     implementation project(Modules.options_settings)
-
-    implementation project(Modules.options_categories)
-    implementation project(Modules.options_categories_data)
     implementation project(Modules.options_categories_screen)
-
-    implementation project(Modules.options_transaction)
-    implementation project(Modules.options_categories_data)
     implementation project(Modules.options_transaction_screen)
 
     implementation AndroidX.androidxCore
