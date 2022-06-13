@@ -6,12 +6,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.PieChart
-import androidx.compose.material.icons.filled.PlusOne
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -101,14 +100,29 @@ private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Bottom)
-            .padding(vertical = 8.dp)
+            .padding(vertical = 4.dp)
     ) {
-        Icon(
-            imageVector = Icons.Default.PlusOne,
-            contentDescription = stringResource(R.string.add_new_account)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = stringResource(R.string.add_new_card), textAlign = TextAlign.Start)
+        Column(){
+            Row {
+                Icon(
+                    imageVector = Icons.Default.HdrPlus,
+                    contentDescription = stringResource(R.string.add_new_account)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(R.string.add_new_card), textAlign = TextAlign.Start)
+            }
+            Icon(imageVector = Icons.Default.Hd, contentDescription = null)
+            Text(text = "Lets study you cunt, i want to sleep, come bad time")
+
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PrevButton() {
+    AddNewAccount(modifier = Modifier) {
+        
     }
 }
 
@@ -160,6 +174,20 @@ fun PreviewEverything() {
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )
+        }
+
+        Text(text = "Live edit rocks", color = Color.White)
+        OutlinedButton(onClick = { /*TODO*/ }) {
+            Text(text = "Everyone should just use compose")
+        }
+        Spacer(Modifier.height(14.dp))
+        Text(text = "And yet some people still using java", color = Color.Magenta)
+        Spacer(Modifier.height(14.dp))
+        OutlinedButton(onClick = {}){
+            Text(text = "Retarted fucks")
+        }
+
+        AddNewAccount(modifier = Modifier) {
         }
         AccountList(accounts = listOf(), onAccountClick = {}, modifier = Modifier.weight(1f))
 //        AddNewAccount {}
