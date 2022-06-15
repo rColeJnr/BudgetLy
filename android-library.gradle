@@ -1,0 +1,83 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Modules
+import com.rick.budgetly.buildsrc.Android
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+android {
+    compileSdk Android.compileSdk
+
+    defaultConfig {
+        minSdk Android.minSdk
+        targetSdk Android.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.compose_ui_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+
+    implementation Libs.AndroidX.coreKtx
+
+    implementation Libs.googleMaterial
+
+    implementation Libs.AndroidX.Compose.activityCompose
+    implementation Libs.AndroidX.Compose.compose
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.extraIcons
+    implementation Libs.AndroidX.Compose.toolingPrev
+    debugImplementation Libs.AndroidX.Compose.tooling
+
+    implementation Libs.AndroidX.Lifecycle.runtime
+    implementation Libs.AndroidX.Lifecycle.viewModelCompose
+
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.android
+    implementation Libs.Coroutines.test
+
+    implementation Libs.Hilt.hilt
+    kapt Libs.Hilt.compiler
+    implementation Libs.Hilt.navigation
+
+    implementation Libs.AndroidX.Navigation.navigation
+
+
+    //Tests
+    testImplementation Libs.Tests.junit
+    androidTestImplementation Libs.Tests.extJunit
+    androidTestImplementation Libs.Tests.espresso
+
+    androidTestImplementation Libs.AndroidX.Compose.uiTest
+    debugImplementation Libs.AndroidX.Compose.uiTestManifest
+
+}

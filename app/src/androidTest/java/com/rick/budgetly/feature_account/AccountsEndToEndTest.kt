@@ -8,7 +8,7 @@ import com.rick.budgetly.BudgetLyActivity
 import com.rick.budgetly.BudgetLyNavHost
 import com.rick.budgetly.feature_account.domain.AccountCurrency
 import com.rick.budgetly.feature_account.domain.AccountType
-import com.rick.budgetly.feature_account.ui.util.TestTags
+import com.rick.util.TestTags
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before

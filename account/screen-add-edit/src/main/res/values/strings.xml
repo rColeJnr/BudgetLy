@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel">Cancel</string>
+    <string name="save">save</string>
+    <string name="accounts_screen">Accounts Screen</string>
+    <string name="account_name">Account %1%s</string>
+    <string name="account_type">Type</string>
+    <string name="account_currency">Currency</string>
+    <string name="account_include_in_total">IncludeInTotal</string>
+    <string name="account_limit">Account Limit</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="add_new_account">Add new account</string>
+    <string name="add_new_card">Add a new Card, Debt, Saving, Loan…</string>
+    <string name="balance">Balance</string>
+    <string name="new_account">New or Edit Account</string>
+    <string name="account_equals">account=%1$d</string>
+    <string name="nav_add_new_acount">accountToEdit=%1$d</string>
+    <string name="account_to_edit">accountToEdit</string>
+    <string name="couldnt_save_account">Couln\'t save account</string>
+    <string name="description">description</string>
+</resources>

@@ -2,7 +2,7 @@ package com.rick.budgetly.feature_account
 
 import android.app.Application
 import androidx.room.Room
-import com.rick.budgetly.feature_account.common.ProductionDispatcherProvider
+import com.rick.common.ProductionDispatcherProvider
 import com.rick.budgetly.feature_account.domain.IAccountRepository
 import com.rick.budgetly.feature_account.domain.IQuoteApi
 import com.rick.budgetly.feature_account.domain.IQuoteRepository
@@ -10,9 +10,9 @@ import com.rick.budgetly.feature_account.domain.use_case.*
 import com.rick.budgetly.feature_account.persistence.AccountDatabase
 import com.rick.budgetly.feature_account.persistence.AccountRepositoryImpl
 import com.rick.budgetly.feature_account.persistence.QuoteRepositoryImpl
+import com.rick.accounts.accounts.AccountModule
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import okhttp3.OkHttpClient

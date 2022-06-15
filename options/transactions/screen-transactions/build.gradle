@@ -1,0 +1,13 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Modules
+
+apply {
+    from( "$rootDir/android-library.gradle")
+}
+
+dependencies {
+    implementation project(Modules.options_transaction_data)
+
+    implementation Libs.AndroidX.Room.runtime
+    kapt Libs.AndroidX.Room.compiler
+}

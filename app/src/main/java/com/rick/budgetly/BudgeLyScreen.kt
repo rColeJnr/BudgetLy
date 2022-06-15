@@ -1,7 +1,9 @@
 package com.rick.budgetly
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.MoneyOff
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 enum class BudgetLyScreen(val icon: ImageVector) {

@@ -1,0 +1,16 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Modules
+
+apply {
+    from( "$rootDir/kotlin-library.gradle")
+}
+
+dependencies {
+    implementation project(Modules.bill_data)
+    implementation project(Modules.budgetly_components)
+
+    implementation Libs.AndroidX.Compose.compose
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.toolingPrev
+    debugImplementation Libs.AndroidX.Compose.tooling
+}

@@ -7,10 +7,34 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="Embedded JDK" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/account" />
+            <option value="$PROJECT_DIR$/account/components-account" />
+            <option value="$PROJECT_DIR$/account/data-account" />
+            <option value="$PROJECT_DIR$/account/screen-account" />
+            <option value="$PROJECT_DIR$/account/screen-add-edit" />
+            <option value="$PROJECT_DIR$/account/screen-details" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/bill" />
+            <option value="$PROJECT_DIR$/bill/components-bill" />
+            <option value="$PROJECT_DIR$/bill/data-bill" />
+            <option value="$PROJECT_DIR$/bill/screen-bill" />
+            <option value="$PROJECT_DIR$/budgetly-components" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/options" />
+            <option value="$PROJECT_DIR$/options/categories" />
+            <option value="$PROJECT_DIR$/options/categories/data-categories" />
+            <option value="$PROJECT_DIR$/options/categories/screen-categories" />
+            <option value="$PROJECT_DIR$/options/options" />
+            <option value="$PROJECT_DIR$/options/overview" />
+            <option value="$PROJECT_DIR$/options/settings" />
+            <option value="$PROJECT_DIR$/options/transactions" />
+            <option value="$PROJECT_DIR$/options/transactions/data-transactions" />
+            <option value="$PROJECT_DIR$/options/transactions/screen-transactions" />
           </set>
         </option>
       </GradleProjectSettings>

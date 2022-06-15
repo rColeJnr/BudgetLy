@@ -1,0 +1,8 @@
+apply {
+    from( "$rootDir/android-library.gradle")
+}
+
+dependencies {
+
+
+}

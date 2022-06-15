@@ -3,8 +3,29 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = "BudgetLy"
 include ':app'
+include ':core'
+include ':budgetly-components'
+
+include ':account:screen-account'
+include ':account:screen-add-edit'
+include ':account:screen-details'
+include ':account:data-account'
+include ':account:components-account'
+
+include ':bill:screen-bill'
+include ':bill:data-bill'
+include ':bill:components-bill'
+
+include ':options:options'
+include ':options:overview'
+include ':options:settings'
+
+include ':options:categories:data-categories'
+include ':options:categories:screen-categories'
+
+include ':options:transactions:data-transactions'
+include ':options:transactions:screen-transactions'

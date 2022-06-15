@@ -1,3 +1,7 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Android
+import com.rick.budgetly.buildsrc.Modules
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -5,14 +9,19 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
 android {
-    compileSdk 31
+    compileSdk Android.compileSdk
 
     defaultConfig {
-        applicationId "com.rick.budgetly"
-        minSdk 26
-        targetSdk 31
-        versionCode 1
+        applicationId Android.appId
+        minSdk Android.minSdk
+        targetSdk Android.targetSdk
+        versionCode Android.versionCode
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -47,96 +56,70 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.compose_ui_version
     }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.rick.budgetly'
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling:$compose_version"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation project(Modules.core)
 
-    // Compose dependencies
+    implementation project(Modules.account_accounts)
 
-    // LiveData
-    implementation 'androidx.compose.runtime:runtime-livedata:1.1.0-beta03'
+    implementation project(Modules.bill_screen)
 
-    // ConstraintLayout
-    implementation 'androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01'
+    implementation project(Modules.options_options)
+    implementation project(Modules.options_overview)
+    implementation project(Modules.options_settings)
+    implementation project(Modules.options_categories_screen)
+    implementation project(Modules.options_transaction_screen)
 
-    // view model
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.googleMaterial
 
-    // navigation
-    implementation "androidx.navigation:navigation-compose:2.4.0-beta01"
-    implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+    implementation Libs.AndroidX.Compose.activityCompose
+    implementation Libs.AndroidX.Compose.compose
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.extraIcons
+    implementation Libs.AndroidX.Compose.toolingPrev
+    debugImplementation Libs.AndroidX.Compose.tooling
 
-    // extra icons
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation Libs.AndroidX.ConstraintLayout.constraint
 
-    // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation Libs.AndroidX.Lifecycle.runtime
+    implementation Libs.AndroidX.Lifecycle.viewModelCompose
 
-    //Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    kapt "com.google.dagger:hilt-android-compiler:2.37"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
-    kapt "androidx.hilt:hilt-compiler:1.0.0"
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
 
-    // Room
-    implementation "androidx.room:room-runtime:2.3.0"
-    kapt "androidx.room:room-compiler:2.3.0"
+    implementation Libs.AndroidX.Navigation.navigation
 
-    // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.3.0"
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.android
+    implementation Libs.Coroutines.test
 
-    // Coil
-    implementation 'io.coil-kt:coil-compose:1.4.0'
+    implementation Libs.Hilt.hilt
+    kapt Libs.Hilt.compiler
+    implementation Libs.Hilt.navigation
 
-    // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    
+    implementation Libs.Retrofit.retrofit
+    implementation Libs.Retrofit.gson
+
+    implementation Libs.Coil.coil
+
     // Tests
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    testImplementation Libs.Tests.junit
+    androidTestImplementation Libs.Tests.extJunit
+    androidTestImplementation Libs.Tests.espresso
 
-    // Local unit tests
-    testImplementation "androidx.test:core:1.4.0"
-    testImplementation "junit:junit:4.13.2"
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
-    testImplementation "com.google.truth:truth:1.1.3"
-    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
-    testImplementation "io.mockk:mockk:1.10.5"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:1.1.0-alpha04"
+    androidTestImplementation Libs.AndroidX.Compose.uiTest
+    debugImplementation Libs.AndroidX.Compose.uiTestManifest
 
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
-    testImplementation 'org.mockito:mockito-inline:2.21.0'
-
-    // Instrumentation tests
-    androidTestImplementation "com.google.dagger:hilt-android-testing:2.40.1"
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.37'
-    androidTestImplementation "junit:junit:4.13.2"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    androidTestImplementation "com.google.truth:truth:1.1.3"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test:core-ktx:1.4.0'
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
-    androidTestImplementation 'androidx.test:runner:1.4.0'
 }
