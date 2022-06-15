@@ -112,7 +112,7 @@ dependencies {
 
     
     // Tests
-    androidTestImplementation Tests.extJunit
+    testImplementation Tests.extJunit
     androidTestImplementation Tests.expresso
     androidTestImplementation Tests.composeUi
     debugImplementation Tests.composeUiTooling

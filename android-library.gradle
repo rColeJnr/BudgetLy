@@ -66,4 +66,10 @@ dependencies {
     implementation KotlinX.coroutines
     implementation KotlinX.coroutinesCore
 
+    //Tests
+    testImplementation Tests.extJunit
+    androidTestImplementation Tests.expresso
+    androidTestImplementation Tests.composeUi
+    debugImplementation Tests.composeUiTooling
+
 }

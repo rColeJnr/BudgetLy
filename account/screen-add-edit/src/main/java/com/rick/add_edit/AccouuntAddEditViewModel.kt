@@ -72,7 +72,7 @@ class AccountAddEditViewModel @Inject constructor(
     init{
         viewModelScope.launch{
             val job = viewModelScope.launch(dispatcher.provideIOContext()) {
-                savedStateHandle.get<Int>(Resources.getSystem().getString(R.string.account_to_edit))?.let { it ->
+                savedStateHandle.get<Int>("accountToEdit")?.let { it ->
                     if (it != -1){
                         currentAccount = accountUseCases.getAccountById(it)
                     }

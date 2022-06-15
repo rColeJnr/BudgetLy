@@ -6,11 +6,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.HdrPlus
+import androidx.compose.material.icons.filled.PieChart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -27,6 +27,7 @@ import com.rick.core.formatAmount
 import com.rick.data.Account
 import com.rick.data.AccountIcon
 import com.rick.screen_account.R
+import com.rick.util.dummyAccounts
 
 @Composable
 fun AccountBody(
@@ -94,39 +95,6 @@ fun AccountBody(
 }
 
 @Composable
-private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
-    TextButton(
-        onClick = { onNewAccountClick() },
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight(align = Alignment.Bottom)
-            .padding(vertical = 4.dp)
-    ) {
-        Column(){
-            Row {
-                Icon(
-                    imageVector = Icons.Default.HdrPlus,
-                    contentDescription = stringResource(R.string.add_new_account)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(R.string.add_new_card), textAlign = TextAlign.Start)
-            }
-            Icon(imageVector = Icons.Default.Hd, contentDescription = null)
-            Text(text = "Lets study you cunt, i want to sleep, come bad time")
-
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PrevButton() {
-    AddNewAccount(modifier = Modifier) {
-        
-    }
-}
-
-@Composable
 private fun AccountList(
     accounts: List<Account>,
     onAccountClick: (Int) -> Unit,
@@ -151,45 +119,35 @@ private fun AccountList(
     }
 }
 
-@Preview
 @Composable
-fun PreviewEverything() {
+private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
+    TextButton(
+        onClick = { onNewAccountClick() },
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(align = Alignment.Bottom)
+            .padding(vertical = 4.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Default.HdrPlus,
+            contentDescription = stringResource(R.string.add_new_account)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = stringResource(R.string.add_new_card), textAlign = TextAlign.Start)
+    }
+}
 
-    Column {
-        AccountTopBar(
-            modifier = Modifier
-                .weight(1f)
-                .wrapContentHeight(align = Alignment.Top),
-            title = "34785",
-            secondTitle = "Balance",
-        ) {
-            Icon(
-                imageVector = Icons.Default.PieChart,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-        }
 
-        Text(text = "Live edit rocks", color = Color.White)
-        OutlinedButton(onClick = { /*TODO*/ }) {
-            Text(text = "Everyone should just use compose")
-        }
-        Spacer(Modifier.height(14.dp))
-        Text(text = "And yet some people still using java", color = Color.Magenta)
-        Spacer(Modifier.height(14.dp))
-        OutlinedButton(onClick = {}){
-            Text(text = "Retarted fucks")
-        }
+@Preview(name = "list", group = "accounts ui")
+@Composable
+fun PrevList() {
+    AccountList(accounts = dummyAccounts, onAccountClick = {}, modifier = Modifier)
+    Text("dfjdkf")
+}
 
-        AddNewAccount(modifier = Modifier) {
-        }
-        AccountList(accounts = listOf(), onAccountClick = {}, modifier = Modifier.weight(1f))
-//        AddNewAccount {}
+@Preview(name = "button", group = "accounts ui")
+@Composable
+fun PrevButton() {
+    AddNewAccount(modifier = Modifier) {
     }
 }
