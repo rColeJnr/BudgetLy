@@ -1,9 +1,12 @@
+import com.rick.budgetly.buildsrc.Libs
+
 apply {
     from( "$rootDir/kotlin-library.gradle")
 }
 
 dependencies {
 
-    implementation Compose.composeMaterial
-    implementation Compose.extraIcons
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.extraIcons
+
 }

@@ -1,3 +1,5 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Modules
 apply {
     from( "$rootDir/kotlin-library.gradle")
 }
@@ -5,10 +7,12 @@ apply {
 dependencies {
     implementation project(Modules.core)
     implementation project(Modules.account_data)
-    implementation Compose.compose
-    implementation Compose.composeMaterial
-    implementation Compose.composeUi
-    implementation Compose.extraIcons
 
-    implementation Compose.activityCompose
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.extraIcons
+
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
+
 }

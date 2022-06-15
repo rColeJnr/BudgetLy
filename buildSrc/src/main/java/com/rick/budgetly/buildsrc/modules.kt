@@ -1,3 +1,5 @@
+package com.rick.budgetly.buildsrc
+
 object Modules {
 
     const val app = ":app"

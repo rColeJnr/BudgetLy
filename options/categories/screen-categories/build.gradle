@@ -1,3 +1,6 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Modules
+
 apply {
     from( "$rootDir/android-library.gradle")
 }
@@ -5,6 +8,7 @@ apply {
 dependencies {
 
     implementation project(Modules.options_categories_data)
-    implementation Room.roomRuntime
-    kapt Room.roomRuntime
+
+    implementation Libs.AndroidX.Room.runtime
+    kapt Libs.AndroidX.Room.compiler
 }

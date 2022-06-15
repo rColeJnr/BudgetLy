@@ -1,14 +1,18 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Modules
+import com.rick.budgetly.buildsrc.Android
+
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdk 31
+    compileSdk Android.compileSdk
 
     defaultConfig {
-        minSdk 26
-        targetSdk 31
+        minSdk Android.minSdk
+        targetSdk Android.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -32,7 +36,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion Compose.compose_version
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.compose_ui_version
     }
     packagingOptions {
         resources {
@@ -43,33 +47,37 @@ android {
 
 dependencies {
 
-    implementation AndroidX.androidxCore
-    implementation AndroidX.appCompat
-    implementation AndroidX.material
+    implementation Libs.AndroidX.coreKtx
 
-    implementation Compose.compose
-    implementation Compose.activityCompose
-    implementation Compose.composeMaterial
-    implementation Compose.composeUi
-    implementation Compose.extraIcons
+    implementation Libs.googleMaterial
 
-    implementation Lifecycle.lifecycle
-    implementation Lifecycle.viewmodel
+    implementation Libs.AndroidX.Compose.activityCompose
+    implementation Libs.AndroidX.Compose.compose
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.extraIcons
+    implementation Libs.AndroidX.Compose.toolingPrev
+    debugImplementation Libs.AndroidX.Compose.tooling
 
-    implementation Hilt.hilt
-    kapt Hilt.hiltGoogleCompiler
-    kapt Hilt.hiltCompiler
+    implementation Libs.AndroidX.Lifecycle.runtime
+    implementation Libs.AndroidX.Lifecycle.viewModelCompose
 
-    implementation Nav.navigation
-    implementation Nav.hiltNav
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.android
+    implementation Libs.Coroutines.test
 
-    implementation KotlinX.coroutines
-    implementation KotlinX.coroutinesCore
+    implementation Libs.Hilt.hilt
+    kapt Libs.Hilt.compiler
+    implementation Libs.Hilt.navigation
+
+    implementation Libs.AndroidX.Navigation.navigation
+
 
     //Tests
-    testImplementation Tests.extJunit
-    androidTestImplementation Tests.expresso
-    androidTestImplementation Tests.composeUi
-    debugImplementation Tests.composeUiTooling
+    testImplementation Libs.Tests.junit
+    androidTestImplementation Libs.Tests.extJunit
+    androidTestImplementation Libs.Tests.espresso
+
+    androidTestImplementation Libs.AndroidX.Compose.uiTest
+    debugImplementation Libs.AndroidX.Compose.uiTestManifest
 
 }

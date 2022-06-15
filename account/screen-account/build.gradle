@@ -1,3 +1,6 @@
+import com.rick.budgetly.buildsrc.Modules
+import com.rick.budgetly.buildsrc.Libs
+
 apply {
     from( "$rootDir/android-library.gradle")
 }
@@ -9,12 +12,14 @@ dependencies {
     implementation project(Modules.account_data)
     implementation project(Modules.core)
 
-    implementation Room.roomRuntime
-    kapt Room.roomCompiler
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
 
-    implementation Deps.livedata
-    implementation Deps.coil
+    implementation Libs.AndroidX.Lifecycle.livedata
+    implementation Libs.Coil.coil
 
-    implementation Retrofit.retrofit
-    implementation Retrofit.gson
+    implementation Libs.Retrofit.retrofit
+    implementation Libs.Retrofit.gson
+
 }

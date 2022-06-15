@@ -1,3 +1,6 @@
+import com.rick.budgetly.buildsrc.Android
+import com.rick.budgetly.buildsrc.Libs
+
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-kapt'
@@ -6,8 +9,8 @@ android {
     compileSdk 31
 
     defaultConfig {
-        minSdk 26
-        targetSdk 31
+        minSdk Android.minSdk
+        targetSdk Android.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -31,7 +34,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion Compose.compose_version
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.compose_ui_version
     }
     packagingOptions {
         resources {

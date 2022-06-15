@@ -1,3 +1,7 @@
+import com.rick.budgetly.buildsrc.Libs
+import com.rick.budgetly.buildsrc.Android
+import com.rick.budgetly.buildsrc.Modules
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -11,13 +15,13 @@ kapt {
 }
 
 android {
-    compileSdk 31
+    compileSdk Android.compileSdk
 
     defaultConfig {
-        applicationId "com.rick.budgetly"
-        minSdk 26
-        targetSdk 31
-        versionCode 1
+        applicationId Android.appId
+        minSdk Android.minSdk
+        targetSdk Android.targetSdk
+        versionCode Android.versionCode
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -52,7 +56,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion Compose.compose_version
+        kotlinCompilerExtensionVersion Libs.AndroidX.Compose.compose_ui_version
     }
     packagingOptions {
         resources {
@@ -76,45 +80,46 @@ dependencies {
     implementation project(Modules.options_categories_screen)
     implementation project(Modules.options_transaction_screen)
 
-    implementation AndroidX.androidxCore
-    implementation AndroidX.appCompat
-    implementation AndroidX.material
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.googleMaterial
 
-    implementation Compose.composeMaterial
-    implementation Compose.compose
-    implementation Compose.composeUi
-    implementation Compose.constraint
-    implementation Compose.activityCompose
-    implementation Compose.extraIcons
+    implementation Libs.AndroidX.Compose.activityCompose
+    implementation Libs.AndroidX.Compose.compose
+    implementation Libs.AndroidX.Compose.material
+    implementation Libs.AndroidX.Compose.extraIcons
+    implementation Libs.AndroidX.Compose.toolingPrev
+    debugImplementation Libs.AndroidX.Compose.tooling
 
-    implementation Lifecycle.lifecycle
-    implementation Lifecycle.viewmodel
+    implementation Libs.AndroidX.ConstraintLayout.constraint
 
-    implementation Deps.livedata
-    implementation Deps.coil
+    implementation Libs.AndroidX.Lifecycle.runtime
+    implementation Libs.AndroidX.Lifecycle.viewModelCompose
 
-    implementation Retrofit.retrofit
-    implementation Retrofit.gson
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
 
-    implementation Nav.navigation
-    implementation Nav.hiltNav
+    implementation Libs.AndroidX.Navigation.navigation
 
-    implementation KotlinX.coroutines
-    implementation KotlinX.coroutinesCore
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.android
+    implementation Libs.Coroutines.test
 
-    implementation Hilt.hilt
-    kapt Hilt.hiltGoogleCompiler
-    kapt Hilt.hiltCompiler
+    implementation Libs.Hilt.hilt
+    kapt Libs.Hilt.compiler
+    implementation Libs.Hilt.navigation
 
-    implementation Room.roomRuntime
-    kapt Room.roomCompiler
-    implementation Room.roomExtensions
+    implementation Libs.Retrofit.retrofit
+    implementation Libs.Retrofit.gson
 
-    
+    implementation Libs.Coil.coil
+
     // Tests
-    testImplementation Tests.extJunit
-    androidTestImplementation Tests.expresso
-    androidTestImplementation Tests.composeUi
-    debugImplementation Tests.composeUiTooling
+    testImplementation Libs.Tests.junit
+    androidTestImplementation Libs.Tests.extJunit
+    androidTestImplementation Libs.Tests.espresso
+
+    androidTestImplementation Libs.AndroidX.Compose.uiTest
+    debugImplementation Libs.AndroidX.Compose.uiTestManifest
 
 }

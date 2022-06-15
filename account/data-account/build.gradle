@@ -1,22 +1,25 @@
+import com.rick.budgetly.buildsrc.Libs
+
 apply {
     from( "$rootDir/kotlin-library.gradle")
 }
 
 dependencies {
-    implementation KotlinX.coroutines
-    implementation KotlinX.coroutinesCore
 
-    implementation Retrofit.retrofit
-    implementation Retrofit.gson
+    implementation Libs.Coroutines.android
+    implementation Libs.Coroutines.core
 
-    implementation Compose.extraIcons
-    implementation Compose.composeMaterial
+    implementation Libs.Retrofit.retrofit
+    implementation Libs.Retrofit.gson
 
-    implementation Hilt.hilt
-    kapt Hilt.hiltGoogleCompiler
+    implementation Libs.AndroidX.Compose.extraIcons
+    implementation Libs.AndroidX.Compose.material
 
-    implementation Room.roomRuntime
-    kapt Room.roomCompiler
-    implementation Room.roomExtensions
+    implementation Libs.Hilt.hilt
+    kapt Libs.Hilt.compiler
+
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
 
 }
