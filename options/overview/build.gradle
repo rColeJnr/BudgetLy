@@ -1,8 +1,11 @@
+import com.rick.budgetly.buildsrc.Modules
+
 apply {
     from( "$rootDir/android-library.gradle")
 }
 
 dependencies {
 
+    implementation project(Modules.budgetly_components)
 
 }

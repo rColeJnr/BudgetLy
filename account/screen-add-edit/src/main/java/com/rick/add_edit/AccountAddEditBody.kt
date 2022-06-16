@@ -1,3 +1,5 @@
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package com.rick.add_edit
 
 import android.widget.Toast
@@ -15,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -29,6 +32,7 @@ import com.rick.screen_add_edit.R
 import com.rick.util.TestTags
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -57,8 +61,12 @@ fun AccountAddEditBody(
     val scope = rememberCoroutineScope()
     BaseBottomSheet(
         state = state,
-        scope = scope,
-        controlNavigation = {TODO("nav controller")},
+        controlNavigation = {
+            BackPressHandler {
+                if (state.isVisible){ scope.launch { state.hide() } }
+                else {navController.navigateUp()}
+            }
+        },
         sheetContent = { Calculator(viewModel, state = state, scope = scope) }
     ) {
         ScreenContent (modifier, viewModel, navController, state, scope)
@@ -165,6 +173,7 @@ fun TopBarWithTextField(
         DefaultInputText(
             text = text,
             onTextChange = onTextChange,
+            label = stringResource(R.string.name),
             testTag = TestTags.newAccountTitle
         )
         if (iconsVisible) {
@@ -189,3 +198,14 @@ fun TopBarWithTextField(
     }
 }
 
+@Preview
+@Composable
+fun PrevScreenContent() {
+
+}
+
+@Preview
+@Composable
+fun PrevTopBar() {
+
+}

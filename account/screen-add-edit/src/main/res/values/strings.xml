@@ -18,4 +18,5 @@
     <string name="account_to_edit">accountToEdit</string>
     <string name="couldnt_save_account">Couln\'t save account</string>
     <string name="description">description</string>
+    <string name="name">name</string>
 </resources>

@@ -25,10 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.bill_data.domain.Bill
 import com.rick.bill_data.domain.BillIcon
-import com.rick.budgetly_components.AccountTopBar
-import com.rick.budgetly_components.BaseBottomSheet
-import com.rick.budgetly_components.BaseRow
-import com.rick.budgetly_components.SimpleSnackbar
+import com.rick.budgetly_components.*
 import com.rick.components_bill.BillDetails
 import com.rick.components_bill.NewBillSheet
 import com.rick.core.BudgetLyContainer
@@ -66,7 +63,9 @@ fun BillsBody(
                     Toast.LENGTH_SHORT
                 ).show()
 
-                BudgetLyContainer.ShowSuccess -> { modalBottomSheetState.hide() }
+                BudgetLyContainer.ShowSuccess -> {
+                    modalBottomSheetState.hide()
+                }
 
                 is BudgetLyContainer.ShowRestoreSnackbar -> {
                     SimpleSnackbar(
@@ -84,27 +83,34 @@ fun BillsBody(
     Scaffold(Modifier.fillMaxSize(), scaffoldState = scaffoldState) {
         BaseBottomSheet(
             state = modalBottomSheetState,
-            scope = scope,
-            controlNavigation = { TODO("bottom sheet navigation") },
+            controlNavigation = {
+                BackPressHandler {
+                    if (modalBottomSheetState.isVisible) {
+                        scope.launch { modalBottomSheetState.hide() }
+                    } else {
+                        navController.navigateUp()
+                    }
+                }
+            },
             sheetContent = {
                 NewBillSheet(
                     modifier,
                     state = modalBottomSheetState,
                     scope = scope,
                     icon = viewModel.billIcon.value,
-                    onIconChanged = {viewModel.onEvent(BillEvents.ChangeBillIcon(it))},
+                    onIconChanged = { viewModel.onEvent(BillEvents.ChangeBillIcon(it)) },
                     amount = viewModel.billAmount.value,
-                    onAmountChanged = {viewModel.onEvent(BillEvents.EnteredAmount(it))},
+                    onAmountChanged = { viewModel.onEvent(BillEvents.EnteredAmount(it)) },
                     title = viewModel.billTitle.value,
-                    onTitleChanged = {viewModel.onEvent(BillEvents.EnteredTitle(it))},
+                    onTitleChanged = { viewModel.onEvent(BillEvents.EnteredTitle(it)) },
                     dueDate = viewModel.billDueDate,
-                    onDateChanged = {viewModel.onEvent(BillEvents.EnteredDueDate(it))},
+                    onDateChanged = { viewModel.onEvent(BillEvents.EnteredDueDate(it)) },
                     archived = viewModel.billArchived.value,
-                    onChangeArchived = {viewModel.onEvent(BillEvents.ChangeIsArchived(it))},
+                    onChangeArchived = { viewModel.onEvent(BillEvents.ChangeIsArchived(it)) },
                     paid = viewModel.billIsPaid.value,
-                    onChangePaid = {viewModel.onEvent(BillEvents.ChangeIsPaid(it))},
-                    saveBill = {viewModel.onEvent(BillEvents.SaveBill)},
-                    cancelBill = {viewModel.onEvent(BillEvents.CancelNewBill)},
+                    onChangePaid = { viewModel.onEvent(BillEvents.ChangeIsPaid(it)) },
+                    saveBill = { viewModel.onEvent(BillEvents.SaveBill) },
+                    cancelBill = { viewModel.onEvent(BillEvents.CancelNewBill) },
                 )
             }
         ) {
@@ -122,7 +128,8 @@ fun BillsBody(
                     scope.launch { modalBottomSheetState.show() }
                 },
                 onClickArchive = {
-                    viewModel.onEvent(BillEvents.ChangeIsArchived(it.isArchived)) }
+                    viewModel.onEvent(BillEvents.ChangeIsArchived(it.isArchived))
+                }
             )
         }
     }
@@ -227,7 +234,10 @@ private fun AddNewBill(
             .wrapContentHeight(align = Alignment.Bottom)
             .padding(vertical = 8.dp)
     ) {
-        Icon(imageVector = Icons.Default.PlusOne, contentDescription = stringResource(R.string.add_new_bill))
+        Icon(
+            imageVector = Icons.Default.PlusOne,
+            contentDescription = stringResource(R.string.add_new_bill)
+        )
         Spacer(modifier = Modifier.width(8.dp))
         Text(text = stringResource(id = R.string.add_new_bill), textAlign = TextAlign.Start)
     }

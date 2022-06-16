@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MergeType
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rick.budgetly_components.DefaultInputText
+import com.rick.budgetly_components.DefaultRow
 import com.rick.budgetly_components.TextDropdownMenu
 import com.rick.data.AccountCurrency
 import com.rick.data.AccountType
@@ -44,19 +47,21 @@ fun AccountAddEditDetails(
         color = MaterialTheme.colors.background
     ) {
         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceEvenly) {
+
             DefaultInputText(
                 text = description,
-                onTextChange = onDescriptionChange,
+                onTextChange = { onDescriptionChange(it) },
                 label = stringResource(R.string.description),
                 testTag = TestTags.newAccountDescription,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
 
-            AccountTitleDetailColumn(
-                title = stringResource(R.string.account_type),
-                icon = Icons.Default.MergeType,
-                detail = {
+            DefaultRow(
+                text = stringResource(R.string.account_type),
+                image = Icons.Default.MergeType,
+                description = stringResource(R.string.account_type),
+                element = {
                     TextDropdownMenu(
                         text = type,
                         items = typeList(),
@@ -70,10 +75,11 @@ fun AccountAddEditDetails(
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
 
-            AccountTitleDetailColumn(
-                title = stringResource(R.string.account_currency),
-                icon = Icons.Default.MergeType,
-                detail = {
+            DefaultRow(
+                text = stringResource(R.string.account_currency),
+                image = Icons.Rounded.Casino,
+                description = stringResource(R.string.account_currency),
+                element = {
                     TextDropdownMenu(
                         text = currency,
                         items = currencyList(),
@@ -87,34 +93,38 @@ fun AccountAddEditDetails(
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
 
-            AccountTitleDetailColumn(
-                title = stringResource(R.string.account_limit),
-                icon = Icons.Default.MergeType,
-                detail = {
-                    Text(text = limit, modifier = Modifier.padding(start = 16.dp))
+            DefaultRow(
+                text = stringResource(R.string.account_limit),
+                image = Icons.Rounded.ProductionQuantityLimits,
+                description = stringResource(R.string.account_limit),
+                element = {
+                    Text(text = limit)
                 },
-                // TODO replace/clean this field code
                 onClick = { scope.launch { state.show() }; field = "l" }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
 
-            AccountTitleDetailColumn(
-                title = stringResource(R.string.account_balance),
-                icon = Icons.Default.MergeType,
-                detail = {
-                    Text(text = balance, modifier = Modifier.padding(start = 16.dp))
+            DefaultRow(
+                text = stringResource(R.string.account_balance),
+                image = Icons.Rounded.PriceChange,
+                description = stringResource(R.string.account_balance),
+                element = {
+                    Text(text = balance)
                 },
                 onClick = { scope.launch { state.show() }; field = "b" }
             )
-
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
 
-            AccountTitleOptionRow(
-                title = stringResource(R.string.account_include_in_total),
-                boolean = checked,
-                onCheckedChange = onCheckedChange
+            DefaultRow(
+                text = stringResource(R.string.account_include_in_total),
+                image = Icons.Rounded.AllInclusive,
+                description = stringResource(R.string.account_include_in_total),
+                element = {
+                    Switch(checked = checked, onCheckedChange = { onCheckedChange(it) })
+                },
+                onClick = {}
             )
         }
     }
@@ -168,7 +178,7 @@ fun AccountTitleOptionRow(title: String, boolean: Boolean, onCheckedChange: (Boo
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = title, style = MaterialTheme.typography.h6)
-            Switch(checked = boolean, onCheckedChange = onCheckedChange)
+
         }
     }
 }
@@ -187,4 +197,74 @@ fun typeList(): List<String> {
         types.add(value.name)
     }
     return types
+}
+
+@Preview
+@Composable
+fun PrevAddEditDetails() {
+
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.SpaceEvenly) {
+        DefaultInputText(
+            text = "description",
+            onTextChange = { },
+            label = stringResource(R.string.description),
+            testTag = TestTags.newAccountDescription,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Divider()
+
+        DefaultRow(
+            text = stringResource(R.string.account_type),
+            image = Icons.Rounded.Payments,
+            description = stringResource(R.string.account_type),
+            element = {
+                Text(text = "type")
+            },
+            onClick = { }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        DefaultRow(
+            text = stringResource(R.string.account_currency),
+            image = Icons.Rounded.Euro,
+            description = stringResource(R.string.account_currency),
+            element = {
+                Text(text = "Currency")
+            },
+            onClick = {}
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        DefaultRow(
+            text = stringResource(R.string.account_limit),
+            image = Icons.Rounded.PriorityHigh,
+            description = stringResource(R.string.account_limit),
+            element = {
+                Text(text = "limit")
+            },
+            onClick = {  }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        DefaultRow(
+            text = stringResource(R.string.account_balance),
+            image = Icons.Rounded.Paid,
+            description = stringResource(R.string.account_balance),
+            element = {
+                Text(text = "balance")
+            },
+            onClick = {  }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        DefaultRow(
+            text = stringResource(R.string.account_include_in_total),
+            image = Icons.Rounded.SwitchLeft,
+            description = stringResource(R.string.account_include_in_total),
+            element = {
+                Switch(checked = true, onCheckedChange = {  })
+            },
+            onClick = {}
+        )
+    }
 }

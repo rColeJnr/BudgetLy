@@ -8,6 +8,7 @@ apply {
 dependencies {
 
     implementation project(Modules.options_categories_data)
+    implementation project(Modules.budgetly_components)
 
     implementation Libs.AndroidX.Room.runtime
     kapt Libs.AndroidX.Room.compiler

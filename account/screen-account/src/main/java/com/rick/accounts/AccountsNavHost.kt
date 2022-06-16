@@ -25,6 +25,7 @@ fun AccountsNavHost() {
             AccountBody(navController = navController)
         }
         val routeAddEdit = AccountsScreen.AccountsAddEdit.name
+
         composable(
             route = "$routeAddEdit?accountToEdit={accountToEdit}",
             arguments = listOf(
@@ -59,5 +60,6 @@ fun AccountsNavHost() {
                 navController = navController
             )
         }
+
     }
 }
