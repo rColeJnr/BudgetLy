@@ -4,13 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MergeType
+import androidx.compose.material.icons.filled.Payments
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,7 +40,7 @@ fun AccountAddEditDetails(
     state: ModalBottomSheetState,
 ) {
 
-    val context = LocalContext.current
+//    val context = LocalContext.current
 
     Surface(
         color = MaterialTheme.colors.background
@@ -59,7 +58,7 @@ fun AccountAddEditDetails(
 
             DefaultRow(
                 text = stringResource(R.string.account_type),
-                image = Icons.Default.MergeType,
+                image = Icons.Default.Payments,
                 description = stringResource(R.string.account_type),
                 element = {
                     TextDropdownMenu(
@@ -77,7 +76,7 @@ fun AccountAddEditDetails(
 
             DefaultRow(
                 text = stringResource(R.string.account_currency),
-                image = Icons.Rounded.Casino,
+                image = Icons.Rounded.Euro,
                 description = stringResource(R.string.account_currency),
                 element = {
                     TextDropdownMenu(
@@ -95,7 +94,7 @@ fun AccountAddEditDetails(
 
             DefaultRow(
                 text = stringResource(R.string.account_limit),
-                image = Icons.Rounded.ProductionQuantityLimits,
+                image = Icons.Rounded.PriorityHigh,
                 description = stringResource(R.string.account_limit),
                 element = {
                     Text(text = limit)
@@ -107,7 +106,7 @@ fun AccountAddEditDetails(
 
             DefaultRow(
                 text = stringResource(R.string.account_balance),
-                image = Icons.Rounded.PriceChange,
+                image = Icons.Rounded.Paid,
                 description = stringResource(R.string.account_balance),
                 element = {
                     Text(text = balance)
@@ -119,7 +118,7 @@ fun AccountAddEditDetails(
 
             DefaultRow(
                 text = stringResource(R.string.account_include_in_total),
-                image = Icons.Rounded.AllInclusive,
+                image = Icons.Rounded.SwitchLeft,
                 description = stringResource(R.string.account_include_in_total),
                 element = {
                     Switch(checked = checked, onCheckedChange = { onCheckedChange(it) })
