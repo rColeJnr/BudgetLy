@@ -61,8 +61,8 @@ fun AccountBody(
                     imageVector = Icons.Default.PieChart,
                     contentDescription = stringResource(id = R.string.pie_icon),
                     modifier = Modifier
-                        .size(34.dp)
                         .padding(end = 4.dp)
+                        .size(34.dp)
                 )
             }
 
