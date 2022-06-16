@@ -6,8 +6,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.HdrPlus
 import androidx.compose.material.icons.filled.PieChart
+import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,8 +61,8 @@ fun AccountBody(
                     imageVector = Icons.Default.PieChart,
                     contentDescription = stringResource(id = R.string.pie_icon),
                     modifier = Modifier
+                        .size(34.dp)
                         .padding(end = 4.dp)
-                        .size(26.dp)
                 )
             }
 
@@ -129,7 +129,7 @@ private fun AddNewAccount(modifier: Modifier, onNewAccountClick: () -> Unit) {
             .padding(vertical = 4.dp)
     ) {
         Icon(
-            imageVector = Icons.Default.HdrPlus,
+            imageVector = Icons.Default.PlusOne,
             contentDescription = stringResource(R.string.add_new_account)
         )
         Spacer(modifier = Modifier.width(8.dp))
