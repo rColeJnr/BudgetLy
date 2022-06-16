@@ -7,8 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.rounded.Cancel
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -153,20 +153,20 @@ fun TopBarWithTextField(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Default.Close,
+                imageVector = Icons.Rounded.Cancel,
                 contentDescription = stringResource(id = R.string.cancel),
                 modifier = Modifier
                     .clickable { onCancelAccount() }
-                    .size(24.dp)
+                    .size(34.dp)
                     .padding(start = 4.dp)
             )
             Text(text = stringResource(R.string.new_account), style = MaterialTheme.typography.h5)
             Icon(
-                imageVector = Icons.Default.Check,
+                imageVector = Icons.Default.AddCircle,
                 contentDescription = stringResource(id = R.string.save),
                 modifier = Modifier
                     .clickable { onSaveAccount() }
-                    .size(24.dp)
+                    .size(34.dp)
                     .padding(end = 4.dp)
             )
         }

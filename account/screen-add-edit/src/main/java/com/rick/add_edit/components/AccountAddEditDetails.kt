@@ -54,7 +54,6 @@ fun AccountAddEditDetails(
                 testTag = TestTags.newAccountDescription,
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Divider()
 
             DefaultRow(
                 text = stringResource(R.string.account_type),
@@ -69,7 +68,7 @@ fun AccountAddEditDetails(
                         }
                     )
                 },
-                padding = 2.dp,
+                padding = 1.dp,
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -88,7 +87,7 @@ fun AccountAddEditDetails(
                         }
                     )
                 },
-                padding = 2.dp,
+                padding = 1.dp,
                 onClick = {}
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -125,7 +124,7 @@ fun AccountAddEditDetails(
                 element = {
                     Switch(checked = checked, onCheckedChange = { onCheckedChange(it) })
                 },
-                padding = 2.dp,
+                padding = 1.dp,
                 onClick = {}
             )
         }
