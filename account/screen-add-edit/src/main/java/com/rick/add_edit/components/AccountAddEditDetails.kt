@@ -68,7 +68,7 @@ fun AccountAddEditDetails(
                         }
                     )
                 },
-                padding = 1.dp,
+                padding = ROW_PADDING,
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -87,7 +87,7 @@ fun AccountAddEditDetails(
                         }
                     )
                 },
-                padding = 1.dp,
+                padding = ROW_PADDING,
                 onClick = {}
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -124,7 +124,7 @@ fun AccountAddEditDetails(
                 element = {
                     Switch(checked = checked, onCheckedChange = { onCheckedChange(it) })
                 },
-                padding = 1.dp,
+                padding = ROW_PADDING,
                 onClick = {}
             )
         }
@@ -132,14 +132,10 @@ fun AccountAddEditDetails(
 }
 
 var field = ""
+private val ROW_PADDING = 1.dp
 
 @Composable
-fun AccountTitleDetailColumn(
-    modifier: Modifier = Modifier,
-    title: String,
-    icon: ImageVector,
-    detail: @Composable () -> Unit = {},
-    onClick: () -> Unit = {}
+fun AccountTitleDetailColumn(modifier: Modifier = Modifier, title: String, icon: ImageVector, detail: @Composable () -> Unit = {}, onClick: () -> Unit = {}
 ) {
 
     Card(modifier = modifier
