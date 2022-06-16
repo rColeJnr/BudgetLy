@@ -69,6 +69,7 @@ fun AccountAddEditDetails(
                         }
                     )
                 },
+                padding = 2.dp,
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -87,6 +88,7 @@ fun AccountAddEditDetails(
                         }
                     )
                 },
+                padding = 2.dp,
                 onClick = {}
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -123,6 +125,7 @@ fun AccountAddEditDetails(
                 element = {
                     Switch(checked = checked, onCheckedChange = { onCheckedChange(it) })
                 },
+                padding = 2.dp,
                 onClick = {}
             )
         }
