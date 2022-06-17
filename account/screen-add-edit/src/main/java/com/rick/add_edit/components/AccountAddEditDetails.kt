@@ -126,7 +126,7 @@ fun AccountAddEditDetails(
                     Switch(checked = checked, onCheckedChange = { onCheckedChange(it) })
                 },
                 padding = ROW_PADDING,
-                onClick = {}
+                onClick = { onCheckedChange(!checked)}
             )
         }
     }
