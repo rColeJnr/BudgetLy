@@ -1,6 +1,5 @@
 package com.rick.budgetly.calculator
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 
@@ -117,8 +116,6 @@ fun numberAction(symbol: String): Pair<String, Boolean> {
             }
         }
     }
-    Log.d("Tagoo", "numero ${numero.value}")
-    Log.d("Tagoo", "simbolo $symbol")
 
     return Pair(numero.value, setResult)
 }
@@ -136,4 +133,12 @@ private fun operationAction(operation: String){
 
 private fun canChangeOperation(newOperator: String){
     if (canChangeOperation && numero.value.isEmpty()) operator = newOperator
+}
+
+fun cleanNumero(){
+    numero.value = ""
+}
+
+fun updateNumero(num: String){
+    numero.value = num
 }
