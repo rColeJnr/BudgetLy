@@ -1,5 +1,6 @@
 package com.rick.budgetly.calculator
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 
@@ -104,7 +105,6 @@ fun numberAction(symbol: String): Pair<String, Boolean> {
             operator = ""
             setResult = true
         }
-
     }
 
     if (symbol != "<" && symbol != ".") {
@@ -117,6 +117,9 @@ fun numberAction(symbol: String): Pair<String, Boolean> {
             }
         }
     }
+    Log.d("Tagoo", "numero ${numero.value}")
+    Log.d("Tagoo", "simbolo $symbol")
+
     return Pair(numero.value, setResult)
 }
 

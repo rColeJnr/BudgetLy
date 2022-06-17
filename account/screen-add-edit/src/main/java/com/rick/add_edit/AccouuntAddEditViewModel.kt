@@ -103,8 +103,9 @@ class AccountAddEditViewModel @Inject constructor(
     }
 
     private fun onCalculatorEvent(symbol: String) {
-        calculatorValue.value = numberAction(symbol).first
-        if (numberAction(symbol).second)  {
+        val action = numberAction(symbol)
+        calculatorValue.value = action.first
+        if (action.second)  {
             if (calculateLimit.value) {
                 onLimitEntered(calculatorValue.value)
             }
