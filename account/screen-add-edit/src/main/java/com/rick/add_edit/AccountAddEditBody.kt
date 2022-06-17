@@ -24,7 +24,6 @@ import androidx.navigation.NavHostController
 import com.rick.add_edit.components.AccountAddEditDetails
 import com.rick.budgetly.calculator.Calculator
 import com.rick.budgetly.calculator.cleanNumero
-import com.rick.budgetly.calculator.updateNumero
 import com.rick.budgetly_components.AnimatedIconRow
 import com.rick.budgetly_components.BackPressHandler
 import com.rick.budgetly_components.BaseBottomSheet
@@ -85,7 +84,10 @@ fun AccountAddEditBody(
         }
     ) {
         ScreenContent(modifier, viewModel, navController, state, scope)
-        if (!state.isVisible) viewModel.calculatorValue.value = ""; cleanNumero()
+        if (!state.isVisible) {
+            viewModel.calculatorValue.value = ""
+            cleanNumero()
+        }
     }
 }
 
@@ -135,17 +137,13 @@ private fun ScreenContent(
             onDescriptionChange = { viewModel.onEvent(AccountAddEditEvents.EnteredDescription(it)) },
             limit = viewModel.accountLimit.value,
             onLimitClick = {
-                viewModel.calculateLimit.value = true
+                viewModel.onLimitClick()
                 scope.launch { state.show() }
-                viewModel.calculatorValue.value = viewModel.accountLimit.value
-                updateNumero(viewModel.accountLimit.value)
             },
             balance = viewModel.accountBalance.value,
             onBalanceClick = {
-                viewModel.calculateLimit.value = false
+                viewModel.onBalanceClick()
                 scope.launch { state.show() }
-                viewModel.calculatorValue.value = viewModel.accountBalance.value
-                updateNumero(viewModel.accountBalance.value)
             },
             scope = scope,
             state = state,

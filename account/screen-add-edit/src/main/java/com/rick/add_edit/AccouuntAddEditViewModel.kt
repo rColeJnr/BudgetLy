@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rick.budgetly.calculator.numberAction
+import com.rick.budgetly.calculator.updateNumero
 import com.rick.common.ProductionDispatcherProvider
 import com.rick.core.BaseLogic
 import com.rick.core.BudgetLyContainer
@@ -72,7 +73,21 @@ class AccountAddEditViewModel @Inject constructor(
             is AccountAddEditEvents.EnteredDescription -> onDescriptionEntered(event.accountDescription)
             is AccountAddEditEvents.CalculatorEvent -> onCalculatorEvent(event.symbol)
             AccountAddEditEvents.SaveAccount -> onSaveAccount()
+            AccountAddEditEvents.BalanceClick -> onBalanceClick()
+            AccountAddEditEvents.LimitClick -> onLimitClick()
         }
+    }
+
+    fun onBalanceClick() {
+        calculateLimit.value = false
+        calculatorValue.value = accountBalance.value
+        updateNumero(accountBalance.value)
+    }
+
+    fun onLimitClick() {
+        calculateLimit.value = true
+        calculatorValue.value = accountLimit.value
+        updateNumero(accountLimit.value)
     }
 
     init{

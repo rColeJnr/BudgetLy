@@ -16,5 +16,7 @@ sealed class AccountAddEditEvents {
     data class CalculatorEvent( val symbol: String): AccountAddEditEvents()
     object SaveAccount: AccountAddEditEvents()
     object CancelAccount: AccountAddEditEvents()
+    object LimitClick: AccountAddEditEvents()
+    object BalanceClick: AccountAddEditEvents()
 
 }
