@@ -8,6 +8,8 @@ dependencyResolutionManagement {
 rootProject.name = "BudgetLy"
 include ':app'
 include ':core'
+
+include ':calculator'
 include ':budgetly-components'
 
 include ':account:screen-account'

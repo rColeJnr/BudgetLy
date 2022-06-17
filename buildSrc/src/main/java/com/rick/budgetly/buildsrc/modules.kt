@@ -4,7 +4,10 @@ object Modules {
 
     const val app = ":app"
     const val core = ":core"
+
     const val budgetly_components = ":budgetly-components"
+
+    const val calculator = ":calculator"
 
     const val options_options = ":options:options"
 

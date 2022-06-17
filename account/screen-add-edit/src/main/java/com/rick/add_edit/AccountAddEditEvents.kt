@@ -2,7 +2,7 @@ package com.rick.add_edit
 
 import androidx.compose.ui.graphics.Color
 
-sealed class AccountAddEditEvents {
+internal sealed class AccountAddEditEvents {
 
     data class EnteredTitle(val accountTitle: String): AccountAddEditEvents()
     data class EnteredDescription(val accountDescription: String): AccountAddEditEvents()
@@ -13,7 +13,6 @@ sealed class AccountAddEditEvents {
     data class EnteredCreditLimit( val accountLimit: String ): AccountAddEditEvents()
     data class EnteredAccountBalance( val accountBalance: String): AccountAddEditEvents()
     data class ChangeIncludeInTotalStatus( val include: Boolean): AccountAddEditEvents()
-    data class CalculatorEVent( val symbol: String): AccountAddEditEvents()
     object SaveAccount: AccountAddEditEvents()
     object CancelAccount: AccountAddEditEvents()
 

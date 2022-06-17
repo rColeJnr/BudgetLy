@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountAddEditViewModel @Inject constructor(
+internal class AccountAddEditViewModel @Inject constructor(
     private val accountUseCases: AccountUseCases,
     private val dispatcher: ProductionDispatcherProvider,
     savedStateHandle: SavedStateHandle
@@ -66,7 +66,6 @@ class AccountAddEditViewModel @Inject constructor(
             is AccountAddEditEvents.EnteredCreditLimit -> onLimitEntered(event.accountLimit)
             is AccountAddEditEvents.EnteredTitle -> onTitleEntered(event.accountTitle)
             is AccountAddEditEvents.EnteredDescription -> onDescriptionEntered(event.accountDescription)
-            is AccountAddEditEvents.CalculatorEVent -> onCalculatorEvent(event.symbol)
             AccountAddEditEvents.SaveAccount -> onSaveAccount()
         }
     }

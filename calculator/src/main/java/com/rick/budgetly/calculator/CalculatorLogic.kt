@@ -1,7 +1,8 @@
-package com.rick.budgetly_components
+package com.rick.budgetly.calculator
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import com.rick.budgetly_components.Numeros
 
 /*
 * lets sleep early, wake up early and go get us that ipad
