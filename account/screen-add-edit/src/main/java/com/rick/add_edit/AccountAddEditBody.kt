@@ -76,7 +76,7 @@ fun AccountAddEditBody(
         },
         sheetContent = {
             Calculator(
-                ""
+                viewModel.calculatorValue.value
             ) {
                 viewModel.onEvent(AccountAddEditEvents.CalculatorEvent(it))
             }
