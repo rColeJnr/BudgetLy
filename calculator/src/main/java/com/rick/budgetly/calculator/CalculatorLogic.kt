@@ -45,7 +45,6 @@ fun calculate(num1: String, num2: String?): String {
         "*" -> return multiply(num1, num2)
         "/" -> return divide(num1, num2)
     }
-    setResult = false
     return numero.value
 }
 

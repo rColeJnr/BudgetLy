@@ -140,7 +140,6 @@ fun AccountAddEditDetails(
     }
 }
 
-var field = ""
 private val ROW_PADDING = 1.dp
 
 @Composable
