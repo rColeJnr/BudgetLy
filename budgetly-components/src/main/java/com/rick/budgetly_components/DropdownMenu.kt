@@ -21,14 +21,19 @@ fun IconDropdownMenu(
     onMenuItemThirdClick: () -> Unit,
     menuItemThirdContent: @Composable () -> Unit,
 ) {
-    Box(modifier = Modifier
-        .wrapContentSize(Alignment.TopEnd)){
+    Box(
+        modifier = Modifier
+            .wrapContentSize(Alignment.TopEnd)
+    ) {
         var expanded by remember { mutableStateOf(false) }
 
-        IconButton(onClick = { expanded = true }  ){
+        IconButton(onClick = { expanded = true }) {
             Icon(imageVector = icon, contentDescription = cDescription)
         }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.semantics { contentDescription = TestTags.detailsMoreVertItem }) {
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.semantics { contentDescription = TestTags.detailsMoreVertItem }) {
             DropdownMenuItem(onClick = { onMenuItemOneClick() }) {
                 menuItemOneContent()
             }
@@ -48,17 +53,19 @@ fun IconDropdownMenu(
 fun TextDropdownMenu(
     text: String,
     items: List<String>,
+    onDismissRequest: () -> Unit,
     expanded: Boolean,
     onMenuItemClick: (Int) -> Unit
 ) {
     Box(modifier = Modifier) {
 
-        TextButton(onClick = { }, modifier = Modifier.semantics { contentDescription = TestTags.textButtonDropDown }) {
-            Text(text = text)
-        }
-        DropdownMenu(expanded = expanded, onDismissRequest = { }) {
-            for (item in items){
-                DropdownMenuItem(onClick = { onMenuItemClick(items.indexOf(item))}, modifier = Modifier.semantics { contentDescription = TestTags.dropDownItem }) {
+        Text(text = text, modifier = Modifier.semantics { contentDescription = TestTags.textButtonDropDown })
+        DropdownMenu(expanded = expanded, onDismissRequest = { onDismissRequest() }) {
+            for (item in items) {
+                DropdownMenuItem(onClick = {
+                    onMenuItemClick(items.indexOf(item))
+                    onDismissRequest()
+                }, modifier = Modifier.semantics { contentDescription = TestTags.dropDownItem }) {
                     Text(text = item)
                 }
                 Divider()

@@ -7,6 +7,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Payments
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -37,14 +39,15 @@ fun AccountAddEditDetails(
     onTypeChange: (Int) -> Unit,
     currency: String,
     onCurrencyChange: (Int) -> Unit,
-    expand: Boolean,
-    onTypeClick: () -> Unit,
-    onCurrencyClick: () -> Unit,
     scope: CoroutineScope,
     state: ModalBottomSheetState,
 ) {
 
 //    val context = LocalContext.current
+    val expandType = remember { mutableStateOf(false) }
+    val expandCurrency = remember { mutableStateOf(false) }
+    val onDismissType = { expandType.value = false }
+    val onDismissCurrency = { expandCurrency.value = false }
 
     Surface(
         color = MaterialTheme.colors.background
@@ -70,11 +73,11 @@ fun AccountAddEditDetails(
                         onMenuItemClick = {
                             onTypeChange(it)
                         },
-                        expanded = expand
+                        expanded = expandType.value,
+                        onDismissRequest = { onDismissType() }
                     )
                 },
-                padding = ROW_PADDING,
-                onClick = { onTypeClick() }
+                onClick = { expandType.value = true }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
@@ -90,11 +93,11 @@ fun AccountAddEditDetails(
                         onMenuItemClick = {
                             onCurrencyChange(it)
                         },
-                        expanded = expand
+                        expanded = expandCurrency.value,
+                        onDismissRequest = { onDismissCurrency() }
                     )
                 },
-                padding = ROW_PADDING,
-                onClick = { onCurrencyClick() }
+                onClick = { expandCurrency.value = true }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
