@@ -66,6 +66,7 @@ class AccountAddEditViewModel @Inject constructor(
             is AccountAddEditEvents.EnteredCreditLimit -> onLimitEntered(event.accountLimit)
             is AccountAddEditEvents.EnteredTitle -> onTitleEntered(event.accountTitle)
             is AccountAddEditEvents.EnteredDescription -> onDescriptionEntered(event.accountDescription)
+            is AccountAddEditEvents.CalculatorEVent -> onCalculatorEvent(event.symbol)
             AccountAddEditEvents.SaveAccount -> onSaveAccount()
         }
     }
@@ -105,13 +106,15 @@ class AccountAddEditViewModel @Inject constructor(
         accountDescription.value = description
     }
 
+    private fun onCalculatorEvent(symbol: String) {
+        numberAction(symbol) //TODO (return a flag to do limit or balance entered)
+    }
+
     private fun onLimitEntered(limit: String) {
-        numberAction(limit)
         accountLimit.value = limit
     }
 
     private fun onBalanceEntered(balance: String) {
-        numberAction(balance)
         accountBalance.value = balance
     }
 

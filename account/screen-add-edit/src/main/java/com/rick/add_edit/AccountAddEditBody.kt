@@ -71,10 +71,11 @@ fun AccountAddEditBody(
                 }
             }
         },
-        sheetContent = { Calculator("", {
-            viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(it))
-            viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it))
-        }) }
+        sheetContent = {
+            Calculator(
+                "",
+                { viewModel.onEvent(AccountAddEditEvents.CalculatorEVent(it)) })
+        }
     ) {
         ScreenContent(modifier, viewModel, navController, state, scope)
         if (!state.isVisible)

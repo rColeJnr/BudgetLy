@@ -13,6 +13,7 @@ sealed class AccountAddEditEvents {
     data class EnteredCreditLimit( val accountLimit: String ): AccountAddEditEvents()
     data class EnteredAccountBalance( val accountBalance: String): AccountAddEditEvents()
     data class ChangeIncludeInTotalStatus( val include: Boolean): AccountAddEditEvents()
+    data class CalculatorEVent( val symbol: String): AccountAddEditEvents()
     object SaveAccount: AccountAddEditEvents()
     object CancelAccount: AccountAddEditEvents()
 
