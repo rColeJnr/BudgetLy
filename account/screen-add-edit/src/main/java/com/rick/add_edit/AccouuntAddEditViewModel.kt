@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rick.budgetly_components.numberAction
+import com.rick.budgetly.calculator.numberAction
 import com.rick.common.ProductionDispatcherProvider
 import com.rick.core.BaseLogic
 import com.rick.core.BudgetLyContainer
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class AccountAddEditViewModel @Inject constructor(
+class AccountAddEditViewModel @Inject constructor(
     private val accountUseCases: AccountUseCases,
     private val dispatcher: ProductionDispatcherProvider,
     savedStateHandle: SavedStateHandle
@@ -47,6 +47,8 @@ internal class AccountAddEditViewModel @Inject constructor(
 
     internal  val accountInTotalStatus = mutableStateOf(true)
 
+    internal val calculatorValue = mutableStateOf("")
+
     private var accountId: Int? = null
 
     private  val accountMain = mutableStateOf(false)
@@ -63,9 +65,10 @@ internal class AccountAddEditViewModel @Inject constructor(
             is AccountAddEditEvents.ChangeAccountType -> onTypeChange(event.accountType)
             is AccountAddEditEvents.ChangeIncludeInTotalStatus -> onIncludeInTotalStatusChange(event.include)
             is AccountAddEditEvents.EnteredAccountBalance -> onBalanceEntered(event.accountBalance)
-            is AccountAddEditEvents.EnteredCreditLimit -> onLimitEntered(event.accountLimit)
+            is AccountAddEditEvents.EnteredAccountLimit -> onLimitEntered(event.accountLimit)
             is AccountAddEditEvents.EnteredTitle -> onTitleEntered(event.accountTitle)
             is AccountAddEditEvents.EnteredDescription -> onDescriptionEntered(event.accountDescription)
+            is AccountAddEditEvents.CalculatorEvent -> onCalculatorEvent(event.symbol)
             AccountAddEditEvents.SaveAccount -> onSaveAccount()
         }
     }
@@ -97,16 +100,16 @@ internal class AccountAddEditViewModel @Inject constructor(
         }
     }
 
+    private fun onCalculatorEvent(symbol: String) {
+        calculatorValue.value = numberAction(symbol).first
+    }
+
     private fun onTitleEntered(title: String) {
         accountTitle.value = title
     }
 
     private fun onDescriptionEntered(description: String){
         accountDescription.value = description
-    }
-
-    private fun onCalculatorEvent(symbol: String) {
-        numberAction(symbol) //TODO (return a flag to do limit or balance entered)
     }
 
     private fun onLimitEntered(limit: String) {

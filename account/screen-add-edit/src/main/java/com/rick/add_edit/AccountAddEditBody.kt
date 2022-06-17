@@ -15,7 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.key.Key.Companion.Calculator
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,8 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.add_edit.components.AccountAddEditDetails
-import com.rick.add_edit.components.field
-import com.rick.budgetly_components.*
+import com.rick.budgetly.calculator.Calculator
+import com.rick.budgetly_components.AnimatedIconRow
+import com.rick.budgetly_components.BackPressHandler
+import com.rick.budgetly_components.BaseBottomSheet
+import com.rick.budgetly_components.DefaultInputText
 import com.rick.core.BudgetLyContainer
 import com.rick.data.AccountColor
 import com.rick.data.AccountCurrency
@@ -41,7 +43,7 @@ import kotlinx.coroutines.launch
 fun AccountAddEditBody(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    viewModel: AccountAddEditViewModel = hiltViewModel(),
+    viewModel: AccountAddEditViewModel = hiltViewModel<AccountAddEditViewModel>(),
 ) {
 
     val context = LocalContext.current
@@ -74,12 +76,14 @@ fun AccountAddEditBody(
         },
         sheetContent = {
             Calculator(
-                "",
-                { viewModel.onEvent(AccountAddEditEvents.CalculatorEVent(it)) })
+                ""
+            ) {
+                viewModel.onEvent(AccountAddEditEvents.CalculatorEvent(it))
+            }
         }
     ) {
         ScreenContent(modifier, viewModel, navController, state, scope)
-        if (!state.isVisible)
+        if (!state.isVisible) viewModel.calculatorValue.value = ""
     }
 }
 
@@ -100,23 +104,8 @@ private fun ScreenContent(
         modifier = modifier
             .fillMaxHeight(),
     ) {
-        TopBarWithTextField(
-            iconsVisible = viewModel.accountTitle.value.isNotEmpty(),
-            text = viewModel.accountTitle.value,
-            onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },
-            icon = AccountIcon.values()[viewModel.accountIcon.value].imageVector,
-            iconList = iconList,
-            onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },
-            color = AccountColor.values()[viewModel.accountColor.value],
-            onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
-            onSaveAccount = {
-                viewModel.onEvent(AccountAddEditEvents.SaveAccount)
-            },
-            onCancelAccount = {
-                viewModel.onEvent(AccountAddEditEvents.CancelAccount)
-                navController.navigateUp()
-            }
-        )
+        TopBarWithTextField(            iconsVisible = viewModel.accountTitle.value.isNotEmpty(),            text = viewModel.accountTitle.value,            onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },           icon = AccountIcon.values()[viewModel.accountIcon.value].imageVector,            iconList = iconList,            onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },            color = AccountColor.values()[viewModel.accountColor.value],            onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },            onSaveAccount = {             viewModel.onEvent(AccountAddEditEvents.SaveAccount)           },            onCancelAccount = {                viewModel.onEvent(AccountAddEditEvents.CancelAccount);              navController.navigateUp()            })
+
         AccountAddEditDetails(
             type = viewModel.accountType.value,
             onTypeChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountType(AccountType.values()[it].type)) },
@@ -134,12 +123,15 @@ private fun ScreenContent(
             onDescriptionChange = { viewModel.onEvent(AccountAddEditEvents.EnteredDescription(it)) },
             limit = viewModel.accountLimit.value,
             onLimitClick = {
-                scope.launch { state.show() }; field = "l"
+                viewModel.calculatorValue.value = viewModel.accountLimit.value
+                scope.launch { state.show() }
+                viewModel.onEvent(AccountAddEditEvents.EnteredAccountLimit(viewModel.calculatorValue.value))
             },
             balance = viewModel.accountBalance.value,
             onBalanceClick = {
-                viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it))
-                scope.launch { state.show() }; field = "b"
+                viewModel.calculatorValue.value = viewModel.accountBalance.value
+                scope.launch { state.show() }
+                viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(viewModel.calculatorValue.value))
             },
             scope = scope,
             state = state,

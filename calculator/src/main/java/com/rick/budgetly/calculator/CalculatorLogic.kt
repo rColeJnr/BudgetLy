@@ -76,7 +76,7 @@ private enum class Operators (val sinal: String){
     }
 }
 
-fun numberAction(symbol: String){
+fun numberAction(symbol: String): Pair<String, Boolean> {
 
     if(symbol == "."){
         if (canAddDecimal) {
@@ -116,6 +116,7 @@ fun numberAction(symbol: String){
             }
         }
     }
+    return Pair(numero.value, setResult)
 }
 
 private fun operationAction(operation: String){
