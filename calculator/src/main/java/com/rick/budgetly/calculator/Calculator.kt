@@ -52,8 +52,9 @@ private fun CalculatorButton(text: String, onclick: () -> Unit) {
     Box(modifier = Modifier
         .padding(2.dp)
         .size(24.dp)
+        .clickable { onclick() }
         .wrapContentSize()
-        .clickable { onclick() }){
+    ){
         Text(text = text, style = MaterialTheme.typography.button, fontWeight = FontWeight.Black)
     }
 }

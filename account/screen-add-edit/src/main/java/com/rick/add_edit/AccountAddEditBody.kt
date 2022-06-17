@@ -133,13 +133,13 @@ private fun ScreenContent(
             onDescriptionChange = { viewModel.onEvent(AccountAddEditEvents.EnteredDescription(it)) },
             limit = viewModel.accountLimit.value,
             onLimitClick = {
-                viewModel.calculatorValue.value = viewModel.accountLimit.value
+                viewModel.calculatorValue.value = ""
                 viewModel.calculateLimit.value = true
                 scope.launch { state.show() }
             },
             balance = viewModel.accountBalance.value,
             onBalanceClick = {
-                viewModel.calculatorValue.value = viewModel.accountBalance.value
+                viewModel.calculatorValue.value = ""
                 viewModel.calculateLimit.value = false
                 scope.launch { state.show() }
             },

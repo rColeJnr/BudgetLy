@@ -106,11 +106,9 @@ class AccountAddEditViewModel @Inject constructor(
         calculatorValue.value = numberAction(symbol).first
         if (numberAction(symbol).second)  {
             if (calculateLimit.value) {
-                accountLimit.value = ""
                 onLimitEntered(calculatorValue.value)
             }
             else {
-                accountBalance.value = ""
                 onBalanceEntered(calculatorValue.value)
             }
         }
