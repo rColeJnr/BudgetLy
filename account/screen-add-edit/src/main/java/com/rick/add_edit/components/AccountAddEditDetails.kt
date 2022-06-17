@@ -21,7 +21,6 @@ import com.rick.data.AccountType
 import com.rick.screen_add_edit.R
 import com.rick.util.TestTags
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
@@ -29,7 +28,9 @@ fun AccountAddEditDetails(
     description: String,
     onDescriptionChange: (String) -> Unit,
     limit: String,
+    onLimitClick: (String) -> Unit,
     balance: String,
+    onBalanceClick: (String) -> Unit,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     type: String,
@@ -100,7 +101,7 @@ fun AccountAddEditDetails(
                 element = {
                     Text(text = limit)
                 },
-                onClick = { scope.launch { state.show() }; field = "l" }
+                onClick = { onLimitClick(limit) }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
@@ -112,7 +113,7 @@ fun AccountAddEditDetails(
                 element = {
                     Text(text = balance)
                 },
-                onClick = { scope.launch { state.show() }; field = "b" }
+                onClick = { onBalanceClick(balance) }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()

@@ -60,7 +60,7 @@ private fun CalculatorButton(text: String, onclick: () -> Unit) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Calculator(numero: String, onNumeroChange: (String) -> Unit, onclick: (String) -> Unit) {
+fun Calculator(numero: String, onclick: (String) -> Unit) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -69,7 +69,7 @@ fun Calculator(numero: String, onNumeroChange: (String) -> Unit, onclick: (Strin
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        DefaultInputText(text = numero, onTextChange = { onNumeroChange(it) })
+        Text(text = numero)
         Divider()
 
         Row(
@@ -146,7 +146,7 @@ private fun CalculatorCustom() {
 @Preview
 @Composable
 fun PrevCalculator() {
-    Calculator("numero", {}, {})
+    Calculator("numero", {})
 }
 
 @OptIn(ExperimentalMaterialApi::class)

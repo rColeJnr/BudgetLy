@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rick.budgetly_components.numberAction
 import com.rick.common.ProductionDispatcherProvider
 import com.rick.core.BaseLogic
 import com.rick.core.BudgetLyContainer
@@ -105,10 +106,12 @@ class AccountAddEditViewModel @Inject constructor(
     }
 
     private fun onLimitEntered(limit: String) {
+        numberAction(limit)
         accountLimit.value = limit
     }
 
     private fun onBalanceEntered(balance: String) {
+        numberAction(balance)
         accountBalance.value = balance
     }
 

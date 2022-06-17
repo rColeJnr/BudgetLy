@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.add_edit.components.AccountAddEditDetails
+import com.rick.add_edit.components.field
 import com.rick.budgetly_components.*
 import com.rick.core.BudgetLyContainer
 import com.rick.data.AccountColor
@@ -63,14 +64,20 @@ fun AccountAddEditBody(
         state = state,
         controlNavigation = {
             BackPressHandler {
-                if (state.isVisible){ scope.launch { state.hide() } }
-                else {navController.navigateUp()}
+                if (state.isVisible) {
+                    scope.launch { state.hide() }
+                } else {
+                    navController.navigateUp()
+                }
             }
         },
-        sheetContent = { Calculator() }
+        sheetContent = { Calculator("", {
+            viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(it))
+            viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it))
+        }) }
     ) {
-        ScreenContent (modifier, viewModel, navController, state, scope)
-        if (!state.isVisible) numero.value = ""
+        ScreenContent(modifier, viewModel, navController, state, scope)
+        if (!state.isVisible)
     }
 }
 
@@ -84,7 +91,7 @@ private fun ScreenContent(
     scope: CoroutineScope,
 ) {
     val iconList = mutableListOf<ImageVector>()
-    for (icon in AccountIcon.values()){
+    for (icon in AccountIcon.values()) {
         iconList.add(icon.imageVector)
     }
     Column(
@@ -124,11 +131,16 @@ private fun ScreenContent(
             description = viewModel.accountDescription.value,
             onDescriptionChange = { viewModel.onEvent(AccountAddEditEvents.EnteredDescription(it)) },
             limit = viewModel.accountLimit.value,
-//            onLimitChange = { viewModel.onEvent(AccountAddEditEvents.EnteredCreditLimit(it)) },
+            onLimitClick = {
+                scope.launch { state.show() }; field = "l"
+            },
             balance = viewModel.accountBalance.value,
+            onBalanceClick = {
+                viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it))
+                scope.launch { state.show() }; field = "b"
+            },
             scope = scope,
             state = state,
-//            onBalanceChange = { viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(it)) },
         )
     }
 }
