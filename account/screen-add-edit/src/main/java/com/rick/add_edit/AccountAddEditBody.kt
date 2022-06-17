@@ -15,6 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.key.Key.Companion.Calculator
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -72,7 +73,7 @@ fun AccountAddEditBody(
             }
         },
         sheetContent = {
-            Calculator(
+            com.rick.budgetly.calculator.Calculator(
                 "",
                 { viewModel.onEvent(AccountAddEditEvents.CalculatorEVent(it)) })
         }

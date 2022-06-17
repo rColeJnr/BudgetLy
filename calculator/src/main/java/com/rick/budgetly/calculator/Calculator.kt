@@ -1,4 +1,4 @@
-package com.rick.budgetly_components
+package com.rick.budgetly.calculator
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -6,16 +6,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rick.budgetly.calculator.numberAction
 
 private enum class Sinais (val sinal: String){
     ADICAO("+"),
@@ -97,52 +96,52 @@ fun Calculator(numero: String, onclick: (String) -> Unit) {
 }
 
 
-@ExperimentalMaterialApi
-@Composable
-private fun CalculatorCustom() {
-    Column(Modifier.fillMaxWidth()) {
-        val numero = remember{ mutableStateOf("") }
-        Text(text = numero.value, modifier = Modifier.padding(start = 65.dp))
-        CustomRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.Start),
-            rows = 1,
-            onClick = {}
-        ) {
-            for (i in Sinais.values()) {
-                TextButton(
-                    onClick = {
-                        numberAction(i.name)
-                        if (true){
-                        }
-                    }, modifier = Modifier
-                        .widthIn(min = 65.dp, max = 800.dp)
-                ) {
-                    Text(text = i.name)
-                }
-            }
-        }
-        CustomRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.Start),
-            onClick = {}
-        ) {
-            for (i in Numeros.values()) {
-                TextButton(
-                    onClick = {
-                        numberAction(i.name)
-                    },
-                    modifier = Modifier
-                        .widthIn(min = 100.dp, max = 800.dp)
-                ) {
-                    Text(text = i.name)
-                }
-            }
-        }
-    }
-}
+//@ExperimentalMaterialApi
+//@Composable
+//private fun CalculatorCustom() {
+//    Column(Modifier.fillMaxWidth()) {
+//        val numero = remember{ mutableStateOf("") }
+//        Text(text = numero.value, modifier = Modifier.padding(start = 65.dp))
+//        CustomRow(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .wrapContentWidth(Alignment.Start),
+//            rows = 1,
+//            onClick = {}
+//        ) {
+//            for (i in Sinais.values()) {
+//                TextButton(
+//                    onClick = {
+//                        numberAction(i.name)
+//                        if (true){
+//                        }
+//                    }, modifier = Modifier
+//                        .widthIn(min = 65.dp, max = 800.dp)
+//                ) {
+//                    Text(text = i.name)
+//                }
+//            }
+//        }
+//        CustomRow(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .wrapContentWidth(Alignment.Start),
+//            onClick = {}
+//        ) {
+//            for (i in Numeros.values()) {
+//                TextButton(
+//                    onClick = {
+//                        numberAction(i.name)
+//                    },
+//                    modifier = Modifier
+//                        .widthIn(min = 100.dp, max = 800.dp)
+//                ) {
+//                    Text(text = i.name)
+//                }
+//            }
+//        }
+//    }
+//}
 
 @Preview
 @Composable
@@ -150,9 +149,9 @@ fun PrevCalculator() {
     Calculator("numero", {})
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
-@Composable
-fun PrevCustomRowCalculator() {
-    CalculatorCustom()
-}
+//@OptIn(ExperimentalMaterialApi::class)
+//@Preview
+//@Composable
+//fun PrevCustomRowCalculator() {
+//    CalculatorCustom()
+//}
