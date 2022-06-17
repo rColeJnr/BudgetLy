@@ -73,7 +73,7 @@ fun AccountAddEditBody(
             }
         },
         sheetContent = {
-            com.rick.budgetly.calculator.Calculator(
+            Calculator(
                 "",
                 { viewModel.onEvent(AccountAddEditEvents.CalculatorEVent(it)) })
         }
