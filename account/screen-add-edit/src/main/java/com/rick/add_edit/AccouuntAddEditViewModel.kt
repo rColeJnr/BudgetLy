@@ -49,6 +49,8 @@ class AccountAddEditViewModel @Inject constructor(
 
     internal val calculatorValue = mutableStateOf("")
 
+    internal val calculateLimit = mutableStateOf(false)
+
     private var accountId: Int? = null
 
     private  val accountMain = mutableStateOf(false)
@@ -102,6 +104,16 @@ class AccountAddEditViewModel @Inject constructor(
 
     private fun onCalculatorEvent(symbol: String) {
         calculatorValue.value = numberAction(symbol).first
+        if (numberAction(symbol).second)  {
+            if (calculateLimit.value) {
+                accountLimit.value = ""
+                onLimitEntered(calculatorValue.value)
+            }
+            else {
+                accountBalance.value = ""
+                onBalanceEntered(calculatorValue.value)
+            }
+        }
     }
 
     private fun onTitleEntered(title: String) {

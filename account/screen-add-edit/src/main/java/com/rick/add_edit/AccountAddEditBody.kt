@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 fun AccountAddEditBody(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    viewModel: AccountAddEditViewModel = hiltViewModel<AccountAddEditViewModel>(),
+    viewModel: AccountAddEditViewModel = hiltViewModel(),
 ) {
 
     val context = LocalContext.current
@@ -104,7 +104,17 @@ private fun ScreenContent(
         modifier = modifier
             .fillMaxHeight(),
     ) {
-        TopBarWithTextField(            iconsVisible = viewModel.accountTitle.value.isNotEmpty(),            text = viewModel.accountTitle.value,            onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },           icon = AccountIcon.values()[viewModel.accountIcon.value].imageVector,            iconList = iconList,            onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },            color = AccountColor.values()[viewModel.accountColor.value],            onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },            onSaveAccount = {             viewModel.onEvent(AccountAddEditEvents.SaveAccount)           },            onCancelAccount = {                viewModel.onEvent(AccountAddEditEvents.CancelAccount);              navController.navigateUp()            })
+        TopBarWithTextField(
+            iconsVisible = viewModel.accountTitle.value.isNotEmpty(),
+            text = viewModel.accountTitle.value,
+            onTextChange = { viewModel.onEvent(AccountAddEditEvents.EnteredTitle(it)) },
+            icon = AccountIcon.values()[viewModel.accountIcon.value].imageVector,
+            iconList = iconList,
+            onIconChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountIcon(it)) },
+            color = AccountColor.values()[viewModel.accountColor.value],
+            onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
+            onSaveAccount = { viewModel.onEvent(AccountAddEditEvents.SaveAccount) },
+            onCancelAccount = { viewModel.onEvent(AccountAddEditEvents.CancelAccount); navController.navigateUp() })
 
         AccountAddEditDetails(
             type = viewModel.accountType.value,
@@ -124,14 +134,14 @@ private fun ScreenContent(
             limit = viewModel.accountLimit.value,
             onLimitClick = {
                 viewModel.calculatorValue.value = viewModel.accountLimit.value
+                viewModel.calculateLimit.value = true
                 scope.launch { state.show() }
-                viewModel.onEvent(AccountAddEditEvents.EnteredAccountLimit(viewModel.calculatorValue.value))
             },
             balance = viewModel.accountBalance.value,
             onBalanceClick = {
                 viewModel.calculatorValue.value = viewModel.accountBalance.value
+                viewModel.calculateLimit.value = false
                 scope.launch { state.show() }
-                viewModel.onEvent(AccountAddEditEvents.EnteredAccountBalance(viewModel.calculatorValue.value))
             },
             scope = scope,
             state = state,
