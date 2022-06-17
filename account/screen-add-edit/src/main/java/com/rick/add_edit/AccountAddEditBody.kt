@@ -67,7 +67,7 @@ fun AccountAddEditBody(
                 else {navController.navigateUp()}
             }
         },
-        sheetContent = { Calculator(viewModel, state = state, scope = scope) }
+        sheetContent = { Calculator() }
     ) {
         ScreenContent (modifier, viewModel, navController, state, scope)
         if (!state.isVisible) numero.value = ""

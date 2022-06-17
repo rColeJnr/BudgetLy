@@ -11,6 +11,7 @@
         <entry key="account/screen-account/src/main/java/com/rick/accounts/AccountBody.kt" value="0.21" />
         <entry key="account/screen-add-edit/src/main/java/com/rick/add_edit/AccountAddEditBody.kt" value="2.0" />
         <entry key="account/screen-add-edit/src/main/java/com/rick/add_edit/components/AccountAddEditDetails.kt" value="0.33" />
+        <entry key="budgetly-components/src/main/java/com/rick/budgetly_components/CalculatorLogic.kt" value="0.24166666666666667" />
         <entry key="budgetly-components/src/main/java/com/rick/budgetly_components/DefaultRow.kt" value="0.19074074074074074" />
         <entry key="options/options/src/main/java/com/rick/options/OptionsBody.kt" value="0.2777777777777778" />
       </map>
