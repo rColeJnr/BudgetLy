@@ -75,7 +75,17 @@ class AccountAddEditViewModel @Inject constructor(
             AccountAddEditEvents.SaveAccount -> onSaveAccount()
             AccountAddEditEvents.BalanceClick -> onBalanceClick()
             AccountAddEditEvents.LimitClick -> onLimitClick()
+            AccountAddEditEvents.CurrencyClick -> onCurrencyClick()
+            AccountAddEditEvents.TypeClick -> onTypeClick()
         }
+    }
+
+    private fun onTypeClick() {
+        TODO("Not yet implemented")
+    }
+
+    private fun onCurrencyClick() {
+        TODO("Not yet implemented")
     }
 
     fun onBalanceClick() {

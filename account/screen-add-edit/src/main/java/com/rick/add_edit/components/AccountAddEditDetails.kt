@@ -37,6 +37,9 @@ fun AccountAddEditDetails(
     onTypeChange: (Int) -> Unit,
     currency: String,
     onCurrencyChange: (Int) -> Unit,
+    expand: Boolean,
+    onTypeClick: () -> Unit,
+    onCurrencyClick: () -> Unit,
     scope: CoroutineScope,
     state: ModalBottomSheetState,
 ) {
@@ -66,11 +69,12 @@ fun AccountAddEditDetails(
                         items = typeList(),
                         onMenuItemClick = {
                             onTypeChange(it)
-                        }
+                        },
+                        expanded = expand
                     )
                 },
                 padding = ROW_PADDING,
-                onClick = { }
+                onClick = { onTypeClick() }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
@@ -85,11 +89,12 @@ fun AccountAddEditDetails(
                         items = currencyList(),
                         onMenuItemClick = {
                             onCurrencyChange(it)
-                        }
+                        },
+                        expanded = expand
                     )
                 },
                 padding = ROW_PADDING,
-                onClick = {}
+                onClick = { onCurrencyClick() }
             )
             Spacer(modifier = Modifier.height(8.dp))
             Divider()

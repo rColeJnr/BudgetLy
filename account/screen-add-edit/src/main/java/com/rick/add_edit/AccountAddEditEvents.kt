@@ -18,5 +18,7 @@ sealed class AccountAddEditEvents {
     object CancelAccount: AccountAddEditEvents()
     object LimitClick: AccountAddEditEvents()
     object BalanceClick: AccountAddEditEvents()
+    object CurrencyClick: AccountAddEditEvents()
+    object TypeClick: AccountAddEditEvents()
 
 }

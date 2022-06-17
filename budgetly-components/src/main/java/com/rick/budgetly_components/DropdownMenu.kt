@@ -48,17 +48,17 @@ fun IconDropdownMenu(
 fun TextDropdownMenu(
     text: String,
     items: List<String>,
+    expanded: Boolean,
     onMenuItemClick: (Int) -> Unit
 ) {
     Box(modifier = Modifier) {
-        var expanded by remember { mutableStateOf(false) }
 
-        TextButton(onClick = { expanded = true }, modifier = Modifier.semantics { contentDescription = TestTags.textButtonDropDown }) {
+        TextButton(onClick = { }, modifier = Modifier.semantics { contentDescription = TestTags.textButtonDropDown }) {
             Text(text = text)
         }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        DropdownMenu(expanded = expanded, onDismissRequest = { }) {
             for (item in items){
-                DropdownMenuItem(onClick = { onMenuItemClick(items.indexOf(item)); expanded = false}, modifier = Modifier.semantics { contentDescription = TestTags.dropDownItem }) {
+                DropdownMenuItem(onClick = { onMenuItemClick(items.indexOf(item))}, modifier = Modifier.semantics { contentDescription = TestTags.dropDownItem }) {
                     Text(text = item)
                 }
                 Divider()
