@@ -21,7 +21,15 @@ fun AccountsNavHost() {
         startDestination = AccountsScreen.Accounts.name,
         modifier = Modifier
     ) {
-        composable(AccountsScreen.Accounts.name) {
+        composable(
+            route = "${AccountsScreen.Accounts.name}?accountDeleted={accountDeleted)",
+            arguments = listOf(
+                navArgument("accountDeleted"){
+                    type = NavType.StringType
+                    defaultValue = null
+                }
+            )
+        ) {
             AccountBody(navController = navController)
         }
         val routeAddEdit = AccountsScreen.AccountsAddEdit.name
