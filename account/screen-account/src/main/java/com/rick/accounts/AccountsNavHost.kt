@@ -26,6 +26,7 @@ fun AccountsNavHost() {
             arguments = listOf(
                 navArgument("accountDeleted"){
                     type = NavType.StringType
+                    nullable = true
                     defaultValue = null
                 }
             )

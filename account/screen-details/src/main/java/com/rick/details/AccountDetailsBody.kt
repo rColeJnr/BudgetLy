@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.gson.Gson
 import com.rick.budgetly_components.IconDropdownMenu
 import com.rick.budgetly_components.SimpleSnackbar
 import com.rick.common.AccountsScreen
@@ -63,7 +64,8 @@ fun AccountDetailsBody(
                     }
                 }
                 BudgetLyContainer.ShowSuccess -> {
-                    navController.navigate("${AccountsScreen.Accounts.name}accountDeleted=${viewModel.currentAccount}")
+                    val gson = Gson().toJson(viewModel.currentAccount)
+                    navController.navigate("${AccountsScreen.Accounts.name}accountDeleted=${gson}")
                 }
             }
         }

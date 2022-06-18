@@ -1,13 +1,16 @@
 package com.rick.accounts
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.rick.common.ProductionDispatcherProvider
 import com.rick.core.BaseLogic
+import com.rick.data.Account
 import com.rick.data.AccountType
 import com.rick.data.use_case.AccountUseCases
 import com.rick.data.use_case.GetQuote
@@ -36,7 +39,7 @@ class AccountsViewModel @Inject constructor(
     private val _accountsState = mutableStateOf(AccountsState())
     internal val accountsState: State<AccountsState> = _accountsState
 
-    internal var recentlyDeleted: String? = null
+    internal var recentlyDeleted: Account? = null
 
     init {
         // Get accounts
@@ -44,7 +47,9 @@ class AccountsViewModel @Inject constructor(
         getQuote()
 
         savedStateHandle.get<String>(ACCOUNT_DELETED)?.let {
-            recentlyDeleted = it
+            val gsonType = object : TypeToken<Account>() {}.type
+            recentlyDeleted = Gson().fromJson<Account>(it, gsonType)
+            Log.d("Tagoo", "account: $recentlyDeleted")
         }
     }
 
