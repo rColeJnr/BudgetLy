@@ -53,7 +53,6 @@ private fun subtrair(num1: Float, num2: Float) = num1 - num2
 private fun multiplicar(num1: Float, num2: Float) = num1 * num2
 private fun dividir(num1: Float, num2: Float) = num1 / num2
 
-// We do it like apple calculator
 // clean the screen after sub, or add, or else
 
 private var canAddOperation = false

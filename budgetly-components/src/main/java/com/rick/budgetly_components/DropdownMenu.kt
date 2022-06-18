@@ -55,7 +55,7 @@ fun TextDropdownMenu(
     items: List<String>,
     onDismissRequest: () -> Unit,
     expanded: Boolean,
-    onMenuItemClick: (Int) -> Unit
+    onMenuItemClick: (String) -> Unit
 ) {
     Box(modifier = Modifier) {
 
@@ -63,7 +63,7 @@ fun TextDropdownMenu(
         DropdownMenu(expanded = expanded, onDismissRequest = { onDismissRequest() }) {
             for (item in items) {
                 DropdownMenuItem(onClick = {
-                    onMenuItemClick(items.indexOf(item))
+                    onMenuItemClick(item)
                     onDismissRequest()
                 }, modifier = Modifier.semantics { contentDescription = TestTags.dropDownItem }) {
                     Text(text = item)

@@ -36,9 +36,9 @@ fun AccountAddEditDetails(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     type: String,
-    onTypeChange: (Int) -> Unit,
+    onTypeChange: (String) -> Unit,
     currency: String,
-    onCurrencyChange: (Int) -> Unit,
+    onCurrencyChange: (String) -> Unit,
     scope: CoroutineScope,
     state: ModalBottomSheetState,
 ) {

@@ -30,9 +30,7 @@ import com.rick.budgetly_components.BaseBottomSheet
 import com.rick.budgetly_components.DefaultInputText
 import com.rick.core.BudgetLyContainer
 import com.rick.data.AccountColor
-import com.rick.data.AccountCurrency
 import com.rick.data.AccountIcon
-import com.rick.data.AccountType
 import com.rick.screen_add_edit.R
 import com.rick.util.TestTags
 import kotlinx.coroutines.CoroutineScope
@@ -118,18 +116,17 @@ private fun ScreenContent(
             color = AccountColor.values()[viewModel.accountColor.value],
             onColorChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountColor(it.color)) },
             onSaveAccount = { viewModel.onEvent(AccountAddEditEvents.SaveAccount) },
-            onCancelAccount = { viewModel.onEvent(AccountAddEditEvents.CancelAccount); navController.navigateUp() })
+            onCancelAccount = {
+                viewModel.onEvent(AccountAddEditEvents.CancelAccount)
+                navController.navigateUp()
+            })
 
         AccountAddEditDetails(
             type = viewModel.accountType.value,
-            onTypeChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountType(AccountType.values()[it].type)) },
+            onTypeChange = { viewModel.onEvent(AccountAddEditEvents.ChangeAccountType(it)) },
             currency = viewModel.accountCurrency.value,
             onCurrencyChange = {
-                viewModel.onEvent(
-                    AccountAddEditEvents.ChangeAccountCurrency(
-                        AccountCurrency.values()[it].currency
-                    )
-                )
+                viewModel.onEvent(AccountAddEditEvents.ChangeAccountCurrency(it))
             },
             checked = viewModel.accountInTotalStatus.value,
             onCheckedChange = { viewModel.onEvent(AccountAddEditEvents.ChangeIncludeInTotalStatus(it)) },

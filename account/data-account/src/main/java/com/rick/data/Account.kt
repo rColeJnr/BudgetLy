@@ -31,6 +31,10 @@ enum class AccountType(val type: String) {
     companion object {
         val Default = CASH
     }
+
+    override fun toString(): String {
+        return this.type
+    }
 }
 
 enum class AccountIcon(val imageVector: ImageVector, val contentDescription: String) {
