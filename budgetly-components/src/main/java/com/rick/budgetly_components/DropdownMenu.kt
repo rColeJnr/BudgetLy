@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.contentDescription
@@ -23,17 +22,17 @@ fun IconDropdownMenu(
 ) {
     Box(
         modifier = Modifier
-            .wrapContentSize(Alignment.TopEnd)
+            .wrapContentSize()
     ) {
         var expanded by remember { mutableStateOf(false) }
 
         IconButton(onClick = { expanded = true }) {
-            Icon(imageVector = icon, contentDescription = cDescription)
+            Icon(imageVector = icon, contentDescription = cDescription, modifier = Modifier.wrapContentSize())
         }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.semantics { contentDescription = TestTags.detailsMoreVertItem }) {
+            modifier = Modifier.wrapContentSize().semantics { contentDescription = TestTags.detailsMoreVertItem }) {
             DropdownMenuItem(onClick = { onMenuItemOneClick() }) {
                 menuItemOneContent()
             }

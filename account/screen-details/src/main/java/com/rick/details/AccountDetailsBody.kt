@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowCircleDown
+import androidx.compose.material.icons.filled.ArrowCircleUp
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -46,7 +50,7 @@ fun AccountDetailsBody(
         topBar = {
             TopAppBar(
                 modifier = modifier,
-                backgroundColor = Color.White,
+                backgroundColor = Color.DarkGray,
                 title = {},
                 navigationIcon = {
                     Icon(
@@ -58,11 +62,10 @@ fun AccountDetailsBody(
                 actions = {
                     IconButton(onClick = { onSettingsClick(viewModel.accountId!!) }) {
                         Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "Settings"
+                            imageVector = Icons.Rounded.Edit,
+                            contentDescription = "edit"
                         )
                     }
-                    Spacer(modifier = modifier.width(8.dp))
                     DetailsDropDownMenu(
                         icon = Icons.Default.MoreVert,
                         contentDescription = TestTags.detailsMoreVert,
