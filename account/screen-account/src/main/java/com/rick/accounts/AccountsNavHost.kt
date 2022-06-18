@@ -44,7 +44,6 @@ fun AccountsNavHost() {
             )
         ) {
             AccountAddEditBody(
-                modifier = Modifier,
                 navController = navController
             )
         }

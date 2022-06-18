@@ -40,7 +40,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AccountAddEditBody(
-    modifier: Modifier = Modifier,
     navController: NavHostController,
     viewModel: AccountAddEditViewModel = hiltViewModel(),
 ) {
@@ -81,7 +80,7 @@ fun AccountAddEditBody(
             }
         }
     ) {
-        ScreenContent(modifier, viewModel, navController, state, scope)
+        ScreenContent(viewModel, navController, state, scope)
         if (!state.isVisible) {
             viewModel.calculatorValue.value = ""
             cleanNumero()
@@ -92,7 +91,6 @@ fun AccountAddEditBody(
 @ExperimentalMaterialApi
 @Composable
 private fun ScreenContent(
-    modifier: Modifier,
     viewModel: AccountAddEditViewModel,
     navController: NavHostController,
     state: ModalBottomSheetState,
@@ -103,7 +101,7 @@ private fun ScreenContent(
         iconList.add(icon.imageVector)
     }
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxHeight(),
     ) {
         TopBarWithTextField(

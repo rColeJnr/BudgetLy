@@ -63,7 +63,7 @@ fun AccountDetailsBody(
                     }
                 }
                 BudgetLyContainer.ShowSuccess -> {
-                    navController.navigateUp()
+                    navController.navigate("${AccountsScreen.Accounts.name}accountDeleted=${viewModel.currentAccount}")
                 }
             }
         }
@@ -104,17 +104,6 @@ fun AccountDetailsBody(
                         viewModel.onEvent(
                             AccountDetailsEvents.DeleteAccount(viewModel.currentAccount!!)
                         )
-                        // We then share data between viewModels, i dont' like this no bit.
-//                        CoroutineScope(Dispatchers.Main).launch {
-//                            val job = scope.launch {
-//                                SimpleSnackbar(scaffoldSate, "Account deleted", "Undo") {
-//                                    viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
-//                                }
-//                                delay(250)
-//                            }
-//                            job.join()
-//                            navController.navigateUp()
-//                        }
                     },
                     menuItemThirdContent = { Text(text = "Delete account") })
             })
