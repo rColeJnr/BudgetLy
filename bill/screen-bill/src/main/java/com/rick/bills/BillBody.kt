@@ -70,7 +70,7 @@ fun BillsBody(
                 is BudgetLyContainer.ShowRestoreSnackbar -> {
                     SimpleSnackbar(
                         scaffoldSate = scaffoldState,
-                        message = event.message,
+                        message = context.getString(R.string.bill_deleted),
                         actionLabel = context.getString(R.string.undo)
                     ) {
                         viewModel.onEvent(BillEvents.RestoreBill)

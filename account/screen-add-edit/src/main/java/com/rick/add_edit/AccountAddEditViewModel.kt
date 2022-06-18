@@ -57,7 +57,7 @@ class AccountAddEditViewModel @Inject constructor(
     private  val accountMain = mutableStateOf(false)
 
     private val _eventFlow = MutableSharedFlow<BudgetLyContainer>()
-    val eventFlow = _eventFlow.asSharedFlow()
+    internal val eventFlow = _eventFlow.asSharedFlow()
 
     override fun onEvent(event: AccountAddEditEvents) {
         when (event){

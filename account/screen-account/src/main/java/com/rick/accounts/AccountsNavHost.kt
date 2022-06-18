@@ -51,12 +51,6 @@ fun AccountsNavHost() {
             )
         ) {
             AccountDetailsBody(
-                onNavigationIconClick = { navController.navigateUp() },
-                onSettingsClick = {
-                    navController.navigate(route = AccountsScreen.AccountsAddEdit.name + "?accountToEdit=${it}")
-                },
-                // i am undecided about moving the all the state up here or passing navController and viewModel as parameters
-                // so it's salad.
                 navController = navController
             )
         }

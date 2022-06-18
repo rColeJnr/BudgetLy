@@ -12,89 +12,113 @@ import androidx.compose.material.icons.filled.ArrowCircleUp
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.rick.budgetly_components.IconDropdownMenu
 import com.rick.budgetly_components.SimpleSnackbar
+import com.rick.common.AccountsScreen
+import com.rick.core.BudgetLyContainer
 import com.rick.core.formatAmount
 import com.rick.data.AccountIcon
+import com.rick.screen_details.R
 import com.rick.util.TestTags
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AccountDetailsBody(
     modifier: Modifier = Modifier,
-    onNavigationIconClick: () -> Unit,
-    onSettingsClick: (Int) -> Unit,
     navController: NavHostController,
     viewModel: AccountDetailsViewModel = hiltViewModel(),
 ) {
 
+    val context = LocalContext.current
+
     val scope = rememberCoroutineScope()
     val scaffoldSate = rememberScaffoldState()
 
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        scaffoldState = scaffoldSate,
-        topBar = {
-            TopAppBar(
-                modifier = modifier,
-                backgroundColor = Color.DarkGray,
-                title = {},
-                navigationIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "NavigateUp",
-                        modifier = Modifier.clickable { onNavigationIconClick() }
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { onSettingsClick(viewModel.accountId!!) }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Edit,
-                            contentDescription = "edit"
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is BudgetLyContainer.ShowError -> { /*No error emissions*/ }
+                is BudgetLyContainer.ShowRestoreSnackbar -> {
+                    SimpleSnackbar(
+                        scaffoldSate,
+                        context.getString(R.string.account_deleted),
+                        context.getString(
+                            R.string.undo
                         )
+                    ) {
+                        viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
                     }
-                    DetailsDropDownMenu(
-                        icon = Icons.Default.MoreVert,
-                        contentDescription = TestTags.detailsMoreVert,
-                        onMenuItemOneClick = { viewModel.onEvent(AccountDetailsEvents.ChangeMainStatus) },
-                        menuItemOneContent = { Text(text = "Set as main account") },
-                        onMenuItemSecondClick = { viewModel.onEvent(AccountDetailsEvents.ChangeIncludeInTotalStatus) },
-                        menuItemSecondContent = { Text(text = if (viewModel.accountInclude.value) "Don't include in total" else "Include in total") },
-                        onMenuItemThirdClick = {
-                            viewModel.onEvent(
-                                AccountDetailsEvents.DeleteAccount(viewModel.currentAccount!!)
-                            )
-                            // We then share data between viewModels, i dont' like this no bit.
-                            CoroutineScope(Dispatchers.Main).launch {
-                                val job = scope.launch {
-                                    SimpleSnackbar(scaffoldSate, "Account deleted", "Undo") {
-                                        viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
-                                    }
-                                    delay(250)
-                                }
-                                job.join()
-                                navController.navigateUp()
-                            }
-                        },
-                        menuItemThirdContent = { Text(text = "Delete account") }
+                }
+                BudgetLyContainer.ShowSuccess -> {
+                    navController.navigateUp()
+                }
+            }
+        }
+    }
+
+    Scaffold(modifier = modifier.fillMaxSize(), scaffoldState = scaffoldSate, topBar = {
+        TopAppBar(modifier = modifier,
+            backgroundColor = Color.DarkGray,
+            title = {},
+            navigationIcon = {
+                Icon(imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "NavigateUp",
+                    modifier = Modifier.clickable { navController.navigateUp() })
+            },
+            actions = {
+                IconButton(onClick = {
+                    navController.navigate(
+                        route = AccountsScreen.AccountsAddEdit.name
+                                + "?accountToEdit=${viewModel.accountId!!}"
+                    )
+                }) {
+                    Icon(
+                        imageVector = Icons.Rounded.Edit, contentDescription = "edit"
                     )
                 }
-            )
-        }
-    ) {
+                DetailsDropDownMenu(icon = Icons.Default.MoreVert,
+                    contentDescription = TestTags.detailsMoreVert,
+                    onMenuItemOneClick = { viewModel.onEvent(AccountDetailsEvents.ChangeMainStatus) },
+                    menuItemOneContent = { Text(text = stringResource(R.string.set_as_main_account)) },
+                    onMenuItemSecondClick = { viewModel.onEvent(AccountDetailsEvents.ChangeIncludeInTotalStatus) },
+                    menuItemSecondContent = {
+                        Text(
+                            text = if (viewModel.accountInclude.value) stringResource(R.string.dont_include)
+                            else stringResource(R.string.include)
+                        )
+                    },
+                    onMenuItemThirdClick = {
+                        viewModel.onEvent(
+                            AccountDetailsEvents.DeleteAccount(viewModel.currentAccount!!)
+                        )
+                        // We then share data between viewModels, i dont' like this no bit.
+//                        CoroutineScope(Dispatchers.Main).launch {
+//                            val job = scope.launch {
+//                                SimpleSnackbar(scaffoldSate, "Account deleted", "Undo") {
+//                                    viewModel.onEvent(AccountDetailsEvents.RestoreAccount)
+//                                }
+//                                delay(250)
+//                            }
+//                            job.join()
+//                            navController.navigateUp()
+//                        }
+                    },
+                    menuItemThirdContent = { Text(text = "Delete account") })
+            })
+    }) {
         Column(
             modifier
                 .wrapContentHeight()
@@ -148,14 +172,13 @@ fun AccountDetailsBody(
 
 @Composable
 fun AccountIncomeExpenses(
-    modifier: Modifier,
-    text: String,
-    money: String,
-    imageVector: ImageVector
+    modifier: Modifier, text: String, money: String, imageVector: ImageVector
 ) {
     Box(
         modifier = modifier
-            .border(width = 2.dp, color = LightGray, shape = RoundedCornerShape(8.dp))
+            .border(
+                width = 2.dp, color = LightGray, shape = RoundedCornerShape(8.dp)
+            )
             .padding(8.dp)
     ) {
         ConstraintLayout(
@@ -170,14 +193,12 @@ fun AccountIncomeExpenses(
                     .constrainAs(title) {
                         top.linkTo(parent.top)
                     }
-                    .padding(start = 8.dp, top = 8.dp)
-            )
+                    .padding(start = 8.dp, top = 8.dp))
             Text(text = money, modifier = modifier
                 .constrainAs(amount) {
                     top.linkTo(title.bottom)
                 }
-                .padding(start = 8.dp, top = 8.dp)
-            )
+                .padding(start = 8.dp, top = 8.dp))
             Icon(
                 imageVector = imageVector,
                 contentDescription = null,
@@ -200,14 +221,12 @@ fun DetailsDropDownMenu(
     onMenuItemThirdClick: () -> Unit,
     menuItemThirdContent: @Composable () -> Unit,
 ) {
-    IconDropdownMenu(
-        icon = icon,
+    IconDropdownMenu(icon = icon,
         cDescription = contentDescription,
         onMenuItemOneClick = { onMenuItemOneClick() },
         menuItemOneContent = { menuItemOneContent() },
         onMenuItemSecondClick = { onMenuItemSecondClick() },
         menuItemSecondContent = { menuItemSecondContent() },
         onMenuItemThirdClick = { onMenuItemThirdClick() },
-        menuItemThirdContent = { menuItemThirdContent() }
-    )
+        menuItemThirdContent = { menuItemThirdContent() })
 }

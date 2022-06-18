@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="set_as_main_account">Set as main account</string>
+    <string name="dont_include">Don\'t include in total</string>
+    <string name="include">Include in total</string>
+    <string name="account_deleted">Account deleted</string>
+    <string name="undo">Undo</string>
+</resources>

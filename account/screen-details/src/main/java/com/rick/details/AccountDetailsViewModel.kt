@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rick.common.ProductionDispatcherProvider
 import com.rick.core.BaseLogic
+import com.rick.core.BudgetLyContainer
 import com.rick.data.Account
 import com.rick.data.AccountIcon
 import com.rick.data.AccountType
@@ -13,6 +14,9 @@ import com.rick.data.use_case.AccountUseCases
 import com.rick.util.getMainAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,6 +42,9 @@ class AccountDetailsViewModel @Inject constructor(
     private val accountMain = mutableStateOf(false)
     internal var accountId: Int? = null
     internal var accountType = AccountType.Default.type
+
+    private val _eventFlow = MutableSharedFlow<BudgetLyContainer>()
+    internal val eventFlow: SharedFlow<BudgetLyContainer> = _eventFlow.asSharedFlow()
 
     init {
         viewModelScope.launch{
@@ -109,6 +116,8 @@ class AccountDetailsViewModel @Inject constructor(
         launch {
             deletedAccount = account
             accountUseCases.deleteAccount(account)
+            _eventFlow.emit(BudgetLyContainer.ShowSuccess)
+            _eventFlow.emit(BudgetLyContainer.ShowRestoreSnackbar)
         }
     }
 }

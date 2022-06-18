@@ -118,7 +118,7 @@ class BillViewModel @Inject constructor(
     private fun deleteBill(bill: Bill) = viewModelScope.launch {
         deletedBill = bill
         billUseCases.removeBill(bill = bill)
-        _eventFlow.emit(BudgetLyContainer.ShowRestoreSnackbar(Resources.getSystem().getString(R.string.bill_deleted)))
+        _eventFlow.emit(BudgetLyContainer.ShowRestoreSnackbar)
         _viewModelBill.value = null
     }
 
