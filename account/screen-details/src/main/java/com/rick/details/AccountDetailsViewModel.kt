@@ -49,7 +49,7 @@ class AccountDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch{
             val job = viewModelScope.launch(dispatcher.provideIOContext()) {
-                savedStateHandle.get<Int>("account")?.let {
+                savedStateHandle.get<Int>(ACCOUNT)?.let {
                     currentAccount = accountUseCases.getAccountById(it)!!
                 }
             }
@@ -121,3 +121,5 @@ class AccountDetailsViewModel @Inject constructor(
         }
     }
 }
+
+private const val ACCOUNT = "account"

@@ -105,7 +105,7 @@ fun AccountDetailsBody(
                             AccountDetailsEvents.DeleteAccount(viewModel.currentAccount!!)
                         )
                     },
-                    menuItemThirdContent = { Text(text = "Delete account") })
+                    menuItemThirdContent = { Text(text = stringResource(R.string.delete_account)) })
             })
     }) {
         Column(

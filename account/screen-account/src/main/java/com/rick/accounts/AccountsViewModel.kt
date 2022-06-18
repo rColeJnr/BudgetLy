@@ -2,6 +2,7 @@ package com.rick.accounts
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rick.common.ProductionDispatcherProvider
@@ -23,6 +24,7 @@ class AccountsViewModel @Inject constructor(
     private val accountUseCases: AccountUseCases,
     private val getQuote: GetQuote,
     private val dispatcher: ProductionDispatcherProvider,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel(), BaseLogic<AccountEvents>, CoroutineScope {
 
     override val coroutineContext: CoroutineContext
@@ -33,10 +35,16 @@ class AccountsViewModel @Inject constructor(
     private val _accountsState = mutableStateOf(AccountsState())
     internal val accountsState: State<AccountsState> = _accountsState
 
+    internal var recentlyDeleted: String? = null
+
     init {
         // Get accounts
         onStart()
         getQuote()
+
+        savedStateHandle.get<String>(ACCOUNT_DELETED)?.let {
+            recentlyDeleted = it
+        }
     }
 
     override fun onEvent(event: AccountEvents) {
@@ -145,3 +153,5 @@ class AccountsViewModel @Inject constructor(
     }
 
 }
+
+private const val ACCOUNT_DELETED = "account"
