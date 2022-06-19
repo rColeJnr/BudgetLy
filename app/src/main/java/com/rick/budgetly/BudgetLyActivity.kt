@@ -14,7 +14,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rick.accounts.AccountBody
-import com.rick.accounts.AccountsNavHost
 import com.rick.add_edit.AccountAddEditBody
 import com.rick.bills.BillsBody
 import com.rick.core.theme.BudgetLyTheme
@@ -67,11 +66,52 @@ fun BudgetLyNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = BudgetLyScreen.Accounts.name,
+        startDestination = "${AccountsScreen.Accounts.name}?accountDeleted={accountDeleted)",
         modifier = modifier
     ) {
-        composable(BudgetLyScreen.Accounts.name) {
-            AccountsNavHost()
+        navigation(
+            startDestination = AccountsScreen.Accounts.name,
+            route = "${AccountsScreen.Accounts.name}?accountDeleted={accountDeleted)"
+        ){
+            composable(AccountsScreen.Accounts.name,arguments = listOf(
+                navArgument("accountDeleted"){
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                }
+            )){
+                AccountBody(navController = navController)
+            }
+
+            val routeAddEdit = AccountsScreen.AccountsAddEdit.name
+
+            composable(
+                route = "$routeAddEdit?accountToEdit={accountToEdit}",
+                arguments = listOf(
+                    navArgument("accountToEdit") {
+                        type = NavType.IntType
+                        defaultValue = -1
+                    }
+                )
+            ) {
+                AccountAddEditBody(
+                    navController = navController
+                )
+            }
+
+            val accountsName = AccountsScreen.AccountsDetails.name
+            composable(
+                route = accountsName + "account={account}",
+                arguments = listOf(
+                    navArgument("account") {
+                        type = NavType.IntType
+                    }
+                )
+            ) {
+                AccountDetailsBody(
+                    navController = navController
+                )
+            }
         }
         composable(BudgetLyScreen.Bills.name){
             BillsBody(navController = navController)
@@ -83,50 +123,5 @@ fun BudgetLyNavHost(
 }
 
 fun NavGraphBuilder.accountsGraph(navController: NavHostController) {
-    navigation(
-        startDestination = BudgetLyScreen.Accounts.name,
-        "${BudgetLyScreen.Accounts.name}?accountDeleted={accountDeleted)"
-    ){
-        composable(
-            route = "${AccountsScreen.Accounts.name}?accountDeleted={accountDeleted)",
-            arguments = listOf(
-                navArgument("accountDeleted"){
-                    type = NavType.StringType
-                    nullable = true
-                    defaultValue = null
-                }
-            )
-        ) {
-            AccountBody(navController = navController)
-        }
-        val routeAddEdit = AccountsScreen.AccountsAddEdit.name
 
-        composable(
-            route = "$routeAddEdit?accountToEdit={accountToEdit}",
-            arguments = listOf(
-                navArgument("accountToEdit") {
-                    type = NavType.IntType
-                    defaultValue = -1
-                }
-            )
-        ) {
-            AccountAddEditBody(
-                navController = navController
-            )
-        }
-
-        val accountsName = AccountsScreen.AccountsDetails.name
-        composable(
-            route = accountsName + "account={account}",
-            arguments = listOf(
-                navArgument("account") {
-                    type = NavType.IntType
-                }
-            )
-        ) {
-            AccountDetailsBody(
-                navController = navController
-            )
-        }
-    }
 }
