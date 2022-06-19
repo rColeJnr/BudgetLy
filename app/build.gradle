@@ -71,6 +71,8 @@ dependencies {
     implementation project(Modules.core)
 
     implementation project(Modules.account_accounts)
+    implementation project(Modules.account_add_edit)
+    implementation project(Modules.account_details)
 
     implementation project(Modules.bill_screen)
 

@@ -25,3 +25,9 @@ enum class BudgetLyScreen(val icon: ImageVector) {
             }
     }
 }
+
+enum class AccountsScreen {
+    Accounts,
+    AccountsDetails,
+    AccountsAddEdit;
+}
